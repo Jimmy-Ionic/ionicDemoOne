@@ -1,0 +1,37 @@
+{
+  "name": "cordova-plugin-zip",
+  "version": "3.1.0",
+  "description": "Unzips zip files",
+  "cordova": {
+    "id": "cordova-plugin-unzip",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MobileChromeApps/cordova-plugin-zip.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.3.0"
+    }
+  ],
+  "author": "",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/MobileChromeApps/zip/issues"
+  },
+  "homepage": "https://github.com/MobileChromeApps/zip",
+  "readme": "# cordova-plugin-zip\n\nA Cordova plugin to unzip files in Android and iOS.\n\n## Installation\n\n    cordova plugin add cordova-plugin-zip\n\n## Usage\n\n    zip.unzip(<source zip>, <destination dir>, <callback>, [<progressCallback>]);\n\nBoth source and destination arguments can be URLs obtained from the HTML File\ninterface or absolute paths to files on the device.\n\nThe callback argument will be executed when the unzip is complete, or when an\nerror occurs. It will be called with a single argument, which will be 0 on\nsuccess, or -1 on failure.\n\nThe progressCallback argument is optional and will be executed whenever a new ZipEntry\nhas been extracted. E.g.:\n\n    var progressCallback = function(progressEvent) {\n        $( \"#progressbar\" ).progressbar(\"value\", Math.round((progressEvent.loaded / progressEvent.total) * 100));\n    };\n\nThe values `loaded` and `total` are the number of compressed bytes processed and total. Total is the\nfile size of the zip file.\n\n## Release Notes\n\n### 3.1.0 (Feb 23, 2016)\n* Updated SSZipArchive (ios lib) to 1.1\n\n### 3.0.0 (May 1, 2015)\n* Updated SSZipArchive (ios lib) to 0.2.1\n* Update file plugin dependency to use npm version (cordova-plugin-file)\n\n### 2.1.0 (May 1, 2014)\n* Added progress events\n* Fix iOS path handling when given file: URLs as src/target\n",
+  "readmeFilename": "README.md",
+  "_id": "cordova-plugin-zip@3.1.0",
+  "_from": "cordova-plugin-zip@latest"
+}

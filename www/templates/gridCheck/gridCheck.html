@@ -1,0 +1,60 @@
+<ion-view class="padding " ng-controller="GridCheckController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class=" padding has-header has-footer padding-top">
+
+    <div class="padding-top common-center">
+      <button class=" button button-small button-positive gride-check-top-btn-margin"
+              ng-click="vm.fun.getGridCheckLocation()">定位
+      </button>
+      <button class=" button button-small button-positive gride-check-top-btn-margin"
+              ng-click="vm.fun.uploadGridCheckData()">上传
+      </button>
+      <button class=" button button-small button-positive gride-check-top-btn-margin"
+              ng-click="vm.fun.takeGridCheckPicture()">拍照
+      </button>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">区市：</span>
+      <span>
+        <input class="add-assessment-select" ng-model="vm.locationObj.district" disabled/>
+      </span>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">街道：</span>
+      <span>
+        <input class="add-assessment-select" ng-model="vm.locationObj.street" disabled/>
+      </span>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">问题代码：</span>
+      <span>
+        <select class="add-assessment-select" ng-init="vm.selectedQuesCode = vm.questionCode[0]"
+                ng-model="vm.selectedQuesCode" ng-options="x for x in vm.questionCode">
+        </select>
+      </span>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">问题描述：</span>
+      <textarea class="common-border add-assessment-textArea" ng-modele="vm.question"></textarea>
+    </div>
+
+
+    <div class="row common-margin-top assessment-img common-center">
+      <img id="img" class="col assessment-img text-center" ng-srcset="{{vm.picPath}}">
+    </div>
+
+    <div class="common-margin-top common-center">已上传图片</div>
+
+    <div class="common-center">
+      <button class="common-margin-top" ng-click="vm.fun.toGridCheckMap()">查看地图</button>
+    </div>
+
+  </ion-content>
+</ion-view>
+

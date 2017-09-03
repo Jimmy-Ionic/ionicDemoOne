@@ -1,0 +1,83 @@
+{
+  "name": "code-push",
+  "version": "2.0.1-beta",
+  "description": "Management SDK for the CodePush service",
+  "main": "script/index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/code-push.git"
+  },
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "license": "MIT",
+  "homepage": "https://microsoft.github.io/code-push",
+  "dependencies": {
+    "q": "^1.4.1",
+    "recursive-fs": "0.1.4",
+    "slash": "1.0.0",
+    "superagent": "^1.7.2",
+    "superagent-proxy": "^1.0.0",
+    "yazl": "^2.4.1"
+  },
+  "bugs": {
+    "url": "https://github.com/Microsoft/code-push/issues"
+  },
+  "_id": "code-push@2.0.1-beta",
+  "_shasum": "f67ce323c240fe34e9df003202783c88af620435",
+  "_from": "code-push@2.0.1-beta",
+  "_npmVersion": "3.10.10",
+  "_nodeVersion": "6.10.0",
+  "_npmUser": {
+    "name": "bretjohnson",
+    "email": "bret.johnson@microsoft.com"
+  },
+  "dist": {
+    "shasum": "f67ce323c240fe34e9df003202783c88af620435",
+    "tarball": "https://registry.npmjs.org/code-push/-/code-push-2.0.1-beta.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "axemclion",
+      "email": "code@nparashuram.com"
+    },
+    {
+      "name": "bokang",
+      "email": "buptkang@gmail.com"
+    },
+    {
+      "name": "bretjohnson",
+      "email": "bret.johnson@microsoft.com"
+    },
+    {
+      "name": "max-mironov",
+      "email": "v-maximi@microsoft.com"
+    },
+    {
+      "name": "maximpop",
+      "email": "maximpop@microsoft.com"
+    },
+    {
+      "name": "pniko",
+      "email": "patrick.nikoletich@microsoft.com"
+    },
+    {
+      "name": "ryanjsalva",
+      "email": "ryanjsalva@gmail.com"
+    },
+    {
+      "name": "silhouettes",
+      "email": "rich@rkhua.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/code-push-2.0.1-beta.tgz_1497242393012_0.44960598181933165"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/code-push/-/code-push-2.0.1-beta.tgz",
+  "readme": "ERROR: No README data found!"
+}

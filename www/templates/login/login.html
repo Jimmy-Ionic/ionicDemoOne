@@ -1,0 +1,44 @@
+<ion-view>
+
+  <ion-header-bar align-title="center" class="bar-positive">
+    <h1 class="title">考核项目登录</h1>
+  </ion-header-bar>
+
+  <ion-content class="has-header" ng-controller="LoginController">
+    <div class="padding">
+      <form class="padding-top" name="loginForm">
+        <label class="item item-input">
+          <i class="icon ion-ios-person-outline placeholder-icon"></i>
+          <input ng-model="info.userName" type="text" placeholder="用 户 名" required>
+        </label>
+        <label class="item item-input">
+          <i class="icon ion-ios-locked-outline placeholder-icon"></i>
+          <input ng-model="info.password" type="password" placeholder="密 码" required>
+        </label>
+        <a class="button button-block button-positive" ng-disabled="!loginForm.$valid" ng-click="doLogin()">
+          登&nbsp;&nbsp;&nbsp;&nbsp;录
+        </a>
+      </form>
+      <div class="row">
+        <div class="col col-center">
+          <!--<ul class="list">-->
+          <!--<li class="item-checkbox">-->
+          <!--<label class="checkbox checkbox-positive checkbox-square">-->
+          <!--<input type="checkbox" ng-model="isRemember">-->
+          <!--</label>-->
+          <!--<a class="button button-clear button-dark">记住密码</a>-->
+          <!--</li>-->
+          <!--</ul>-->
+          <ion-checkbox ng-checked="info.isRemAccountAndPwd" ng-model="info.isRemAccountAndPwd" class="checkbox-square item-borderless">记住密码
+          </ion-checkbox>
+          <ion-checkbox ng-checked="isCommonAccount" ng-model="isCommonAccount" class="checkbox-square item-borderless">公共账户
+          </ion-checkbox>
+        </div>
+        <div class="col col-center">
+          <button class=" button button-clear button-dark" ng-click="setNetAddress()">地址设置
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

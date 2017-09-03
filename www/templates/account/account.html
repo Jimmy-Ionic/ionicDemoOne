@@ -1,0 +1,78 @@
+<ion-view class="padding " ng-controller="AccountDetailsController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border">
+
+    <div>
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="搜索">
+      </label>
+    </div>
+
+    <div class="light-border padding-top">
+      <div class="row wait-work-menu padding-top">
+        <div class="col-40 text-center">
+          <select>
+            <option>全部</option>
+            <option selected="">Green</option>
+            <option>Red</option>
+          </select>
+        </div>
+        <div class="col-20 text-center">
+          <select>
+            <option>全部类型</option>
+            <option selected="">Green</option>
+            <option>Red</option>
+          </select>
+        </div>
+        <div class="col-20 text-center">
+          <select>
+            <option>全部子类</option>
+            <option selected="">Green</option>
+            <option>Red</option>
+          </select>
+        </div>
+        <div class="col-20 text-center">详情
+        </div>
+      </div>
+
+      <div class="padding-top">
+        <div class="row">
+          <div class="col-40 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item " ng-repeat="item in vm.planDetailsList">
+                {{item.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-20 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
+                {{item.type}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-20 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
+                {{item.status=='0'?'未考核':'已考核'}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-20 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
+                <span class="wait-work-list-item-btn"
+                      ng-click="vm.toAssessmentStatus(item)">{{item.status=='0'?'上报':'查看'}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+  <div ng-include="'templates/common/common.footer.html'"></div>
+</ion-view>

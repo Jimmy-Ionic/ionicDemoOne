@@ -1,0 +1,14 @@
+<ion-view title="Model" ng-controller="ModelController as vm">
+  <ion-content>
+    <div class="row">
+      <!--图标呈现代码-->
+      <ng-echarts style="height:300px" class="col col-100 echarts" ec-config="vm.chartGlobalConfig" ec-option="vm.lineOption"></ng-echarts>
+    </div>
+    <div class="row">
+      <ng-echarts style="height:300px" class="col col-100 echarts" ec-config="vm.chartGlobalConfig" ec-option="vm.columnOption"></ng-echarts>
+    </div>
+    <div class="row">
+      <ng-echarts style="height:300px" class="col col-100 echarts" ec-config="vm.chartGlobalConfig" ec-option="vm.pieOption"></ng-echarts>
+    </div>
+  </ion-content>
+</ion-view>

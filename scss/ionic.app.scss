@@ -1,0 +1,345 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../fonts" !default;
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+//lyq 通用样式
+
+.currency-textAlign-right {
+  padding-right: 20px;
+  text-align: right !important;
+}
+
+.currency-textAlign-left {
+  padding-left: 20px;
+  text-align: left !important;
+}
+
+// lyq homePage页面样式
+
+.homePage-bgcolor {
+  background-color: #44a9ea;
+}
+
+.homePage-default-fontFamily {
+  font-family: 微软雅黑 light;
+}
+
+.homePage-img {
+  border-radius: 0px !important;
+  padding-left: 30px;
+  padding-top: 35px !important;
+}
+
+.item-avatar > a {
+  background-color: #277EBE !important;
+}
+
+// lyq sceneDescription页面样式
+
+.sceneDescription-bgcolor {
+  overflow: hidden;
+  background-color: #44a9ea;
+}
+
+.sceneDescription-topDiv {
+  background-color: #1F74B2;
+  height: 100%;
+}
+
+.sceneDescription-areaContent {
+  width: 100% !important;
+  height: 90% !important;
+  font-size: 35px;
+  line-height: 35px;
+  resize: none;
+}
+
+.sceneDescription-openClose-div {
+
+  min-height: 13px;
+}
+
+.sceneDescription-button {
+  min-height: 13px;
+  min-width: 0px;
+  width: 180px;
+  font-size: 25px;
+  height: 65px;
+  line-height: 65px;
+}
+
+.sceneDescription-promptTip {
+  line-height: 35px;
+  font-size: 42px;
+  height: 10% !important;
+}
+
+.sceneDescription-item {
+  padding-top: 15px;
+  height: 100% !important;
+}
+
+.sceneDescription-card {
+  margin: 20px 20px;
+  height: 100% !important;
+  width: 100%;
+}
+
+//wqf
+
+.conten-wan {
+  overflow: auto;
+  background-color: #45a8eb;
+}
+
+.small-conten-wan {
+  background-color: #287dbe;
+  border: 1px solid #617d93;
+  height: 97%;
+}
+
+.font-size-title-wan {
+  color: #fff;
+}
+
+.font-size-info-wan {
+  color: #dec833;
+}
+
+.no-padding-top-wan {
+  padding-top: 0px !important;
+}
+
+.padding-info-wan {
+  border-bottom: 1px #fff solid;
+}
+
+.col-wan-100 {
+  width: 100%;
+}
+
+.col-wan-50 {
+  width: 50%;
+}
+
+.text-align-center-wan {
+  text-align: center;
+  margin: auto;
+}
+
+.text-align-left-wan {
+  text-align: left;
+}
+
+.text-align-right-wan {
+  text-align: right;
+}
+
+.button-wan {
+  background-color: #11c1f3;
+  text-align: center;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  margin: auto;
+}
+
+.textarea-style-wan {
+  width: 90%;
+  resize: none;
+  margin: auto;
+}
+
+.home-work-div {
+  width: 100px;
+  height: 90px;
+}
+
+.common-font {
+  font-size: 16px;
+  color: #444;
+}
+
+.wait-work-list-item {
+  border-color: #ddd;
+  background-color: #fff;
+  color: #444;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: -1px;
+  padding: 15px 0px;
+  font-size: 15px;
+}
+
+.wait-work-list-item-btn {
+
+  background-color: #E9E9E9;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px;
+  border-color: #BBBBBB;
+  color: #444;
+  font-size: 15px;
+
+  &:active {
+    background-color: #BBBBBB;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px;
+    border-radius: 2px;
+    border-color: grey;
+    color: #444;
+    font-size: 15px;
+  }
+
+  &:focus {
+    background-color: #BBBBBB;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px;
+    border-radius: 2px;
+    border-color: grey;
+    color: #444;
+    font-size: 15px;
+  }
+}
+
+.common-center, .common-loading-dialog-center {
+  isplay: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.common-vertical-top {
+  isplay: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.common-horizontal-top {
+  margin: 0 auto;
+}
+
+.map-div {
+  width: 120px;
+  height: 120px;
+}
+
+.horizontal-center {
+  margin: 0 auto;
+}
+
+.common-margin-top {
+  margin-top: 20px;
+}
+
+.assessment-img {
+  height: 40px;
+  width: 40px;
+}
+
+.padding-top-2 {
+  padding-top: 2px;
+}
+
+.padding-top-5 {
+  padding-top: 5px;
+}
+
+.padding-top-50 {
+  padding-top: 50px;
+}
+
+.map-div {
+  height: 400px;
+  width: 320px;
+}
+
+.weather-margin-left {
+  margin-left: 25px;
+}
+
+.assessment-map-div {
+  width: 120px;
+  height: 120px;
+}
+
+.common-margin {
+  margin-top: 100px;
+  margin-bottom: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.common-border {
+  border: 1px;
+  border-color: darkgrey;
+  border-style: solid;
+}
+
+.add-assessment-map {
+  height: 400px;
+  width: 320px;
+}
+
+.add-assessment-select {
+  width: 150px;
+  height: 30px;
+}
+
+.common-margin-top-10 {
+  margin-top: 10px;
+}
+
+.add-assessment-input {
+  width: 70px;
+  height: 30px;
+}
+
+.add-assessment-textArea {
+  width: 150px;
+  height: 50px;
+}
+
+.assessment-img {
+  height: 160px;
+  width: 160px
+}
+
+.gride-check-top-btn-margin {
+  margin-left: 10px;
+}
+
+.common-span-width {
+  width: 80px;
+  min-width: 80px;
+  max-width: 100px;
+  text-align: left;
+}

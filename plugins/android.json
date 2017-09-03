@@ -1,0 +1,58 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-code-push": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        }
+    },
+    "dependent_plugins": {
+        "code-push": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-zip": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.xinhai.appdemo"
+        }
+    }
+}

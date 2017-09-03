@@ -1,0 +1,71 @@
+<ion-view class="padding " ng-controller="HistoryController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class="has-header has-footer padding-top scroll-bar-fade-out">
+
+    <div class="padding">
+      <label class="item item-input">
+        <i class="icon ion-search"></i>
+        <input type="text" placeholder="请输入关键字搜索">
+      </label>
+    </div>
+
+    <div class="padding row">
+      <div class="col">
+        <select>
+          <option selected="">2017年</option>
+          <option selected="">2018年</option>
+          <option selected="">2019年</option>
+        </select>
+      </div>
+      <div class="col">
+        <select>
+          <option>一月</option>
+          <option>二月</option>
+        </select>
+      </div>
+      <div class="col">
+        考核名称
+      </div>
+      <div class="col">
+        查看详情
+      </div>
+    </div>
+
+    <div class="padding">
+      <div class="row">
+        <div class="col">
+          <ul class="list">
+            <li class="wait-work-list-item " ng-repeat="item in vm.historyList">
+              {{item.year}}
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+              {{item.month}}
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+              {{item.workName}}
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+              <span class="wait-work-list-item-btn" ng-click="vm.toPlanDetails(item)">查看</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+  <div ng-include="'templates/common/common.footer.html'"></div>
+</ion-view>

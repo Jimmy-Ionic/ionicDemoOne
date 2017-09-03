@@ -1,0 +1,46 @@
+<ion-view class="padding " ng-controller="WaitForWorkController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class="has-header padding-top scroll-bar-fade-out">
+    <div class="row wait-work-menu padding-top">
+      <div class="col-40 text-center">工作名称</div>
+      <div class="col-20 text-center">开始时间</div>
+      <div class="col-20 text-center">结束时间</div>
+      <div class="col-20 text-center"></div>
+    </div>
+    <div class="padding-top">
+      <div class="row">
+        <div class="col-40 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
+              {{item.workName}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
+              {{item.startTime=='无'?'':item.startTime}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
+              {{item.endTime=='无'?'':item.startTime}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
+              <span class="wait-work-list-item-btn" ng-click="toJobDetails(item)">查看</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

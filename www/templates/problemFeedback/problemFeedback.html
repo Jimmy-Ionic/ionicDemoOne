@@ -1,0 +1,64 @@
+<ion-view class="padding " ng-controller="ProblemFeedbackController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out ">
+
+    <div class="padding-top common-center">
+      <span>问题列表</span>
+    </div>
+
+    <div class="row wait-work-menu padding-top">
+      <div class="col-40 text-center">设施名称</div>
+      <div class="col-20 text-center">类型</div>
+      <div class="col-20 text-center">状态</div>
+      <div class="col-20 text-center">详情</div>
+    </div>
+
+  </ion-content>
+
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border">
+
+    <div class="light-border padding-top">
+
+
+      <div class="padding-top">
+        <div class="row">
+          <div class="col-40 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item " ng-repeat="item in vm.problemList">
+                {{item.institutionsName}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-20 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.problemList">
+                {{item.type}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-20 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.problemList">
+                {{item.status=='0'?'未反馈':'已反馈'}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-20 text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
+                <span class="wait-work-list-item-btn"
+                      ng-click="vm.checkProblemDetails(item)">查看</span>
+                <span class="wait-work-list-item-btn"
+                      ng-click="vm.feedbackProblem(item)">反馈</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+  <div ng-include="'templates/common/common.footer.html'"></div>
+</ion-view>

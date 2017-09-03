@@ -1,0 +1,106 @@
+<ion-view class="padding " ng-controller="AddAssessmentController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border" scroll="false">
+
+
+    <div class="common-center common-margin-top-10">
+      <span>设施类型：</span>
+      <span>
+        <select class="add-assessment-select">
+            <option>ARC-170</option>
+            <option>A-wing</option>
+            <option>Delta-7</option>
+            <option>Naboo N-1</option>
+            <option>TIE</option>
+            <option selected="">X-wing</option>
+            <option>Y-wing</option>
+          </select>
+      </span>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span>设施地址：</span>
+      <span>
+        <input class="add-assessment-select"/>
+      </span>
+    </div>
+
+    <div class="row wait-work-menu common-margin-top">
+      <div class="col  text-center">保洁等级</div>
+      <div class="col  text-center">主次干道</div>
+      <div class="col  text-center">长度</div>
+      <div class="col  text-center">宽度</div>
+    </div>
+
+    <div class="row">
+      <div class="col  text-center">
+        <input class="add-assessment-input text-center"/>
+      </div>
+      <div class="col  text-center">
+        <input class="add-assessment-input text-center"/>
+      </div>
+      <div class="col  text-center">
+        <input class="add-assessment-input text-center"/>
+      </div>
+      <div class="col  text-center">
+        <input class="add-assessment-input text-center"/>
+      </div>
+    </div>
+
+    <i class="devider"></i>
+
+    <div class="row">
+      <div class="col text-center">
+
+        <div class="common-center common-margin-top-10">
+          <span>扣分情况：</span>
+          <select class="add-assessment-select">
+            <option>ARC-170</option>
+            <option>A-wing</option>
+            <option>Delta-7</option>
+            <option>Naboo N-1</option>
+            <option>TIE</option>
+            <option selected="">X-wing</option>
+            <option>Y-wing</option>
+          </select>
+        </div>
+
+        <div class="common-center common-margin-top-10">
+          <span>扣分原因：</span>
+          <select class="add-assessment-select ">
+            <option>ARC-170</option>
+            <option>A-wing</option>
+            <option>Delta-7</option>
+            <option>Naboo N-1</option>
+            <option>TIE</option>
+            <option selected="">X-wing</option>
+            <option>Y-wing</option>
+          </select>
+        </div>
+
+        <div class="common-center common-margin-top-10">
+          <span>备注：</span>
+          <textarea class="common-border add-assessment-textArea"></textarea>
+        </div>
+
+
+        <div class="row common-margin-top assessment-img common-center">
+          <img class="col assessment-img text-center"
+               ng-repeat="path in vm.assessmentStatusDetailsList.picPath track by $index" ng-srcset="{{path}}">
+        </div>
+
+        <button class="common-margin-top" ng-click="vm.fun.takePicture()">拍照上传</button>
+
+        <div>
+          <button class="common-margin-top" ng-click="vm.fun.toAddAssessmentMap()">查看地图</button>
+        </div>
+      </div>
+    </div>
+
+
+  </ion-content>
+  <div ng-include="'templates/common/common.footerConfirm.html'"></div>
+
+</ion-view>

@@ -1,0 +1,27 @@
+<ion-view class="padding" ng-controller="MapController as vm" title="{{vm.title}}">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <div class="content has-header">
+
+    <div class="padding common-margin-top" ng-include="'templates/common/common.weather.html'"></div>
+
+    <div id="map" class="common-center map-div">
+    </div>
+    <div class="common-center padding-top">
+      <div>
+        <span>所在位置：</span>
+        <span>{{vm.position}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div ng-include="'templates/common/common.footer.html'"></div>
+
+</ion-view>
+
+
+
+
+
+

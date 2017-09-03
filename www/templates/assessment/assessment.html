@@ -1,0 +1,50 @@
+<ion-view class="padding" ng-controller="AssessmentController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class="has-header padding-top">
+    <div class="row padding-top has-header">
+      <div class="col-40 text-center">巡检计划</div>
+      <div class="col-20 text-center">开始时间</div>
+      <div class="col-20 text-center">结束时间</div>
+      <div class="col-20 text-center"></div>
+    </div>
+  </ion-content>
+
+
+  <ion-content class="has-footer common-margin common-border" scrollbar-y="false">
+    <div class="padding-top" scroll="true">
+      <div class="row">
+        <div class="col-40 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item " ng-repeat="item in vm.planList">
+              {{item.workName}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+              {{item.startTime}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+              {{item.endTime}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+              <span class="wait-work-list-item-btn" ng-click="vm.toPlanDetails(item)">查看</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <div ng-include="'templates/common/common.footer.html'"></div>
+</ion-view>

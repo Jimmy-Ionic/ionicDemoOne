@@ -1,0 +1,21 @@
+<ion-view class="padding" ng-controller="MessageController as vm" title="{{vm.title}}">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <div class="content has-header">
+    <div class="list">
+
+      <a class="item item-icon-left item-icon-right" ng-repeat="msg in vm.messages" href="#/messageContent">
+        <span class="icon" ng-switch="msg.status">
+          <span class="icon ion-email-unread" ng-switch-when="0"></span>
+          <span class="icon ion-email" ng-switch-when="1"></span>
+        </span>
+        <span>{{msg.title}}</span>
+        <span>({{msg.status==0?'未读':'已读'}})</span>
+        <span class="item-note">{{msg.date}}</span>
+
+      </a>
+    </div>
+  </div>
+
+</ion-view>

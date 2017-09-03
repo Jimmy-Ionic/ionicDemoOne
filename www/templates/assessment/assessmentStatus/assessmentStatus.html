@@ -1,0 +1,50 @@
+<ion-view class="padding " ng-controller="AssessmentStatusController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border">
+
+    <div class="row wait-work-menu padding-top">
+      <div class="col col-30 text-center">地址</div>
+      <div class="col col-30 text-center">问题</div>
+      <div class="col col-20 text-center">扣分</div>
+      <div class="col col-20 text-center">查看</div>
+    </div>
+
+    <div class="padding-top">
+      <div class="row">
+        <div class="col col-30 text-center">
+          <ul class="list">
+            <li class="item wait-work-list-item " ng-repeat="item in vm.assessmentStatusList">
+              {{item.address}}
+            </li>
+          </ul>
+        </div>
+        <div class="col col-30 text-center">
+          <ul class="list">
+            <li class="item wait-work-list-item" ng-repeat="item in vm.assessmentStatusList">
+              {{item.problem}}
+            </li>
+          </ul>
+        </div>
+        <div class="col col-20 text-center">
+          <ul class="list">
+            <li class="item wait-work-list-item" ng-repeat="item in vm.assessmentStatusList">
+              {{item.points}}
+            </li>
+          </ul>
+        </div>
+        <div class="col col-20 text-center">
+          <ul class="list">
+            <li class="item wait-work-list-item" ng-repeat="item in vm.assessmentStatusList">
+              <span class="wait-work-list-item-btn" ng-click="vm.toAssessmentStatusDetails(item)">查看</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  </ion-content>
+  <div ng-include="'templates/common/common.footerUpload.html'"></div>
+</ion-view>

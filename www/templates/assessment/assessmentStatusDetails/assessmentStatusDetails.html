@@ -1,0 +1,107 @@
+<ion-view class="padding " ng-controller="AssessmentStatusDetailsController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border">
+
+    <div class="row wait-work-menu padding-top">
+      <div class="col col-30 text-center">保洁等级</div>
+      <div class="col col-30 text-center">主次干道</div>
+      <div class="col col-20 text-center">长度</div>
+      <div class="col col-20 text-center">宽度</div>
+    </div>
+
+    <div class="padding-top">
+      <div class="row">
+        <div class="col col-30 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item">
+              {{vm.assessmentStatusDetailsList.cleaningLevel}}
+            </li>
+          </ul>
+        </div>
+        <div class="col col-30 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item">
+              {{vm.assessmentStatusDetailsList.roadLevel}}
+            </li>
+          </ul>
+        </div>
+        <div class="col col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item">
+              {{vm.assessmentStatusDetailsList.roadLength}}
+            </li>
+          </ul>
+        </div>
+        <div class="col col-20 text-center">
+          <ul class="list">
+            <li class="wait-work-list-item">
+              {{vm.assessmentStatusDetailsList.roadWidth}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col  text-center">
+        <div id="map" class="assessment-map-div horizontal-center"></div>
+        <div class="common-margin-top">目标位置</div>
+
+        <div class="common-margin-top">
+          <button>显示当前位置</button>
+        </div>
+
+      </div>
+      <div class="col text-center">
+        <div class="item item-input item-select">
+          <div class="input-label">扣分情况
+          </div>
+          <select>
+            <option>ARC-170</option>
+            <option>A-wing</option>
+            <option>Delta-7</option>
+            <option>Naboo N-1</option>
+            <option>TIE</option>
+            <option selected="">X-wing</option>
+            <option>Y-wing</option>
+          </select>
+        </div>
+
+        <div class="item item-input item-select">
+          <div class="input-label">扣分原因
+          </div>
+          <select>
+            <option>ARC-170</option>
+            <option>A-wing</option>
+            <option>Delta-7</option>
+            <option>Naboo N-1</option>
+            <option>TIE</option>
+            <option selected="">X-wing</option>
+            <option>Y-wing</option>
+          </select>
+        </div>
+
+        <div class="item item-input">
+          <div class="input-label">
+            备注
+          </div>
+          <textarea></textarea>
+        </div>
+
+        <div class=" row common-margin-top assessment-img">
+          <img class="col assessment-img text-center" ng-repeat="path in vm.assessmentStatusDetailsList.picPath track by $index" ng-srcset="{{path}}" >
+        </div>
+
+        <button class="common-margin-top">拍照上传</button>
+      </div>
+    </div>
+
+
+  </ion-content>
+  <div ng-include="'templates/common/common.footerConfirm.html'"></div>
+
+</ion-view>
