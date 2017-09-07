@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.savedDataModule')
+  angular.module('app.savedData')
     .config(SavedDataRouteConfig);
 
   SavedDataRouteConfig.$inject = ['$stateProvider'];

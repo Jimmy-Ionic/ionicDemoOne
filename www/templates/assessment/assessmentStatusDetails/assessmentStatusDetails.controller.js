@@ -11,75 +11,48 @@
   function AssessmentStatusDetailsController($rootScope, $scope, $state, $stateParams, AssessmentStatusDetailsService, $ionicLoading, $ionicPopup) {
 
     var vm = this;
-    // vm.data = $stateParams.assessmentStatusData;
-    vm.data = {};
+    vm.data = $stateParams.assessmentStatusData;
     vm.title = '';
-    vm.titleController = {
-      backToBeforePage: backToBeforePage,
-      enterMsg: enterMsg
+    vm.type = '05';//判断是道路还是公厕还是其他的设施 05：道路 01：公厕 06：车辆
+    vm.isEdit = false;//判断界面是编辑还是查看
+    vm.assessmentStatusDetailsList = {};
+    vm.reasonAccount = ['道路不净', '垃圾桶占路'];
+    vm.fun = {
+      uploadData: uploadData
     }
-    vm.initAmap = initAmap;
-
-    vm.assessmentStatusDetailsList =
-      {
-        questionId: '1',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        cleaningLevel: '特级',
-        roadLevel: '主干道',
-        roadLength: '1600米',
-        roadWidth: '30米',
-        points: '-1.5',
-        remarks: '备注',
-        targetPosition: '129.134',
-        picPath: [
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg',
-          'http://www.chinagvs.com/ShopHome/Tpl/Public/images/left-logo.jpg',
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg'
-        ]
-      };
 
 
     activate();
 
 
     function activate() {
-
-      // vm.assessmentStatusDetailsList=AssessmentStatusDetailsService.getAssessmentStatusDetailsList(vm.data.id);
-
-      initAmap();
+      vm.isEdit = $stateParams.isEdit;
+      getAccounts();
+      if (vm.data != null) {
+        console.log(vm.data);
+        AssessmentStatusDetailsService.getAssessmentStatusDetailsList(vm.data, function (resData) {
+          vm.assessmentStatusDetailsList = resData[0];
+          if (vm.assessmentStatusDetailsList) {
+            vm.type = vm.assessmentStatusDetailsList.type;
+          }
+        });
+      }
     }
 
+    function uploadData() {
 
-    function initAmap() {
+    }
 
-      var position = new AMap.LngLat(116.397428, 39.90923);
+    function toCommonMap() {
+      $state.go('');
+    }
 
-      $scope.mapObj = new AMap.Map('map', {
-
-        view: new AMap.View2D({
-
-          center: position,
-
-          zoom: 10,
-
-          rotation: 0
-
-        }),
-
-        lang: 'zh_cn'
-
+    function getAccounts() {
+      AssessmentStatusDetailsService.getAccounts(function (resData) {
+        vm.reasonAccount = resData;
       });
-      console.log('走到这儿啦');
     }
 
-    function backToBeforePage() {
-
-    }
-
-    function enterMsg() {
-
-    }
 
   }
 })();

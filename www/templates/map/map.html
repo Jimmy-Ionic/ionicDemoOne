@@ -1,24 +1,49 @@
-<ion-view class="padding" ng-controller="MapController as vm" title="{{vm.title}}">
+<ion-view class="padding " ng-controller="MapController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <div class="content has-header">
+  <ion-content class=" padding has-header" scroll="false">
 
-    <div class="padding common-margin-top" ng-include="'templates/common/common.weather.html'"></div>
-
-    <div id="map" class="common-center map-div">
-    </div>
-    <div class="common-center padding-top">
-      <div>
-        <span>所在位置：</span>
-        <span>{{vm.position}}</span>
+    <div class="common-center common-margin-top-10">
+      <div ng-repeat="item in vm.accountList">
+        <label class="checkbox checkbox-square common-center" >
+          <input type="checkbox" ng-checked="item.selected">
+          <span >{{item.account}}</span>
+        </label>
       </div>
     </div>
-  </div>
 
-  <div ng-include="'templates/common/common.footer.html'"></div>
+    <div class="common-center common-margin-top-10">
+      <span>设施地址：</span>
+      <div style="height: 30px;">
+        <input id="search-form" class="add-assessment-select"/>
+        <button ng-click="vm.fun.getAccountsPostionData()">搜索</button>
+        <div id="spinner" ng-show="vm.spinnerShow" class="add-assessment-select">
+          <ul class="proposal-list" ng-repeat="item in vm.accountAddressData">
+            <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
+    <div class="common-center">
+      <div>
+        <div id="map" class="query-map card">
+
+        </div>
+
+        <div class="common-margin-top-20 common-center">
+          <span>所在位置：</span>
+          <span>{{vm.mapPositionObj.address}}</span>
+        </div>
+      </div>
+    </div>
+
+
+
+  </ion-content>
 </ion-view>
+
 
 
 

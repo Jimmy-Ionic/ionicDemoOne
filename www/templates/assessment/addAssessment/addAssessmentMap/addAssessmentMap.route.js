@@ -12,6 +12,7 @@
     $stateProvider
       .state('addAssessmentMap', {
         url: '/addAssessmentMap',
+        params: {mapPositionObj: null},
         templateUrl: 'templates/assessment/addAssessment/addAssessmentMap/addAssessmentMap.html'
       });
   }

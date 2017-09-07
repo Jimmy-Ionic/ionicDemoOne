@@ -15,7 +15,7 @@
     'ngCordova',
     'app.login',
     'app.home',
-    'app.savedDataModule',
+    'app.savedData',
     'app.waitForWork',
     'app.assessment',
     'app.planDetails',
@@ -318,13 +318,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.assessmentStatusDetails', []);
+  angular.module('app.assessmentStatus', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.assessmentStatus', []);
+  angular.module('app.assessmentStatusDetails', []);
 })();
 
 (function () {
@@ -348,7 +348,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.savedDataModule',[]);
+  angular.module('app.savedData',[]);
 })();
 
 (function () {
@@ -451,43 +451,43 @@
 
     vm.planList = [
       {
-        id: '1',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '6月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/1'
       },
       {
-        id: '2',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '7月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '3',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '8月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '4',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '9月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '5',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '10月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '6',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '11月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/1'
       },
       {
-        id: '7',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '12月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/1'
@@ -583,11 +583,16 @@
 
 
     function activate() {
-      // vm.planList = AssessmentService.getPlanList($rootScope.userId);
+      for(var i = 0;i<10;i++){
+
+      }
+      // AssessmentService.getPlanList($rootScope.userId, function (data) {
+      //   vm.planList = data;
+      // });
     }
 
     function toPlanDetails(item) {
-      $state.go('planDetails', {assessmentData: item, fromWhere: 'assessment'});
+      $state.go('planDetails', {planDetailsData: item, fromWhere: 'assessment'});
     }
   }
 })();
@@ -634,9 +639,9 @@
     return service;
 
 
-    function getPlanList(userId) {
+    function getPlanList(userId,fun) {
       var path = '' + userId;
-      return MyHttpService.getCommonData(path);
+      MyHttpService.getCommonData(path,fun);
     }
   }
 })();
@@ -648,16 +653,17 @@
     .module('app.gridCheck')
     .controller('GridCheckController', GridCheckController);
 
-  GridCheckController.$inject = ['$scope', '$state', 'GridCheckService', 'CommonMapService', '$ionicPopup', '$ionicLoading', '$cordovaFileTransfer'];
+  GridCheckController.$inject = ['$scope', '$state', '$stateParams', 'GridCheckService', 'CommonMapService', '$ionicPopup', '$ionicLoading', '$cordovaFileTransfer'];
 
   /** @ngInject */
-  function GridCheckController($scope, $state, GridCheckService, CommonMapService, $ionicPopup, $ionicLoading, $cordovaFileTransfer) {
+  function GridCheckController($scope, $state, $stateParams, GridCheckService, CommonMapService, $ionicPopup, $ionicLoading, $cordovaFileTransfer) {
 
     var vm = this;
     vm.title = '网格化巡检';
     vm.picPath = 'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg';
-    vm.picData ='';
+    vm.picData = '';
     vm.picName = '';
+    vm.pickPositon = $stateParams.position;
 
     vm.selectedQuesCode = '';
     vm.questionCode = [];
@@ -713,7 +719,7 @@
 
         var image = document.getElementById('img');
         image.src = "data:image/jpeg;base64," + imageData;
-        vm.picName = moment().format('YYYY-MM-DD-HH:mm:ss')+'.jpg';
+        vm.picName = moment().format('YYYY-MM-DD-HH:mm:ss') + '.jpg';
         vm.picData = imageData;
         console.log(vm.picName);
       }, function (err) {
@@ -831,55 +837,62 @@
     .module('app.history')
     .controller('HistoryController', HistoryController);
 
-  HistoryController.$inject = ['$scope', 'HistoryService'];
+  HistoryController.$inject = ['$scope','$state', 'HistoryService'];
 
   /** @ngInject */
-  function HistoryController($scope, HistoryService) {
+  function HistoryController($scope,$state ,HistoryService) {
     var vm = this;
     vm.title = '历史考核记录';
     vm.fun = {
-      toPlanDetails:toPlanDetails
+      toPlanDetails: toPlanDetails,
+      getHistoryDataByCondition:getHistoryDataByCondition
     }
 
     vm.toPlanDetails = toPlanDetails;
 
-    vm.historyList = [
-      {
-        id: '1',
-        workName: '6月份考核计划',
-        year: '2017年',
-        month: '六月'
-      },
-      {
-        id: '2',
-        workName: '7月份考核计划',
-        year: '2017年',
-        month: '七月'
-      },
-      {
-        id: '3',
-        workName: '8月份考核计划',
-        year: '2017年',
-        month: '八月'
-      },
-      {
-        id: '4',
-        workName: '9月份考核计划',
-        year: '2017年',
-        month: '九月'
-      }
-    ];
-
+    vm.historyList = [];
+    vm.yeahArray = [];
+    vm.monthArray = [];
+    vm.thisYeah = moment().format('YYYY');
+    vm.thisMonth = moment().format('M');
+    vm.keyword = '';
+    vm.selectedYeah = '';
+    vm.selectedMonth = '';
 
     activate();
 
 
     function activate() {
+      console.log(vm.thisYeah+'***'+vm.thisMonth);
+
+      for (var i = 0; i < 15; i++) {
+        vm.historyList[i] = {
+          id: '1',
+          workName: '6月份考核计划',
+          year: '2017年',
+          month: '六月'
+        }
+      }
+
+      for (var i = 0; i < 12; i++) {
+        vm.monthArray[i] = i+1;
+      }
+
+      console.log(vm.monthArray);
+
+      for (var i = 0; i < 5; i++) {
+        vm.yeahArray[i] = vm.thisYeah - i;
+      }
       // vm.historyList = HistoryService.getHistoryData($rootScope.userId);
     }
 
     function toPlanDetails(item) {
       $state.go('planDetails', {assessmentData: item, fromWhere: 'history'});
+    }
+
+    function getHistoryDataByCondition() {
+      console.log(vm.selectedMonth+'**'+vm.selectedYeah+'**'+vm.keyword);
+      HistoryService.getHistoryDataByCondition(vm.selectedYeah, vm.selectedMonth, vm.keyword);
     }
 
 
@@ -916,9 +929,9 @@
     .module('app.history')
     .service('HistoryService', HistoryService);
 
-  HistoryService.$inject = ['$http','MyHttpService'];
+  HistoryService.$inject = ['MyHttpService'];
   /** @ngInject */
-  function HistoryService($http,MyHttpService) {
+  function HistoryService(MyHttpService) {
     var service = {
       getHistoryData:getHistoryData,
       getHistoryDataByCondition:getHistoryDataByCondition
@@ -931,10 +944,11 @@
       return MyHttpService.getCommonData(url);
     }
 
-    function getHistoryDataByCondition(year,month,other) {
+    function getHistoryDataByCondition(year,month,keyword) {
       var url = '';
       return MyHttpService.getCommonData(url);
     }
+    
   }
 })();
 
@@ -973,6 +987,7 @@
     vm.hasSavedData = true;
     vm.saveDataNum = '20';
     vm.savedData = {};
+    vm.isCommonAccount = $rootScope.isCommonAccount;
     vm.weather = {};
     vm.msgCount = $rootScope.unReadMsgCount;
     vm.homeWorkController = {
@@ -992,10 +1007,10 @@
 
 
     function activate() {
-      if (GetWeatherService.getWeather()) {
-        vm.weather = GetWeatherService.getWeather();
-      }
-      console.log(vm.weather);
+
+      GetWeatherService.getWeather(function (resData) {
+        vm.weather = resData;
+      });
 
       vm.savedData = HomeService.getSavedUploadedData();
       if (vm.savedData) {
@@ -1099,27 +1114,11 @@
     }
   }
 
-  function GetWeatherService($http, SYS_INFO, $interval) {
+  function GetWeatherService($http, SYS_INFO) {
 
     var weatherApi = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/Weather/WeatherJson.action'
 
     var weatherInfo = {}
-
-    Date.prototype.Format = function (fmt) {
-      var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "h+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-      };
-      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-      for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-      return fmt;
-    }
 
     var fun = {
       getWeather: getWeather
@@ -1128,28 +1127,30 @@
     return fun;
 
 
-    function getWeather() {
+    function getWeather(fun) {
       $http.get(weatherApi)
         .then(function (response) {
           if (response.data) {
-            weatherInfo.weatherDate = new Date().Format('MM月dd日');
+            weatherInfo.weatherDate = moment().format('MM月DD日');
             weatherInfo.address = '青岛'
             weatherInfo.temperature = getTemperature(response.data);
             weatherInfo.weather = response.data.data.forecast[0].type;
+            fun(weatherInfo);
           } else {
-            weatherInfo.weatherDate = new Date().Format('MM月dd日');
+            weatherInfo.weatherDate = moment().format('MM月DD日');
             weatherInfo.address = '青岛';
             weatherInfo.temperature = '20度';
             weatherInfo.weather = '晴';
+            fun(weatherInfo);
           }
         }, function (response) {
-          weatherInfo.weatherDate = new Date().Format('MM月dd日');
+          weatherInfo.weatherDate = moment().format('MM月DD日');
           weatherInfo.address = '青岛';
           weatherInfo.temperature = '20度';
           weatherInfo.weather = '晴';
+          fun(weatherInfo);
         });
       console.log(weatherInfo);
-      return weatherInfo;
     }
 
 
@@ -1178,14 +1179,12 @@
   LoginController.$inject = [
     '$scope',
     '$state',
-    'LoginService',
-    '$cordovaCamera'
+    'LoginService'
   ];
 
   function LoginController($scope,
                            $state,
-                           LoginService,
-                           $cordovaCamera) {
+                           LoginService) {
 
     $scope.doLogin = doLogin;
     $scope.setNetAddress = setNetAddress;
@@ -1210,8 +1209,7 @@
 
 
     function doLogin() {
-      // LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd,$scope.info)
-      $state.go('home');
+      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd,$scope.info);
     }
 
   }
@@ -1267,6 +1265,7 @@
         case false:
           $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
             .then(function (response) {
+              $rootScope.isCommonAccount = false;
               success(response, isRemAccountAndPwd,info);
             }, function (response) {
               error(response)
@@ -1275,6 +1274,7 @@
         case  true:
           $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
             .then(function (response) {
+              $rootScope.isCommonAccount = true;
               success(response, isRemAccountAndPwd,info);
             }, function (response) {
               error(response)
@@ -1286,6 +1286,7 @@
     }
 
     function success(res, isRemAccountAndPwd,info) {
+      console.log(res);
       if (res.data.success == '1') {
         $timeout(function () {
           if (isRemAccountAndPwd) {
@@ -1398,25 +1399,153 @@
     .module('app.map')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['$scope','GetWeatherService','MyMapService'];
-  /** @ngInject */
-  function MapController($scope,GetWeatherService,MyMapService) {
-    var vm = this;
-    vm.title = '地图查询';
-    vm.position = '市南区';
+  MapController.$inject = ['$scope', 'GetWeatherService', 'CommonMapService', 'MyHttpService'];
 
-    vm.weather = {};
+  /** @ngInject */
+  function MapController($scope, GetWeatherService, CommonMapService, MyHttpService) {
+    var vm = this;
+    vm.data = {};
+    vm.title = '地图查询';
+    vm.spinnerShow = false;
+    vm.queryObj = {
+      account: '',
+      keyword: ''
+    }
+
+    vm.accountList = [{account: '全部', selected: true}, {account: '公厕', selected: true}, {
+      account: '街道',
+      selected: true
+    }, {account: '车辆', selected: false}, {account:'垃圾桶',selected:false}, {account:'收集站',selected:false}];
+
+    //获取到的所有的匹配的台帐信息
+    vm.accountAddressData = [{
+      name: '百度1',
+      position: [],
+      roadPositionArray: []
+    }, {
+      name: '百度2',
+      position: [],
+      roadPositionArray: []
+    }, {
+      name: '百度3',
+      position: [],
+      roadPositionArray: []
+    }, {
+      address: '百度4',
+      position: [],
+      roadPositionArray: []
+    }];
+
+    vm.map;
+    vm.marker;
+    vm.markerPerson;
+    vm.polyline;
+    vm.centerPositionNum = 0;
+
+    vm.mapPositionObj = {
+      address: '市南软件园2号楼',
+      position: [120.41317, 36.07705],
+      roadPositionArray: []
+      // roadPositionArray: [
+      //   ["120.352728", "36.086514"], ["120.352788", "36.086477"],
+      //   ["120.352849", "36.08644"], ["120.35291", "36.086403"],
+      //   ["120.35297", "36.086365"], ["120.353031", "36.086328"],
+      //   ["120.353092", "36.086291"], ["120.353152", "36.086254"],
+      //   ["120.353213", "36.086217"], ["120.353283", "36.086178"],
+      //   ["120.353354", "36.086138"], ["120.353425", "36.086099"],
+      //   ["120.353425", "36.086099"]
+      // ]
+    }
+
+    vm.fun ={
+      getAccountsPostionData:getAccountsPostionData
+    }
+
 
     activate();
 
+
     function activate() {
-      var weatherInfo = GetWeatherService.getWeather();
-      if (weatherInfo) {
-        vm.weather = weatherInfo;
+
+      initMap();
+
+    }
+
+    function initMap() {
+
+      vm.map = CommonMapService.initMap(vm.mapPositionObj.position);
+      vm.markerPerson = new AMap.Marker();
+
+      if (vm.mapPositionObj.roadPositionArray.length <= 0) {
+        //当roadPositionArray.length数量小于等于0的时候，说明道路的坐标没有，
+        // 代表着这是一个具体的设施（比如山东路某个公厕，具体到了地址），不是道路
+        vm.marker = new AMap.Marker({
+          position: vm.mapPositionObj.position,
+          icon: new AMap.Icon({
+            size: new AMap.Size(32, 32),  //图标大小
+            content: '<img src="/www/assets/global/img/location.png" />',
+            // image: "http://www.iconpng.com/png/iconbeast_lite/map-pin.png"
+            // imageOffset: new AMap.Pixel(0, 0)
+          })
+        });
+
+        vm.marker.setMap(vm.map);
+        vm.map.setCenter(vm.mapPositionObj.position);
+      } else {
+        vm.polyline = new AMap.Polyline({
+          path: vm.mapPositionObj.roadPositionArray,
+          strokeColor: "#1C8B08",
+          strokeWeight: 5
+        });
+        // 添加到地图中
+        vm.polyline.setMap(vm.map);
+        vm.map.setZoom(17);
+        vm.centerPositionNum = parseInt(vm.mapPositionObj.roadPositionArray.length / 2);
+        vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
       }
 
-      MyMapService.initMap();
+      // CommonMapService.getCoordinateInfo(function (data) {
+      //   vm.markerPerson.setPosition(data);
+      //   vm.markerPerson.setMap(vm.map);
+      // });
+    }
 
+    function refreshMyPosition() {
+      CommonMapService.getCoordinateInfo(function (data) {
+        vm.markerPerson.setPosition(data);
+        vm.map.setZoom(13);
+        vm.markerPerson.setMap(vm.map);
+        vm.map.setCenter(data);
+      });
+    }
+
+    function refreshRoadOrInstallationPosition() {
+      if (vm.mapPositionObj.roadPositionArray.length <= 0) {
+        vm.map.setCenter(vm.mapPositionObj.position);
+      } else {
+        vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
+      }
+    }
+
+    //获取对应的台帐的信息
+    function getAccounts() {
+      var url = ''
+      MyHttpService.getCommonData(url, function (data) {
+        vm.accountList = data[0];
+      });
+    }
+
+    //根据台帐获取对应的台帐定位信息
+    function getAccountsPostionData() {
+      var url = '';
+      MyHttpService.getCommonData(url, function (data) {
+        vm.accountList = data[0];
+        vm.spinnerShow = true;
+      });
+    }
+
+    function spinnerHide(item) {
+      vm.spinnerShow = false;
     }
   }
 })();
@@ -1569,17 +1698,63 @@
     .module('app.problemFeedback')
     .controller('ProblemFeedbackController', ProblemFeedbackController);
 
-  ProblemFeedbackController.$inject = ['$scope'];
+  ProblemFeedbackController.$inject = ['$rootScope', '$state', '$ionicPopup', '$scope', 'ProblemFeedbackService'];
+
   /** @ngInject */
-  function ProblemFeedbackController($scope) {
+  function ProblemFeedbackController($rootScope, $state, $ionicPopup, $scope, ProblemFeedbackService) {
+
     var vm = this;
+    vm.title = '已收到的检查问题';
+
+    vm.fun = {
+      checkProblemDetails: checkProblemDetails,
+      feedbackProblem: feedbackProblem
+    }
+
+    vm.problemList = [];
 
     activate();
 
-    ////////////////
 
     function activate() {
+      for (var i = 0; i < 15; i++) {
+        vm.problemList[i] = {
+          id: '6',
+          institutionsName: '山东路',
+          type: '道路',
+          status: '1',
+          address: "燕儿岛路",
+          question: "公厕不净",
+          position:[120.41317,36.07705]
+        }
+      }
+      // vm.problemList = ProblemFeedbackService.getProblemList($rootScope.userId);
     }
+
+
+    function checkProblemDetails(item) {
+      toProblemFeedbackDetails(item);
+    }
+
+    function feedbackProblem(item) {
+      if (item.status == 0) {
+        toProblemFeedbackDetails(item);
+      } else {
+        $ionicPopup.alert({
+          title: '提示',
+          template: '您已经反馈过问题啦'
+        }).then(function (res) {
+
+        });
+      }
+
+    }
+
+    function toProblemFeedbackDetails(item) {
+      $state.go('problemFeedbackDetails', {problemItem: item,fromWhere:'problemFeedbackDetails'});
+    }
+
+
   }
 })();
 
@@ -1610,15 +1785,22 @@
   'use strict';
 
   angular
-    .module('app.setting')
-    .service('userInfoService', userInfoService);
+    .module('app.problemFeedback')
+    .service('ProblemFeedbackService', ProblemFeedbackService);
 
-  userInfoService.$inject = ['$http'];
+  ProblemFeedbackService.$inject = ['MyHttpService'];
   /** @ngInject */
-  function userInfoService($http) {
-    var service = {};
+  function ProblemFeedbackService(MyHttpService) {
+    var service = {
+      getProblemList:getProblemList
+    };
 
     return service;
+
+    function getProblemList(userId) {
+      var path = '' + userId;
+      return MyHttpService.getCommonData(path);
+    }
 
   }
 })();
@@ -1781,36 +1963,10 @@
   function WaitForWorkController($scope,WaitForWorkService,$rootScope,$state) {
     var vm = this;
     vm.title = '代办工作';
-    vm.titleController = {
-    }
+    vm.titleController = {};
+    vm.workList = [];
     vm.toJobDetails = toJobDetails;
 
-    vm.workList = [
-      {
-        id: "cc07edd7-892a-4bf0-96dc-52301699663c",
-        planName: '6月份综合考核',
-        sDate: '2017/6/1',
-        eDate: '2017/6/1'
-      },
-      {
-        id: "cc07edd7-892a-4bf0-96dc-52301699663c",
-        planName: '6月份综合考核',
-        sDate: '2017/6/1',
-        eDate: '2017/6/1'
-      },
-      {
-        id: "cc07edd7-892a-4bf0-96dc-52301699663c",
-        planName: '6月份综合考核',
-        sDate: '2017/6/1',
-        eDate: '2017/6/1'
-      },
-      {
-        id: "cc07edd7-892a-4bf0-96dc-52301699663c",
-        planName: '6月份综合考核',
-        sDate: '2017/6/1',
-        eDate: '2017/6/1'
-      }
-    ];
 
 
     activate();
@@ -1818,16 +1974,18 @@
 
     function activate() {
       console.log($rootScope.userId);
-      vm.workList = WaitForWorkService.getWaitForWorkInfo($rootScope.userId);
-      console.log(vm.workList);
+      WaitForWorkService.getWaitForWorkInfo($rootScope.userId,function (data) {
+        vm.workList = data;
+        console.log(vm.workList);
+      });
     }
 
 
     function toJobDetails(item) {
       if (item.sDate == '无') {
-        $state.go('assessmentStatus', {planDetailsData: item})
+        $state.go('problemFeedbackDetails', {problemItem: item,fromWhere: 'waitForWork'});
       } else {
-        $state.go('planDetails', {assessmentData: item, fromWhere: 'waitForWork'})
+        $state.go('planDetails', {planDetailsData: item, fromWhere: 'waitForWork'});
       }
     }
   }
@@ -1870,7 +2028,6 @@
   function WaitForWorkService(MyHttpService, $localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice, $state) {
 
 
-    var workList = [];
 
     var service = {
       getWaitForWorkInfo: getWaitForWorkInfo
@@ -1878,10 +2035,9 @@
 
     return service;
 
-    function getWaitForWorkInfo(userId) {
+    function getWaitForWorkInfo(userId,fun) {
       var path = '/hwweb/AssignmentAssessment/findDataByUserId?userId=' + userId;
-      var data = MyHttpService.getCommonData(path);
-      return data;
+      MyHttpService.getCommonData(path,fun);
     }
   }
 })
@@ -1957,21 +2113,33 @@
     .module('app.addAssessment')
     .controller('AddAssessmentController', AddAssessmentController);
 
-  AddAssessmentController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'AssessmentStatusDetailsService', '$ionicLoading', '$ionicPopup'];
+  AddAssessmentController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'AddAssessmentService'];
 
   /** @ngInject */
-  function AddAssessmentController($rootScope, $scope, $state, $stateParams, AssessmentStatusDetailsService, $ionicLoading, $ionicPopup) {
+  function AddAssessmentController($rootScope, $scope, $state, $stateParams, AddAssessmentService) {
 
     var vm = this;
-    vm.data = {
-
-    };
+    vm.data = {};
     vm.title = '录入计划';
-    vm.fun = {
-      toAddAssessmentMap:toAddAssessmentMap,
-      takePicture:takePicture
+    vm.spinnerShow = false;
+    vm.picBase64DataArray = [];
+    vm.uploadData = {
+      type: '',
+      address: '',
+      level: '',
+      road: '',
+      length: '',
+      points: '',
+      width: '',
+      reason: '',
+      remark: '',
+      img: []
     };
-
+    vm.line = '120.352728,36.086514,120.352788,36.086477,' +
+      '120.352849,36.08644,120.35291,36.086403,120.35297,36.086365,' +
+      '120.353031,36.086328,120.353092,36.086291,120.353152,36.086254,120.353213,' +
+      '36.086217,120.353283,36.086178,120.353354,36.086138,120.353425,36.086099,120.353425,' +
+      '36.086099';
 
     vm.assessmentStatusDetailsList =
       {
@@ -1992,20 +2160,119 @@
         ]
       };
 
+    //台帐数据
+    vm.accountList =
+      {
+        type: ['道路', '公厕'],
+        reason: ['道路不净', '垃圾桶占路']
+      };
+
+    //获取到的所有的匹配的台帐信息
+    vm.accountAddressData = [{
+      name: '百度1',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }, {
+      name: '百度2',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }, {
+      name: '百度3',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }, {
+      address: '百度4',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }];
+
+    //跳转到地图页面需要传递的道路坐标数组
+    vm.mapPositionObj = {
+      address: '市南软件园2号楼',
+      position: [120.41317, 36.07705],
+      roadPositionArray: []
+    };
+
+    vm.fun = {
+      toAddAssessmentMap: toAddAssessmentMap,
+      takePicture: takePicture,
+      spinnerHide: spinnerHide,
+      queryAccount: queryAccount,
+      deletePic: deletePic
+    };
+
 
     activate();
 
 
     function activate() {
-
+      // queryAccountList();
+      vm.mapPositionObj.roadPositionArray = AddAssessmentService.getPositionArray(vm.line);
+      console.log(vm.mapPositionObj.roadPositionArray);
     }
 
     function toAddAssessmentMap() {
-      $state.go('addAssessmentMap');
+      $state.go('addAssessmentMap',{mapPositionObj:vm.mapPositionObj});
     }
 
+    //启动摄像头拍照
     function takePicture() {
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
 
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        // var image = document.getElementById('pic' + vm.picIsShow);
+        // image.src = "data:image/jpeg;base64," + imageData;
+        vm.picBase64DataArray.push("data:image/jpeg;base64," + imageData);
+      }, function (err) {
+        // error
+      });
+    }
+
+    //根据模糊查询，查询到相关的设施匹配地址
+    function queryAccount() {
+      var queryObj = {
+        type: vm.uploadData.type,
+        address: vm.uploadData.address
+      }
+      AddAssessmentService.queryAccount(queryObj, function (resData) {
+        vm.accountAddressData = resData.accountAddressData;
+        vm.mapPositionArray = resData.mapPositionArray;
+        vm.spinnerShow = true;
+      })
+    }
+
+    //获取设施类型，扣分情况，扣分原因等使用<select>Dom的详细数据
+    function queryAccountList() {
+      AddAssessmentService.queryAccountList(function (resData) {
+        vm.accountList = resData[0];
+      })
+    }
+
+    function spinnerHide(item) {
+      vm.spinnerShow = false;
+      vm.uploadData.level = item.info.level;
+      vm.uploadData.road = item.info.road;
+      vm.uploadData.length = item.info.length;
+      vm.uploadData.width = item.info.width;
+    }
+
+    function deletePic(index) {
+      vm.picBase64DataArray.splice(index, 1);
     }
 
   }
@@ -2038,14 +2305,18 @@
     .module('app.addAssessment')
     .service('AddAssessmentService', AddAssessmentService);
 
-  AddAssessmentService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera'];
+  AddAssessmentService.$inject = ['$cordovaCamera', 'MyHttpService'];
 
   /** @ngInject */
-  function AddAssessmentService($http, SYS_INFO, $cordovaCamera) {
+  function AddAssessmentService($cordovaCamera, MyHttpService) {
+
     var service = {
       addNewAssessment: addNewAssessment,
       getPhonePictureData: getPhonePictureData,
-      getPhonePicturePath: getPhonePicturePath
+      getPhonePicturePath: getPhonePicturePath,
+      queryAccount: queryAccount,
+      queryAccountList: queryAccountList,
+      getPositionArray: getPositionArray
     }
 
 
@@ -2102,6 +2373,152 @@
         $cordovaCamera.cleanup().then();
       }, false);
     }
+
+    function queryAccount(queryArray, fun) {
+      var path = '';
+      MyHttpService.getCommonData(path, fun);
+    }
+
+    function queryAccountList(fun) {
+      var path = '';
+      MyHttpService.getCommonData(path, fun);
+    }
+
+    function getPositionArray(string) {
+      var roadPositionArray = [];
+      console.log(string);
+      var temArray = string.split(',');
+      for (var i = 0; i < temArray.length - 1; i = i + 2) {
+        var array = new Array();
+        array[0] = temArray[i];
+        array[1] = temArray[i + 1];
+        roadPositionArray.push(array);
+      }
+      return roadPositionArray;
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.assessmentStatus')
+    .controller('AssessmentStatusController', AssessmentStatusController);
+
+  AssessmentStatusController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'AssessmentStatusService', '$ionicLoading', '$ionicPopup'];
+
+  /** @ngInject */
+  function AssessmentStatusController($rootScope, $scope, $state, $stateParams, AssessmentStatusService, $ionicLoading, $ionicPopup) {
+    var vm = this;
+    vm.title = '考核情况';
+    vm.data = $stateParams.planDetailsData;
+    vm.fun = {
+      toAssessmentStatusDetails:toAssessmentStatusDetails,
+      upload:upload,
+      checkStatusDetails:checkStatusDetails
+    };
+
+
+    vm.assessmentStatusList = [];
+
+
+    activate();
+
+    function activate() {
+      console.log(vm.data);
+      if(vm.data){
+        AssessmentStatusService.getAssessmentStatusList(vm.data,function (resData) {
+          vm.assessmentStatusList = resData;
+        });
+      }
+    }
+
+    //上传数据
+    function upload() {
+      if(vm.planDetailsData!=null&&vm.planDetailsData.status == null){
+
+      }else{
+        $ionicPopup.alert({
+          title: '该项目已考核',
+          template: response.data
+        }).then(function (res) {
+
+        });
+      }
+    }
+
+    function toAssessmentStatusDetails() {
+      if(vm.data!=null&&vm.data.status == null){
+        $state.go('assessmentStatusDetails', {assessmentStatusData: vm.data,isChecked:false})
+      }else{
+        $ionicPopup.alert({
+          title: '该项目已考核',
+          template: response.data
+        }).then(function (res) {
+
+        });
+      }
+    }
+
+    function checkStatusDetails(item) {
+      if (vm.data != null && vm.data.status == null) {
+        item.typeId = vm.data.typeId;
+        item.infraId = vm.data.infraId;
+        $state.go('assessmentStatusDetails', {assessmentStatusData: item, isChecked: true})
+      }
+    }
+
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.assessmentStatus')
+    .config(AssessmentStatusConfig);
+
+  AssessmentStatusConfig.$inject = ['$stateProvider'];
+
+  /** @ngInject */
+  function AssessmentStatusConfig($stateProvider) {
+    $stateProvider
+      .state('assessmentStatus', {
+        // url: 'assessment/assessmentStatus',
+        url: '/assessmentStatus',
+        params: {
+          planDetailsData: null
+        },
+        cache: true,
+        templateUrl: 'templates/assessment/assessmentStatus/assessmentStatus.html'
+      });
+  }
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.assessmentStatus')
+    .service('AssessmentStatusService', AssessmentStatusService);
+
+  AssessmentStatusService.$inject = ['$http', 'SYS_INFO', 'MyHttpService'];
+
+  /** @ngInject */
+  function AssessmentStatusService($http, SYS_INFO, MyHttpService) {
+    var service = {
+      getAssessmentStatusList: getAssessmentStatusList
+    }
+
+    return service;
+
+    function getAssessmentStatusList(planDetails, fun) {
+      var path = '/hwweb/AssignmentAssessment/findProView.action?' + 'planId=' + planDetails.planId +
+        '&infrastructureId=' + planDetails.infraId + '&infoId=' + planDetails.id;
+      MyHttpService.getCommonData(path, fun);
+    }
   }
 })();
 
@@ -2118,33 +2535,18 @@
   function AssessmentStatusDetailsController($rootScope, $scope, $state, $stateParams, AssessmentStatusDetailsService, $ionicLoading, $ionicPopup) {
 
     var vm = this;
-    // vm.data = $stateParams.assessmentStatusData;
-    vm.data = {};
+    vm.data = $stateParams.assessmentStatusData;
     vm.title = '';
+    vm.type = '05';//判断是道路还是公厕还是其他的设施 05：道路 01：公厕 06：车辆
+    vm.isEdit = false;//判断界面是编辑还是查看
+    vm.isChecked = $stateParams.isChecked;
     vm.titleController = {
       backToBeforePage: backToBeforePage,
       enterMsg: enterMsg
     }
     vm.initAmap = initAmap;
 
-    vm.assessmentStatusDetailsList =
-      {
-        questionId: '1',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        cleaningLevel: '特级',
-        roadLevel: '主干道',
-        roadLength: '1600米',
-        roadWidth: '30米',
-        points: '-1.5',
-        remarks: '备注',
-        targetPosition: '129.134',
-        picPath: [
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg',
-          'http://www.chinagvs.com/ShopHome/Tpl/Public/images/left-logo.jpg',
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg'
-        ]
-      };
+    vm.assessmentStatusDetailsList = {};
 
 
     activate();
@@ -2152,7 +2554,15 @@
 
     function activate() {
 
-      // vm.assessmentStatusDetailsList=AssessmentStatusDetailsService.getAssessmentStatusDetailsList(vm.data.id);
+      if (vm.data != null) {
+        console.log(vm.data);
+        AssessmentStatusDetailsService.getAssessmentStatusDetailsList(vm.data, function (resData) {
+          vm.assessmentStatusDetailsList = resData[0];
+          if (vm.assessmentStatusDetailsList) {
+            vm.type = vm.assessmentStatusDetailsList.type;
+          }
+        });
+      }
 
       initAmap();
     }
@@ -2207,7 +2617,7 @@
         // url: 'assessment/assessmentStatusDetails',
         url: '/assessmentStatusDetails',
         params: {
-          assessmentStatusData:null
+          assessmentStatusData:null,isChecked:false
         },
         templateUrl: 'templates/assessment/assessmentStatusDetails/assessmentStatusDetails.html'
       });
@@ -2236,36 +2646,12 @@
     return service;
 
 
-    function getAssessmentStatusDetailsList(questionId) {
-      var path = '' + questionId;
-      return MyHttpService.getCommonData(path);
+    function getAssessmentStatusDetailsList(data, fun) {
+      var path = '/hwweb/AssignmentAssessment/findFacilities.action?' + 'typeId=' + data.typeId + '&infraId=' + data.infraId;
+      MyHttpService.getCommonData(path,fun);
     }
 
     function getPhonePictureData() {
-
-      document.addEventListener("deviceready", function () {
-
-        var options = {
-          quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: true,
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 100,
-          targetHeight: 100,
-          popoverOptions: CameraPopoverOptions,
-          saveToPhotoAlbum: false,
-          correctOrientation: true
-        };
-
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-          var image = document.getElementById('myImage');
-          image.src = "data:image/jpeg;base64," + imageData;
-        }, function (err) {
-          // error
-        });
-
-      }, false);
     }
 
     function getPhonePicturePath() {
@@ -2294,297 +2680,38 @@
   'use strict';
 
   angular
-    .module('app.assessmentStatus')
-    .controller('AssessmentStatusController', AssessmentStatusController);
-
-  AssessmentStatusController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'AssessmentStatusService', '$ionicLoading', '$ionicPopup'];
-
-  /** @ngInject */
-  function AssessmentStatusController($rootScope, $scope, $state, $stateParams, AssessmentStatusService, $ionicLoading, $ionicPopup) {
-    var vm = this;
-    vm.title = '考核情况';
-    vm.data = $stateParams.planDetailsData;
-    vm.titleController = {
-      backToBeforePage: backToBeforePage,
-      enterMsg: enterMsg
-    }
-    vm.toAssessmentStatusDetails = toAssessmentStatusDetails;
-
-    vm.assessmentStatusList = [
-      {
-        id: '1',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '2',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      },
-      {
-        id: '3',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '4',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      },
-      {
-        id: '5',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '6',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      },
-      {
-        id: '7',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '8',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      }
-    ];
-
-
-    activate();
-
-    function activate() {
-
-      // vm.assessmentStatusList = AssessmentStatusService.getAssessmentStatusList(vm.data.id);
-
-    }
-
-    function backToBeforePage() {
-
-    }
-
-    function enterMsg() {
-
-    }
-
-    function toAssessmentStatusDetails(item) {
-      $state.go('assessmentStatusDetails', {assessmentStatusData: item})
-
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.assessmentStatus')
-    .config(AssessmentStatusConfig);
-
-  AssessmentStatusConfig.$inject = ['$stateProvider'];
-
-  /** @ngInject */
-  function AssessmentStatusConfig($stateProvider) {
-    $stateProvider
-      .state('assessmentStatus', {
-        // url: 'assessment/assessmentStatus',
-        url: '/assessmentStatus',
-        params: {
-          planDetailsData: null
-        },
-        cache: true,
-        templateUrl: 'templates/assessment/assessmentStatus/assessmentStatus.html'
-      });
-  }
-}());
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.assessmentStatus')
-    .service('AssessmentStatusService', AssessmentStatusService);
-
-  AssessmentStatusService.$inject = ['$http','SYS_INFO','MyHttpService'];
-  /** @ngInject */
-  function AssessmentStatusService($http,SYS_INFO,MyHttpService) {
-    var service = {
-      getAssessmentStatusList: getAssessmentStatusList
-    }
-
-    return service;
-
-    function getAssessmentStatusList(planDetailId) {
-      var path = '' + planDetailId;
-      return MyHttpService.getCommonData(path);
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
     .module('app.planDetails')
     .controller('PlanDetailsController', PlanDetailsController);
 
-  PlanDetailsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'PlanDetailsService', '$ionicLoading', '$ionicPopup'];
+  PlanDetailsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'PlanDetailsService'];
 
   /** @ngInject */
-  function PlanDetailsController($rootScope, $scope, $state, $stateParams, PlanDetailsService, $ionicLoading, $ionicPopup) {
+  function PlanDetailsController($rootScope, $scope, $state, $stateParams, PlanDetailsService) {
     var vm = this;
-    vm.data = $stateParams.assessmentData;
-    vm.title = vm.data.workName;
-    // vm.fromWhere = $stateParams.fromWhere;
-    vm.fromWhere = 'assessment'
+    vm.data = $stateParams.planDetailsData;
+    vm.title = '';
+    vm.fromWhere = $stateParams.fromWhere;
     vm.fun = {
-      toAddAssessment:toAddAssessment
+      toAddAssessment: toAddAssessment
     }
     vm.toAssessmentStatus = toAssessmentStatus;
 
-    vm.planDetailsList = [
-      {
-        id: '1',
-        name: '山东路',
-        type: '道路',
-        status: '0'
-      },
-      {
-        id: '2',
-        name: '香港路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '3',
-        name: '江西路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '4',
-        name: '宁夏路公厕',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '5',
-        name: '银川路公厕',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },{
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },{
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      }
-    ];
+    vm.planDetailsList = [];
 
 
     activate();
 
 
     function activate() {
-      // PlanDetailsService.getPlanDetailsList(vm.data.id, vm.fromWhere);
-    }
-
-
-    function getDataFromFrontPage() {
-
+      if (vm.fromWhere == null) {
+        vm.fromWhere = 'waitForWork'
+      }
+      if (vm.data) {
+        vm.title = vm.data.planName;
+      }
+      PlanDetailsService.getPlanDetailsList(vm.data.id, vm.fromWhere, function (responseData) {
+        vm.planDetailsList = responseData;
+      });
     }
 
 
@@ -2593,6 +2720,7 @@
     }
 
     function toAssessmentStatus(item) {
+      item.planId = vm.data.id;
       $state.go('assessmentStatus', {planDetailsData: item})
     }
   }
@@ -2613,7 +2741,7 @@
       .state('planDetails', {
         url: '/assessment/planDetails',
         params: {
-          assessmentData: null,
+          planDetailsData: null,
           formWhere:''
         },
         cache: true,
@@ -2629,10 +2757,10 @@
     .module('app.planDetails')
     .service('PlanDetailsService', PlanDetailsService);
 
-  PlanDetailsService.$inject = ['$http', 'SYS_INFO'];
+  PlanDetailsService.$inject = ['$http', 'SYS_INFO','MyHttpService'];
 
   /** @ngInject */
-  function PlanDetailsService($http, SYS_INFO) {
+  function PlanDetailsService($http, SYS_INFO,MyHttpService) {
 
     var service = {
       getPlanDetailsList: getPlanDetailsList
@@ -2641,22 +2769,23 @@
     return service;
 
 
-    function getPlanDetailsList(id, fromWhere) {
+    function getPlanDetailsList(id, fromWhere,fun) {
 
       var path = '';
 
       switch (fromWhere) {
         case 'waitForWork':
           path = '/hwweb/AssignmentAssessment/findPlanView.action?planId=' + id;
+          MyHttpService.getCommonData(path,fun);
           break;
         case 'assessment':
-          path = '';
+          path = '/hwweb/AssignmentAssessment/findPlanView.action?planId=' + id;
+          MyHttpService.getCommonData(path,fun);
           break;
         default:
           break;
       }
 
-      return MyHttpService.getCommonData(path);
 
     }
   }
@@ -2680,10 +2809,12 @@
     return service;
 
 
-    var data = [];
+    function getCommonData(urlPath,fun) {
 
+      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
 
-    function getCommonData(urlPath) {
+      var data = [];
+
       $ionicLoading.show(
         {
           templateUrl: 'templates/common/common.loadingData.html',
@@ -2693,36 +2824,32 @@
         method: 'GET',
         url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
       }).then(function (response) {
-        if (success) {
-          success(response);
+        if (response.data.success == 1) {
+          $ionicLoading.hide();
+          data = response.data.data;
+          console.log('数据获取成功');
+          console.log(data);
+          fun(data);
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: response.data.msg
+          }).then(function (res) {
+            console.log('数据获取失败');
+            console.log(data);
+            fun(data);
+          });
         }
       }, function (response) {
-        if (error) {
-          error(response);
-        }
-      });
-      return data;
-    }
-
-    function success(response) {
-      if (response.data.success == 1) {
-        $ionicLoading.hide();
-        data =  response.data.data;
-      } else {
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: response.data.msg
+          title: '获取数据失败',
+          template: response.data
         }).then(function (res) {
+          console.log('通信异常');
+          console.log(data);
+          fun(data);
         });
-      }
-    }
-
-    function error(response) {
-      $ionicLoading.hide();
-      $ionicPopup.alert({
-        title: '获取数据失败',
-        template: response.data
-      }).then(function (res) {
       });
     }
 
@@ -3057,7 +3184,10 @@
     }
 
 
-    //定位并且获取相应的地理位置信息
+    /**
+     * 网格化巡检定位城市和街道(通过调用手机的GPS进行获取定位)
+     * @param fun
+     */
     function getAddressByGPS(fun) {
       //调用GPS定位
       $ionicLoading.show(
@@ -3074,7 +3204,6 @@
         .then(function (position) {
           positionArray[0] = position.coords.longitude;
           positionArray[1] = position.coords.latitude;
-          // positionArray =  [120.41317, 36.07705];
           $ionicLoading.hide();
           console.log('定位成功，坐标数组：' + positionArray);
           AMap.plugin('AMap.Geocoder', function () {
@@ -3102,7 +3231,7 @@
             var geocoder = new AMap.Geocoder({
               city: "010"//城市，默认：“全国”
             });
-            geocoder.getAddress(positionArray, function (status, result) {
+            geocoder.getAddress(defaultPosition, function (status, result) {
               if (status == 'complete') {
                 var locationObj = {};
                 locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
@@ -3118,9 +3247,70 @@
 
     }
 
+    //通过浏览器和Ip来实现定位获取详细的街道和市区信息
+    function getAddressByBrowserOrIp(fun) {
 
+      var geolocation;
 
+      AMap.plugin('AMap.Geolocation', function () {
+        geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,//是否使用高精度定位，默认:true
+          timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+          buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          buttonPosition: 'RB'
+        });
 
+        geolocation.getCurrentPosition();
+
+        AMap.event.addListener(geolocation, 'complete', function (data) {
+          var position = [];
+          position[0] = data.position.getLng();
+          position[1] = data.position.getLat();
+          AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+              city: "010"//城市，默认：“全国”
+            });
+            geocoder.getAddress(position, function (status, result) {
+              if (status == 'complete') {
+                var locationObj = {};
+                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
+                locationObj.street = result.regeocode.addressComponent.street;
+                fun(locationObj);
+                console.log(result);
+              } else {
+                console.log('获取地理位置信息失败！' + status + result);
+              }
+            })
+          });
+          if (data.accuracy) {
+            console.log('精度：' + data.accuracy + ' 米');
+          }//如为IP精确定位结果则没有精度信息
+          console.log('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+        });//返回定位信息
+
+        AMap.event.addListener(geolocation, 'error', function (data) {
+          var defaultPosition = [120.41317, 36.07705];
+          console.log('定位失败');
+          AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+              city: "010"//城市，默认：“全国”
+            });
+            geocoder.getAddress(defaultPosition, function (status, result) {
+              if (status == 'complete') {
+                var locationObj = {};
+                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
+                locationObj.street = result.regeocode.addressComponent.street;
+                fun(locationObj);
+                console.log(result);
+              } else {
+                console.log('获取地理位置信息失败！' + status + result);
+              }
+            })
+          });
+        });      //返回定位出错信息
+      });
+    }
 
   }
 })();
@@ -3129,7 +3319,7 @@
   'use strict';
 
   angular
-    .module('app.savedDataModule')
+    .module('app.savedData')
     .controller('SavedDataController', SavedDataController);
 
   SavedDataController.$inject = [
@@ -3189,7 +3379,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.savedDataModule')
+  angular.module('app.savedData')
     .config(SavedDataRouteConfig);
 
   SavedDataRouteConfig.$inject = ['$stateProvider'];
@@ -3211,7 +3401,7 @@
   'use strict';
 
   angular
-    .module('app.savedDataModule')
+    .module('app.savedData')
     .service('SavedDataService', SavedDataService)
 
 
@@ -3320,14 +3510,61 @@
     .module('app.problemFeedbackDetails')
     .controller('ProblemFeedbackDetailsController', ProblemFeedbackDetailsController);
 
-  ProblemFeedbackDetailsController.$inject = ['$scope'];
+  ProblemFeedbackDetailsController.$inject = ['$scope', '$stateParams', 'ProblemFeedbackDetailsService'];
+
   /** @ngInject */
-  function ProblemFeedbackDetailsController($scope) {
+  function ProblemFeedbackDetailsController($scope, $stateParams, ProblemFeedbackDetailsService) {
     var vm = this;
+    vm.title = '问题详情'
+    vm.fromWhere = $stateParams.fromWhere;
+    vm.problemDetails = $stateParams.problemItem;
+    vm.feedBack = '';
+    vm.footerContent = '确定'
+    vm.fun = {
+      initCamera: initCamera,
+      uploadProblemFeedbackData:uploadProblemFeedbackData
+    }
+    vm.problemFeedbackData = {};
 
     activate();
 
     function activate() {
+
+      if (vm.problemDetails == null) {
+        vm.problemDetails = {};
+        vm.problemDetails.postion = [120.41317,36.07705];
+        vm.problemDetails.address = '燕儿岛路';
+      }
+
+      ProblemFeedbackDetailsService.getProblemFeedbackDetailsMap(vm.problemDetails);
+    }
+
+
+    function initCamera() {
+
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 100,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        var image = document.getElementById('myImage');
+        image.problemFeedbackDetailsImg = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+
+      });
+    }
+
+    function uploadProblemFeedbackData() {
+      ProblemFeedbackDetailsService.uploadProblemFeedbackData(vm.problemFeedbackData,vm.fromWhere);
     }
   }
 })();
@@ -3346,11 +3583,12 @@
     $stateProvider
       .state('problemFeedbackDetails', {
         url: '/problemFeedbackDetails',
+        params: {problemItem: null, fromWhere: ''},
         // views: {
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
-        templateUrl: 'templates/problemFeedback/problemFeedback.html'
+        templateUrl: 'templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.html'
       });
   }
 }());
@@ -3362,14 +3600,62 @@
     .module('app.problemFeedbackDetails')
     .service('ProblemFeedbackDetailsService', ProblemFeedbackDetailsService);
 
-  ProblemFeedbackDetailsService.$inject = ['$http'];
+  ProblemFeedbackDetailsService.$inject = ['$http', '$ionicLoading', '$ionicPopup'];
+
   /** @ngInject */
-  function ProblemFeedbackDetailsService($http) {
-    var service = {};
+  function ProblemFeedbackDetailsService($http, $ionicLoading, $ionicPopup) {
+
+    var service = {
+      getProblemFeedbackDetailsMap: getProblemFeedbackDetailsMap,
+      uploadProblemFeedbackData: uploadProblemFeedbackData
+    };
 
     return service;
 
-    ////////////////
+
+    function getProblemFeedbackDetailsMap(positionObj) {
+
+      var map = new AMap.Map('problemFeedbackDetailsMap', {
+        resizeEnable: true,
+        zoom: 18,
+        center: positionObj.position
+      });
+
+      var marker = new AMap.Marker({
+        position: positionObj.position,
+        title: positionObj.address,
+        map: map
+      });
+
+      map.plugin(['AMap.ToolBar'], function () {
+        var toolBar = new AMap.ToolBar();
+        map.addControl(toolBar);
+      });
+    }
+
+    function uploadProblemFeedbackData(problemFeedbackData, fromWhere) {
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        });
+
+      switch (fromWhere) {
+        case 'problemFeedbackDetails':
+          break;
+        case 'waitForWork':
+          break;
+        default:
+          break;
+      }
+
+    }
+
+
   }
 })();
 
@@ -3380,46 +3666,140 @@
     .module('app.addAssessment')
     .controller('AddAssessmentMapController', AddAssessmentMapController);
 
-  AddAssessmentMapController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'AddAssessmentService'];
+  AddAssessmentMapController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'CommonMapService', 'AddAssessmentMapService'];
 
   /** @ngInject */
-  function AddAssessmentMapController($rootScope, $scope, $state, $stateParams, AddAssessmentService) {
+  function AddAssessmentMapController($rootScope, $scope, $state, $stateParams, CommonMapService, AddAssessmentMapService) {
 
     var vm = this;
     vm.data = {};
     vm.title = '地图详情';
-    vm.fun = {};
-
-
-    vm.assessmentStatusDetailsList =
+    //台帐数据
+    vm.accountList =
       {
-        questionId: '1',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        cleaningLevel: '特级',
-        roadLevel: '主干道',
-        roadLength: '1600米',
-        roadWidth: '30米',
-        points: '-1.5',
-        remarks: '备注',
-        targetPosition: '129.134',
-        picPath: [
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg',
-          'http://www.chinagvs.com/ShopHome/Tpl/Public/images/left-logo.jpg',
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg'
-        ]
+        type: ['全部','公厕','街道','车辆','收集站','垃圾桶'],
+        reason: ['道路不净', '垃圾桶占路']
       };
+
+    //获取到的所有的匹配的台帐信息
+    vm.accountAddressData = [{
+      name: '百度1',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }, {
+      name: '百度2',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }, {
+      name: '百度3',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }, {
+      address: '百度4',
+      position: [],
+      roadPositionArray: [],
+      info: {level: '', road: '', length: '', width: ''}
+    }];
+
+    vm.map;
+    vm.marker;
+    vm.markerPerson;
+    vm.polyline;
+    vm.centerPositionNum = 0;
+    vm.fun = {
+      refreshMyPosition: refreshMyPosition,
+      refreshRoadOrInstallationPosition: refreshRoadOrInstallationPosition
+    };
+    vm.mapPositionObj = {
+      address: '市南软件园2号楼',
+      position: [120.41317, 36.07705],
+      roadPositionArray: []
+      // roadPositionArray: [
+      //   ["120.352728", "36.086514"], ["120.352788", "36.086477"],
+      //   ["120.352849", "36.08644"], ["120.35291", "36.086403"],
+      //   ["120.35297", "36.086365"], ["120.353031", "36.086328"],
+      //   ["120.353092", "36.086291"], ["120.353152", "36.086254"],
+      //   ["120.353213", "36.086217"], ["120.353283", "36.086178"],
+      //   ["120.353354", "36.086138"], ["120.353425", "36.086099"],
+      //   ["120.353425", "36.086099"]
+      // ]
+    }
 
 
     activate();
 
 
     function activate() {
-        AddAssessmentService.initAddAssessmentMap();
+
+      if ($stateParams.mapPositionObj != null) {
+        vm.mapPositionObj = $stateParams.mapPositionObj;
+        console.log(vm.mapPositionObj);
+      }
+
+      initMap();
+
+
     }
 
+    function initMap() {
 
+      vm.map = CommonMapService.initMap(vm.mapPositionObj.position);
+      vm.markerPerson = new AMap.Marker();
 
+      if (vm.mapPositionObj.roadPositionArray.length <= 0) {
+        //当roadPositionArray.length数量小于等于0的时候，说明道路的坐标没有，
+        // 代表着这是一个具体的设施（比如山东路某个公厕，具体到了地址），不是道路
+        vm.marker = new AMap.Marker({
+          position: vm.mapPositionObj.position,
+          icon: new AMap.Icon({
+            size: new AMap.Size(32, 32),  //图标大小
+            // content: '<img src="/www/assets/global/img/location.png" />',
+            image: "/www/assets/global/img/position.png",
+            imageOffset: new AMap.Pixel(0, 0)
+          })
+        });
+
+        vm.marker.setMap(vm.map);
+        vm.map.setCenter(vm.mapPositionObj.position);
+      } else {
+        vm.polyline = new AMap.Polyline({
+          path: vm.mapPositionObj.roadPositionArray,
+          strokeColor: "#1C8B08",
+          strokeWeight: 5
+        });
+        // 添加到地图中
+        vm.polyline.setMap(vm.map);
+        vm.map.setZoom(17);
+        vm.centerPositionNum = parseInt(vm.mapPositionObj.roadPositionArray.length / 2);
+        vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
+      }
+
+      // CommonMapService.getCoordinateInfo(function (data) {
+      //   vm.markerPerson.setPosition(data);
+      //   vm.markerPerson.setMap(vm.map);
+      // });
+    }
+
+    function refreshMyPosition() {
+      CommonMapService.getCoordinateInfo(function (data) {
+        vm.markerPerson.setPosition(data);
+        vm.map.setZoom(13);
+        vm.markerPerson.setMap(vm.map);
+        vm.map.setCenter(data);
+      });
+    }
+
+    function refreshRoadOrInstallationPosition() {
+      if (vm.mapPositionObj.roadPositionArray.length <= 0) {
+        vm.map.setCenter(vm.mapPositionObj.position);
+      }else{
+        vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
+      }
+
+    }
   }
 })();
 
@@ -3437,6 +3817,7 @@
     $stateProvider
       .state('addAssessmentMap', {
         url: '/addAssessmentMap',
+        params: {mapPositionObj: null},
         templateUrl: 'templates/assessment/addAssessment/addAssessmentMap/addAssessmentMap.html'
       });
   }
@@ -3448,23 +3829,19 @@
 
   angular
     .module('app.addAssessmentMap')
-    .service('AddAssessmentService', AddAssessmentService);
+    .service('AddAssessmentMapService', AddAssessmentMapService);
 
-  AddAssessmentService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera', 'CommonMapService'];
+  AddAssessmentMapService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera', 'CommonMapService'];
 
   /** @ngInject */
-  function AddAssessmentService($http, SYS_INFO, $cordovaCamera, CommonMapService) {
+  function AddAssessmentMapService($http, SYS_INFO, $cordovaCamera, CommonMapService) {
     var service = {
       initAddAssessmentMap: initAddAssessmentMap
     }
 
     return service;
 
-    var center = [120.445467, 36.179479]
-
-    function initAddAssessmentMap() {
-        CommonMapService.initMap(center);
-    }
+    function initAddAssessmentMap() {}
 
 
   }

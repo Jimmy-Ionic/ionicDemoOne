@@ -14,7 +14,7 @@
         // url: 'assessment/assessmentStatusDetails',
         url: '/assessmentStatusDetails',
         params: {
-          assessmentStatusData:null
+          assessmentStatusData:null,isChecked:false
         },
         templateUrl: 'templates/assessment/assessmentStatusDetails/assessmentStatusDetails.html'
       });

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.savedDataModule')
+    .module('app.savedData')
     .controller('SavedDataController', SavedDataController);
 
   SavedDataController.$inject = [

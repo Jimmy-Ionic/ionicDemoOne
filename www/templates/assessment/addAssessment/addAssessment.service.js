@@ -5,14 +5,18 @@
     .module('app.addAssessment')
     .service('AddAssessmentService', AddAssessmentService);
 
-  AddAssessmentService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera'];
+  AddAssessmentService.$inject = ['$cordovaCamera', 'MyHttpService'];
 
   /** @ngInject */
-  function AddAssessmentService($http, SYS_INFO, $cordovaCamera) {
+  function AddAssessmentService($cordovaCamera, MyHttpService) {
+
     var service = {
       addNewAssessment: addNewAssessment,
       getPhonePictureData: getPhonePictureData,
-      getPhonePicturePath: getPhonePicturePath
+      getPhonePicturePath: getPhonePicturePath,
+      queryAccount: queryAccount,
+      queryAccountList: queryAccountList,
+      getPositionArray: getPositionArray
     }
 
 
@@ -68,6 +72,29 @@
 
         $cordovaCamera.cleanup().then();
       }, false);
+    }
+
+    function queryAccount(queryArray, fun) {
+      var path = '';
+      MyHttpService.getCommonData(path, fun);
+    }
+
+    function queryAccountList(fun) {
+      var path = '';
+      MyHttpService.getCommonData(path, fun);
+    }
+
+    function getPositionArray(string) {
+      var roadPositionArray = [];
+      console.log(string);
+      var temArray = string.split(',');
+      for (var i = 0; i < temArray.length - 1; i = i + 2) {
+        var array = new Array();
+        array[0] = temArray[i];
+        array[1] = temArray[i + 1];
+        roadPositionArray.push(array);
+      }
+      return roadPositionArray;
     }
   }
 })();

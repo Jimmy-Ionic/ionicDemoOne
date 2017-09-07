@@ -16,8 +16,9 @@
     return service;
 
 
+    function getCommonData(urlPath,fun) {
 
-    function getCommonData(urlPath) {
+      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
 
       var data = [];
 
@@ -33,14 +34,17 @@
         if (response.data.success == 1) {
           $ionicLoading.hide();
           data = response.data.data;
+          console.log('数据获取成功');
           console.log(data);
-          return data;
+          fun(data);
         } else {
           $ionicLoading.hide();
           $ionicPopup.alert({
             title: response.data.msg
           }).then(function (res) {
-            return data;
+            console.log('数据获取失败');
+            console.log(data);
+            fun(data);
           });
         }
       }, function (response) {
@@ -49,7 +53,9 @@
           title: '获取数据失败',
           template: response.data
         }).then(function (res) {
-          return data;
+          console.log('通信异常');
+          console.log(data);
+          fun(data);
         });
       });
     }

@@ -8,23 +8,24 @@
     <div class="common-center common-margin-top-10">
       <span>设施类型：</span>
       <span>
-        <select class="add-assessment-select">
-            <option>ARC-170</option>
-            <option>A-wing</option>
-            <option>Delta-7</option>
-            <option>Naboo N-1</option>
-            <option>TIE</option>
-            <option selected="">X-wing</option>
-            <option>Y-wing</option>
+        <select class="add-assessment-select" ng-init="vm.uploadData.type = vm.accountList.type[0]"
+                ng-model="vm.uploadData.type">
+            <option ng-repeat="item in vm.accountList.type">{{item}}</option>
           </select>
       </span>
     </div>
 
     <div class="common-center common-margin-top-10">
       <span>设施地址：</span>
-      <span>
-        <input class="add-assessment-select"/>
-      </span>
+      <div style="height: 30px;">
+        <input id="search-form" class="add-assessment-select"/>
+        <button ng-click="vm.fun.queryAccount()">搜索</button>
+        <div id="spinner" ng-show="vm.spinnerShow" class="add-assessment-select">
+          <ul class="proposal-list" ng-repeat="item in vm.accountAddressData">
+            <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item}}</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="row wait-work-menu common-margin-top">
@@ -36,16 +37,16 @@
 
     <div class="row">
       <div class="col  text-center">
-        <input class="add-assessment-input text-center"/>
+        <input class="add-assessment-input text-center" ng-model="vm.uploadData.level"/>
       </div>
       <div class="col  text-center">
-        <input class="add-assessment-input text-center"/>
+        <input class="add-assessment-input text-center" ng-model="vm.uploadData.road"/>
       </div>
       <div class="col  text-center">
-        <input class="add-assessment-input text-center"/>
+        <input class="add-assessment-input text-center" ng-model="vm.uploadData.length"/>
       </div>
       <div class="col  text-center">
-        <input class="add-assessment-input text-center"/>
+        <input class="add-assessment-input text-center" ng-model="vm.uploadData.width"/>
       </div>
     </div>
 
@@ -56,27 +57,14 @@
 
         <div class="common-center common-margin-top-10">
           <span>扣分情况：</span>
-          <select class="add-assessment-select">
-            <option>ARC-170</option>
-            <option>A-wing</option>
-            <option>Delta-7</option>
-            <option>Naboo N-1</option>
-            <option>TIE</option>
-            <option selected="">X-wing</option>
-            <option>Y-wing</option>
-          </select>
+          <input class="add-assessment-select" ng-model="vm.uploadData.points"/>
         </div>
 
         <div class="common-center common-margin-top-10">
           <span>扣分原因：</span>
-          <select class="add-assessment-select ">
-            <option>ARC-170</option>
-            <option>A-wing</option>
-            <option>Delta-7</option>
-            <option>Naboo N-1</option>
-            <option>TIE</option>
-            <option selected="">X-wing</option>
-            <option>Y-wing</option>
+          <select class="add-assessment-select" ng-init="vm.uploadData.reason = vm.accountList.reason[0]"
+                  ng-model="vm.uploadData.reason">
+            <option ng-repeat="item in vm.accountList.reason">{{item}}</option>
           </select>
         </div>
 
@@ -86,9 +74,9 @@
         </div>
 
 
-        <div class="row common-margin-top assessment-img common-center">
-          <img class="col assessment-img text-center"
-               ng-repeat="path in vm.assessmentStatusDetailsList.picPath track by $index" ng-srcset="{{path}}">
+        <div class="row common-margin-top common-center">
+          <img class="col add-assessment-img text-center"
+               ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}"  on-hold="vm.fun.deletePic($index)">
         </div>
 
         <button class="common-margin-top" ng-click="vm.fun.takePicture()">拍照上传</button>
@@ -98,9 +86,9 @@
         </div>
       </div>
     </div>
-
-
   </ion-content>
+
+
   <div ng-include="'templates/common/common.footerConfirm.html'"></div>
 
 </ion-view>

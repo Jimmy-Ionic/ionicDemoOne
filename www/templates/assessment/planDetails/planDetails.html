@@ -34,7 +34,7 @@
           <div class="col-20 text-center">
             <ul class="list">
               <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
-                {{item.status=='0'?'未考核':'已考核'}}
+                {{item.status==null?'未考核':'已考核'}}
               </li>
             </ul>
           </div>
@@ -42,7 +42,9 @@
             <ul class="list">
               <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
                 <span class="wait-work-list-item-btn"
-                      ng-click="vm.toAssessmentStatus(item)">{{item.status=='0'?'上报':'查看'}}</span>
+                      ng-click="vm.toAssessmentStatus(item)">{{item.status== null ?'上报':'查看'}}</span>
+                <!--<button class="button button-small button-positive"-->
+                <!--ng-click="vm.toAssessmentStatus(item)">{{item.status=='0'?'上报':'查看'}}</button>-->
               </li>
             </ul>
           </div>
@@ -50,12 +52,10 @@
       </div>
     </div>
 
-    <button ng-show="vm.fromWhere=='assessment'" class=" common-center" ng-click="vm.fun.toAddAssessment()">录入计划</button>
+    <button ng-show="vm.fromWhere=='assessment'" class=" common-center" ng-click="vm.fun.toAddAssessment()">录入计划
+    </button>
 
   </ion-content>
 
 
-
-
-  <div ng-include="'templates/common/common.footer.html'"></div>
 </ion-view>

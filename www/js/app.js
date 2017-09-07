@@ -15,7 +15,7 @@
     'ngCordova',
     'app.login',
     'app.home',
-    'app.savedDataModule',
+    'app.savedData',
     'app.waitForWork',
     'app.assessment',
     'app.planDetails',

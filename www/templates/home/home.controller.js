@@ -33,6 +33,7 @@
     vm.hasSavedData = true;
     vm.saveDataNum = '20';
     vm.savedData = {};
+    vm.isCommonAccount = $rootScope.isCommonAccount;
     vm.weather = {};
     vm.msgCount = $rootScope.unReadMsgCount;
     vm.homeWorkController = {
@@ -52,10 +53,10 @@
 
 
     function activate() {
-      if (GetWeatherService.getWeather()) {
-        vm.weather = GetWeatherService.getWeather();
-      }
-      console.log(vm.weather);
+
+      GetWeatherService.getWeather(function (resData) {
+        vm.weather = resData;
+      });
 
       vm.savedData = HomeService.getSavedUploadedData();
       if (vm.savedData) {

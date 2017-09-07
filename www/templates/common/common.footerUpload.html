@@ -1,4 +1,10 @@
 <div class="bar bar-footer text-center">
-  <button class="button">录入</button>
-  <button class="button">考核完成</button>
+  <div class="row">
+    <div class="col col-center">
+      <button class="button button-clear button-positive" ng-click="vm.fun.toAssessmentStatusDetails()">录入</button>
+    </div>
+    <div class="col col-center">
+      <button class="button button-clear button-positive" ng-click="vm.fun.upload()">考核完成</button>
+    </div>
+  </div>
 </div>

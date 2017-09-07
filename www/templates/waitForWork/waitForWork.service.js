@@ -12,7 +12,6 @@
   function WaitForWorkService(MyHttpService, $localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice, $state) {
 
 
-    var workList = [];
 
     var service = {
       getWaitForWorkInfo: getWaitForWorkInfo
@@ -20,10 +19,9 @@
 
     return service;
 
-    function getWaitForWorkInfo(userId) {
+    function getWaitForWorkInfo(userId,fun) {
       var path = '/hwweb/AssignmentAssessment/findDataByUserId?userId=' + userId;
-      var data = MyHttpService.getCommonData(path);
-      return data;
+      MyHttpService.getCommonData(path,fun);
     }
   }
 })

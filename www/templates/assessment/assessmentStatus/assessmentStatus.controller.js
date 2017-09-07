@@ -12,83 +12,62 @@
     var vm = this;
     vm.title = '考核情况';
     vm.data = $stateParams.planDetailsData;
-    vm.titleController = {
-      backToBeforePage: backToBeforePage,
-      enterMsg: enterMsg
-    }
-    vm.toAssessmentStatusDetails = toAssessmentStatusDetails;
+    vm.fun = {
+      toAssessmentStatusDetails:toAssessmentStatusDetails,
+      upload:upload,
+      checkStatusDetails:checkStatusDetails
+    };
 
-    vm.assessmentStatusList = [
-      {
-        id: '1',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '2',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      },
-      {
-        id: '3',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '4',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      },
-      {
-        id: '5',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '6',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      },
-      {
-        id: '7',
-        address: '山东路',
-        problem: '废弃物超标',
-        points: '1'
-      },
-      {
-        id: '8',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        points: '2'
-      }
-    ];
+
+    vm.assessmentStatusList = [];
 
 
     activate();
 
     function activate() {
-
-      // vm.assessmentStatusList = AssessmentStatusService.getAssessmentStatusList(vm.data.id);
-
+      console.log(vm.data);
+      if(vm.data){
+        AssessmentStatusService.getAssessmentStatusList(vm.data,function (resData) {
+          vm.assessmentStatusList = resData;
+        });
+      }
     }
 
-    function backToBeforePage() {
+    //上传数据
+    function upload() {
+      if(vm.planDetailsData!=null&&vm.planDetailsData.status == null){
 
+      }else{
+        $ionicPopup.alert({
+          title: '该项目已考核',
+          template: response.data
+        }).then(function (res) {
+
+        });
+      }
     }
 
-    function enterMsg() {
+    function toAssessmentStatusDetails() {
+      if(vm.data!=null&&vm.data.status == null){
+        $state.go('assessmentStatusDetails', {assessmentStatusData: vm.data,isEdit:true})
+      }else{
+        $ionicPopup.alert({
+          title: '该项目已考核',
+          template: response.data
+        }).then(function (res) {
 
+        });
+      }
     }
 
-    function toAssessmentStatusDetails(item) {
-      $state.go('assessmentStatusDetails', {assessmentStatusData: item})
-
+    function checkStatusDetails(item) {
+      if (vm.data != null && vm.data.status == null) {
+        item.typeId = vm.data.typeId;
+        item.infraId = vm.data.infraId;
+        $state.go('assessmentStatusDetails', {assessmentStatusData: item, isEdit: false})
+      }
     }
+
+
   }
 })();

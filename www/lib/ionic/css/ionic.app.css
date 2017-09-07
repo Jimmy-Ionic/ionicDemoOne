@@ -9943,14 +9943,19 @@ a.button {
   z-index: 2;
   display: block;
   margin: -1px;
-  padding: 15px 0px;
-  font-size: 15px; }
+  padding: 10px 0px;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden; }
 
 .wait-work-list-item-btn {
   background-color: #E9E9E9;
   padding-left: 5px;
   padding-right: 5px;
   border: 1px;
+  border-radius: 5px;
   border-color: #BBBBBB;
   color: #444;
   font-size: 15px; }
@@ -9977,7 +9982,7 @@ a.button {
   isplay: -webkit-flex;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   margin: 0 auto; }
@@ -10069,3 +10074,223 @@ a.button {
   min-width: 80px;
   max-width: 100px;
   text-align: left; }
+
+.common-has-header {
+  margin-top: 45px; }
+
+.common-ion-content-top {
+  margin-top: 140px; }
+
+.feedback-map-div {
+  width: 330px;
+  height: 230px; }
+
+.common-display-inline {
+  display: inline; }
+
+.feedback-img {
+  width: 150px;
+  height: 100px; }
+
+.common-margin-left-10 {
+  margin-left: 10px; }
+
+.common-margin-top-5 {
+  margin-top: 5px; }
+
+.common-margin-top-10 {
+  margin-top: 10px; }
+
+.common-margin-top-15 {
+  margin-top: 15px; }
+
+.common-margin-top-20 {
+  margin-top: 20px; }
+
+.common-margin-top-25 {
+  margin-top: 25px; }
+
+.common-margin-top-30 {
+  margin-top: 30px; }
+
+.common-margin-top-35 {
+  margin-top: 35px; }
+
+.common-ion-content-top-200 {
+  margin-top: 180px; }
+
+.padding-bottom-20 {
+  padding-bottom: 20px; }
+
+.padding-bottom-30 {
+  padding-bottom: 30px; }
+
+.padding-bottom-40 {
+  padding-bottom: 40px; }
+
+.padding-bottom-50 {
+  padding-bottom: 50px; }
+
+.margin-bottom-20 {
+  padding-bottom: 20px; }
+
+.margin-bottom-30 {
+  padding-bottom: 30px; }
+
+.margin-bottom-40 {
+  padding-bottom: 40px; }
+
+.margin-bottom-50 {
+  padding-bottom: 50px; }
+
+.add-assessment-img {
+  height: 80px;
+  width: 80px; }
+
+.common-z-index {
+  position: absolute;
+  z-index: 9999; }
+
+.common-scroll {
+  overflow-y: scroll;
+  overflow-x: hidden; }
+
+.common-spinner-item {
+  width: 150px;
+  height: 40px; }
+
+.common-spinner {
+  width: 150px;
+  height: 400px;
+  margin-left: 70px; }
+
+.common-spinner-item {
+  border-color: #ddd;
+  background-color: #fff;
+  color: #444;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: -1px;
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.autocomplete-container {
+  position: relative;
+  width: 283px;
+  height: 32px;
+  margin: 0 auto; }
+
+.autocomplete-input {
+  padding: 9px;
+  border-radius: 3px;
+  font-family: inherit;
+  float: left;
+  font-size: 1em;
+  border: 1px solid rgba(0, 0, 0, 0.19);
+  margin: 0; }
+
+.autocomplete-button {
+  font-family: inherit;
+  border: none;
+  background-color: #990101;
+  color: white;
+  padding: 8px;
+  float: left;
+  cursor: pointer;
+  border-radius: 0px 3px 3px 0px;
+  transition: all 0.2s ease-out 0s;
+  margin: 0.5px 0px 0px -1px; }
+
+.autocomplete-button:HOVER {
+  background-color: #D11E1E; }
+
+.proposal-box {
+  position: absolute;
+  height: auto;
+  border-left: 1px solid rgba(0, 0, 0, 0.11);
+  border-right: 1px solid rgba(0, 0, 0, 0.11);
+  left: 0px; }
+
+.proposal-list {
+  width: 150px;
+  height: 300px;
+  position: relative;
+  background: white;
+  overflow-y: scroll;
+  list-style: none;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.44);
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-start: 0;
+  z-index: 9999; }
+
+.proposal-list li {
+  text-align: left;
+  padding: 5px;
+  font-family: inherit;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  height: 35px;
+  line-height: 25px;
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer; }
+
+li.proposal.selected {
+  background-color: rgba(175, 42, 0, 0.52);
+  color: white; }
+
+body {
+  font-family: "microsoft yahei" !important;
+  background-color: #FDFFE0; }
+
+h2 {
+  display: block;
+  font-size: 1.3em;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: normal;
+  margin: 15px 0px 20px; }
+
+:focus {
+  outline: none; }
+
+h3 {
+  font-weight: normal;
+  text-align: center;
+  font-size: 2em;
+  text-transform: uppercase;
+  color: #5A0404;
+  margin: 30px 0px 20px; }
+
+#container {
+  width: 800px;
+  margin: 0 auto; }
+
+#search-box {
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+  display: inline; }
+
+.wrapper {
+  width: 750px;
+  margin: 0 auto; }
+
+#message {
+  margin-top: 40px;
+  margin-bottom: 50px;
+  font-size: 20px;
+  text-align: center; }
+
+.query-map {
+  height: 350px;
+  width: 320px; }

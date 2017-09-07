@@ -33,6 +33,7 @@
         case false:
           $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
             .then(function (response) {
+              $rootScope.isCommonAccount = false;
               success(response, isRemAccountAndPwd,info);
             }, function (response) {
               error(response)
@@ -41,6 +42,7 @@
         case  true:
           $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
             .then(function (response) {
+              $rootScope.isCommonAccount = true;
               success(response, isRemAccountAndPwd,info);
             }, function (response) {
               error(response)
@@ -52,6 +54,7 @@
     }
 
     function success(res, isRemAccountAndPwd,info) {
+      console.log(res);
       if (res.data.success == '1') {
         $timeout(function () {
           if (isRemAccountAndPwd) {

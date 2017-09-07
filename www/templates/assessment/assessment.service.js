@@ -17,9 +17,9 @@
     return service;
 
 
-    function getPlanList(userId) {
+    function getPlanList(userId,fun) {
       var path = '' + userId;
-      return MyHttpService.getCommonData(path);
+      MyHttpService.getCommonData(path,fun);
     }
   }
 })();

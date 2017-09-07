@@ -16,28 +16,28 @@
         <div class="col col-30 text-center">
           <ul class="list">
             <li class="item wait-work-list-item " ng-repeat="item in vm.assessmentStatusList">
-              {{item.address}}
+              {{item.name}}
             </li>
           </ul>
         </div>
         <div class="col col-30 text-center">
           <ul class="list">
             <li class="item wait-work-list-item" ng-repeat="item in vm.assessmentStatusList">
-              {{item.problem}}
+              {{item.deductItem}}
             </li>
           </ul>
         </div>
         <div class="col col-20 text-center">
           <ul class="list">
             <li class="item wait-work-list-item" ng-repeat="item in vm.assessmentStatusList">
-              {{item.points}}
+              {{item.score}}
             </li>
           </ul>
         </div>
         <div class="col col-20 text-center">
           <ul class="list">
             <li class="item wait-work-list-item" ng-repeat="item in vm.assessmentStatusList">
-              <span class="wait-work-list-item-btn" ng-click="vm.toAssessmentStatusDetails(item)">查看</span>
+              <span class="wait-work-list-item-btn" ng-click="vm.fun.checkStatusDetails(item)">查看</span>
             </li>
           </ul>
         </div>

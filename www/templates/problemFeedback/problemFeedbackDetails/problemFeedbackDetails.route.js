@@ -12,12 +12,12 @@
     $stateProvider
       .state('problemFeedbackDetails', {
         url: '/problemFeedbackDetails',
-        params: {problemItem:null},
+        params: {problemItem: null, fromWhere: ''},
         // views: {
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
-        templateUrl: 'templates/problemFeedback/problemFeedback.html'
+        templateUrl: 'templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.html'
       });
   }
 }());

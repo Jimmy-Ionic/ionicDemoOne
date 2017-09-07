@@ -3,23 +3,19 @@
 
   angular
     .module('app.addAssessmentMap')
-    .service('AddAssessmentService', AddAssessmentService);
+    .service('AddAssessmentMapService', AddAssessmentMapService);
 
-  AddAssessmentService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera', 'CommonMapService'];
+  AddAssessmentMapService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera', 'CommonMapService'];
 
   /** @ngInject */
-  function AddAssessmentService($http, SYS_INFO, $cordovaCamera, CommonMapService) {
+  function AddAssessmentMapService($http, SYS_INFO, $cordovaCamera, CommonMapService) {
     var service = {
       initAddAssessmentMap: initAddAssessmentMap
     }
 
     return service;
 
-    var center = [120.445467, 36.179479]
-
-    function initAddAssessmentMap() {
-        CommonMapService.initMap(center);
-    }
+    function initAddAssessmentMap() {}
 
 
   }

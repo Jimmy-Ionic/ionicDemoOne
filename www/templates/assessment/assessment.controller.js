@@ -18,43 +18,43 @@
 
     vm.planList = [
       {
-        id: '1',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '6月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/1'
       },
       {
-        id: '2',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '7月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '3',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '8月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '4',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '9月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '5',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '10月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/5'
       },
       {
-        id: '6',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '11月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/1'
       },
       {
-        id: '7',
+        id: 'cc07edd7-892a-4bf0-96dc-52301699663c',
         workName: '12月份考核计划',
         startTime: '2017/6/1',
         endTime: '2017/6/1'
@@ -150,11 +150,16 @@
 
 
     function activate() {
-      // vm.planList = AssessmentService.getPlanList($rootScope.userId);
+      for(var i = 0;i<10;i++){
+
+      }
+      // AssessmentService.getPlanList($rootScope.userId, function (data) {
+      //   vm.planList = data;
+      // });
     }
 
     function toPlanDetails(item) {
-      $state.go('planDetails', {assessmentData: item, fromWhere: 'assessment'});
+      $state.go('planDetails', {planDetailsData: item, fromWhere: 'assessment'});
     }
   }
 })();

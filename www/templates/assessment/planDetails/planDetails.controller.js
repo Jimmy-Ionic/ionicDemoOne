@@ -5,152 +5,35 @@
     .module('app.planDetails')
     .controller('PlanDetailsController', PlanDetailsController);
 
-  PlanDetailsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'PlanDetailsService', '$ionicLoading', '$ionicPopup'];
+  PlanDetailsController.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'PlanDetailsService'];
 
   /** @ngInject */
-  function PlanDetailsController($rootScope, $scope, $state, $stateParams, PlanDetailsService, $ionicLoading, $ionicPopup) {
+  function PlanDetailsController($rootScope, $scope, $state, $stateParams, PlanDetailsService) {
     var vm = this;
-    vm.data = $stateParams.assessmentData;
-    vm.title = vm.data.workName;
-    // vm.fromWhere = $stateParams.fromWhere;
-    vm.fromWhere = 'assessment'
+    vm.data = $stateParams.planDetailsData;
+    vm.title = '';
+    vm.fromWhere = $stateParams.fromWhere;
     vm.fun = {
-      toAddAssessment:toAddAssessment
+      toAddAssessment: toAddAssessment
     }
     vm.toAssessmentStatus = toAssessmentStatus;
 
-    vm.planDetailsList = [
-      {
-        id: '1',
-        name: '山东路',
-        type: '道路',
-        status: '0'
-      },
-      {
-        id: '2',
-        name: '香港路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '3',
-        name: '江西路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '4',
-        name: '宁夏路公厕',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '5',
-        name: '银川路公厕',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },{
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },{
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      },
-      {
-        id: '6',
-        name: '山东路',
-        type: '道路',
-        status: '1'
-      }
-    ];
+    vm.planDetailsList = [];
 
 
     activate();
 
 
     function activate() {
-      // PlanDetailsService.getPlanDetailsList(vm.data.id, vm.fromWhere);
-    }
-
-
-    function getDataFromFrontPage() {
-
+      if (vm.fromWhere == null) {
+        vm.fromWhere = 'waitForWork'
+      }
+      if (vm.data) {
+        vm.title = vm.data.planName;
+      }
+      PlanDetailsService.getPlanDetailsList(vm.data.id, vm.fromWhere, function (responseData) {
+        vm.planDetailsList = responseData;
+      });
     }
 
 
@@ -159,6 +42,7 @@
     }
 
     function toAssessmentStatus(item) {
+      item.planId = vm.data.id;
       $state.go('assessmentStatus', {planDetailsData: item})
     }
   }

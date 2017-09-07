@@ -5,9 +5,9 @@
     .module('app.history')
     .service('HistoryService', HistoryService);
 
-  HistoryService.$inject = ['$http','MyHttpService'];
+  HistoryService.$inject = ['MyHttpService'];
   /** @ngInject */
-  function HistoryService($http,MyHttpService) {
+  function HistoryService(MyHttpService) {
     var service = {
       getHistoryData:getHistoryData,
       getHistoryDataByCondition:getHistoryDataByCondition
@@ -20,9 +20,10 @@
       return MyHttpService.getCommonData(url);
     }
 
-    function getHistoryDataByCondition(year,month,other) {
+    function getHistoryDataByCondition(year,month,keyword) {
       var url = '';
       return MyHttpService.getCommonData(url);
     }
+    
   }
 })();

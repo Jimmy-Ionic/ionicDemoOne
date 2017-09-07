@@ -2,63 +2,69 @@
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class="has-header has-footer padding-top scroll-bar-fade-out">
 
-    <div class="padding">
+  <div class="common-has-header  padding-top ">
+
+    <div class="padding common-center">
       <label class="item item-input">
-        <i class="icon ion-search"></i>
-        <input type="text" placeholder="请输入关键字搜索">
+        <!--<i class="icon ion-search"></i>-->
+        <input type="text" placeholder="请输入关键字搜索" ng-model="vm.keyword"/>
       </label>
+      <button class="button button-positive icon ion-search common-margin-left-20"
+              ng-click="vm.fun.getHistoryDataByCondition()"></button>
     </div>
 
-    <div class="padding row">
-      <div class="col">
-        <select>
-          <option selected="">2017年</option>
-          <option selected="">2018年</option>
-          <option selected="">2019年</option>
+    <div class="row">
+      <div class="col col-20 text-center">
+        <select ng-init="vm.selectedYeah = vm.thisYeah" ng-model="vm.selectedYeah">
+          <option ng-repeat="x in vm.yeahArray">{{x}}</option>
         </select>
       </div>
-      <div class="col">
-        <select>
-          <option>一月</option>
-          <option>二月</option>
+      <div class="col col-20 text-center">
+        <select ng-init="vm.selectedMonth = vm.thisMonth" ng-model="vm.selectedMonth">
+          <option ng-repeat="x in vm.monthArray track by $index">{{x}}</option>
         </select>
       </div>
-      <div class="col">
+
+      <div class="col col-40 text-center">
         考核名称
       </div>
-      <div class="col">
-        查看详情
+
+      <div class="col col-20 text-center">
+        详情
       </div>
     </div>
 
-    <div class="padding">
+  </div>
+
+  <ion-content class="padding scroll-bar-fade-out padding-top common-ion-content-top-200">
+
+    <div>
       <div class="row">
-        <div class="col">
+        <div class="col col-20 text-center">
           <ul class="list">
-            <li class="wait-work-list-item " ng-repeat="item in vm.historyList">
+            <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
               {{item.year}}
             </li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col col-20 text-center">
           <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+            <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
               {{item.month}}
             </li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col col-40 text-center">
           <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+            <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
               {{item.workName}}
             </li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col col-20 text-center">
           <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
+            <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
               <span class="wait-work-list-item-btn" ng-click="vm.toPlanDetails(item)">查看</span>
             </li>
           </ul>
@@ -67,5 +73,4 @@
     </div>
 
   </ion-content>
-  <div ng-include="'templates/common/common.footer.html'"></div>
 </ion-view>

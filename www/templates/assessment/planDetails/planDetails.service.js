@@ -5,10 +5,10 @@
     .module('app.planDetails')
     .service('PlanDetailsService', PlanDetailsService);
 
-  PlanDetailsService.$inject = ['$http', 'SYS_INFO'];
+  PlanDetailsService.$inject = ['$http', 'SYS_INFO','MyHttpService'];
 
   /** @ngInject */
-  function PlanDetailsService($http, SYS_INFO) {
+  function PlanDetailsService($http, SYS_INFO,MyHttpService) {
 
     var service = {
       getPlanDetailsList: getPlanDetailsList
@@ -17,22 +17,23 @@
     return service;
 
 
-    function getPlanDetailsList(id, fromWhere) {
+    function getPlanDetailsList(id, fromWhere,fun) {
 
       var path = '';
 
       switch (fromWhere) {
         case 'waitForWork':
           path = '/hwweb/AssignmentAssessment/findPlanView.action?planId=' + id;
+          MyHttpService.getCommonData(path,fun);
           break;
         case 'assessment':
-          path = '';
+          path = '/hwweb/AssignmentAssessment/findPlanView.action?planId=' + id;
+          MyHttpService.getCommonData(path,fun);
           break;
         default:
           break;
       }
 
-      return MyHttpService.getCommonData(path);
 
     }
   }

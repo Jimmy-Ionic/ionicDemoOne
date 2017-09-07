@@ -9,8 +9,14 @@
 
       </div>
 
+      <div class="common-margin-top common-center">{{vm.mapPositionObj.address}}
+      </div>
+
       <div class="common-margin-top common-center">
-        <button>刷新当前位置</button>
+        <button class="button button-positive button-small" ng-click="vm.fun.refreshMyPosition()">刷新当前位置</button>
+        <button class="button button-positive button-small common-margin-left-10"
+                ng-click="vm.fun.refreshRoadOrInstallationPosition()">查看设施位置
+        </button>
       </div>
     </div>
 

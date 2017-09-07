@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.savedDataModule')
+    .module('app.savedData')
     .service('SavedDataService', SavedDataService)
 
 

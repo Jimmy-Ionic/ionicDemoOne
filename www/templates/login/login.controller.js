@@ -8,14 +8,12 @@
   LoginController.$inject = [
     '$scope',
     '$state',
-    'LoginService',
-    '$cordovaCamera'
+    'LoginService'
   ];
 
   function LoginController($scope,
                            $state,
-                           LoginService,
-                           $cordovaCamera) {
+                           LoginService) {
 
     $scope.doLogin = doLogin;
     $scope.setNetAddress = setNetAddress;
@@ -40,8 +38,7 @@
 
 
     function doLogin() {
-      // LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd,$scope.info)
-      $state.go('home');
+      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd,$scope.info);
     }
 
   }

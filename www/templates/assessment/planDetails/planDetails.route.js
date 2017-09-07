@@ -13,7 +13,7 @@
       .state('planDetails', {
         url: '/assessment/planDetails',
         params: {
-          assessmentData: null,
+          planDetailsData: null,
           formWhere:''
         },
         cache: true,

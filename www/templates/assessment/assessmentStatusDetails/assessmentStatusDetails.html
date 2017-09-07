@@ -1,107 +1,75 @@
-<ion-view class="padding " ng-controller="AssessmentStatusDetailsController as vm">
+<ion-view class="padding " ng-controller="AddAssessmentController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border">
+  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border" scroll="false">
 
-    <div class="row wait-work-menu padding-top">
-      <div class="col col-30 text-center">保洁等级</div>
-      <div class="col col-30 text-center">主次干道</div>
-      <div class="col col-20 text-center">长度</div>
-      <div class="col col-20 text-center">宽度</div>
+    <div ng-switch="vm.type">
+      <div class="row wait-work-menu common-margin-top" ng-switch-when="05">
+        <div class="col  text-center">保洁等级</div>
+        <div class="col  text-center">主次干道</div>
+        <div class="col  text-center">长度</div>
+        <div class="col  text-center">宽度</div>
+      </div>
+
     </div>
 
-    <div class="padding-top">
-      <div class="row">
-        <div class="col col-30 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item">
-              {{vm.assessmentStatusDetailsList.cleaningLevel}}
-            </li>
-          </ul>
+    <div ng-switch="vm.type">
+      <div class="row" ng-switch-when="05">
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.uploadData.level"/>
         </div>
-        <div class="col col-30 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item">
-              {{vm.assessmentStatusDetailsList.roadLevel}}
-            </li>
-          </ul>
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.uploadData.road"/>
         </div>
-        <div class="col col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item">
-              {{vm.assessmentStatusDetailsList.roadLength}}
-            </li>
-          </ul>
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.uploadData.length"/>
         </div>
-        <div class="col col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item">
-              {{vm.assessmentStatusDetailsList.roadWidth}}
-            </li>
-          </ul>
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.uploadData.width"/>
         </div>
       </div>
     </div>
 
-    <hr/>
 
     <div class="row">
-      <div class="col  text-center">
-        <div id="map" class="assessment-map-div horizontal-center"></div>
-        <div class="common-margin-top">目标位置</div>
-
-        <div class="common-margin-top">
-          <button>显示当前位置</button>
-        </div>
-
-      </div>
       <div class="col text-center">
-        <div class="item item-input item-select">
-          <div class="input-label">扣分情况
-          </div>
-          <select>
-            <option>ARC-170</option>
-            <option>A-wing</option>
-            <option>Delta-7</option>
-            <option>Naboo N-1</option>
-            <option>TIE</option>
-            <option selected="">X-wing</option>
-            <option>Y-wing</option>
+
+        <div class="common-center common-margin-top-10">
+          <span>扣分情况：</span>
+          <input class="add-assessment-select" ng-model="vm.uploadData.points"/>
+        </div>
+
+        <div class="common-center common-margin-top-10">
+          <span>扣分原因：</span>
+          <select class="add-assessment-select" ng-init="vm.uploadData.reason = vm.accountList.reason[0]"
+                  ng-model="vm.uploadData.reason">
+            <option ng-repeat="item in vm.accountList.reason">{{item}}</option>
           </select>
         </div>
 
-        <div class="item item-input item-select">
-          <div class="input-label">扣分原因
-          </div>
-          <select>
-            <option>ARC-170</option>
-            <option>A-wing</option>
-            <option>Delta-7</option>
-            <option>Naboo N-1</option>
-            <option>TIE</option>
-            <option selected="">X-wing</option>
-            <option>Y-wing</option>
-          </select>
+        <div class="common-center common-margin-top-10">
+          <span>备注：</span>
+          <textarea class="common-border add-assessment-textArea"></textarea>
         </div>
 
-        <div class="item item-input">
-          <div class="input-label">
-            备注
-          </div>
-          <textarea></textarea>
+
+        <div class="row common-margin-top common-center">
+          <img class="col add-assessment-img text-center"
+               ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}" on-hold="vm.fun.deletePic($index)">
         </div>
 
-        <div class=" row common-margin-top assessment-img">
-          <img class="col assessment-img text-center" ng-repeat="path in vm.assessmentStatusDetailsList.picPath track by $index" ng-srcset="{{path}}" >
-        </div>
+        <button class="common-margin-top" ng-click="vm.fun.takePicture()">拍照上传</button>
 
-        <button class="common-margin-top">拍照上传</button>
+        <div>
+          <button class="common-margin-top" ng-click="vm.fun.toAddAssessmentMap()">查看地图</button>
+        </div>
       </div>
     </div>
-
-
   </ion-content>
+
+
   <div ng-include="'templates/common/common.footerConfirm.html'"></div>
 
 </ion-view>
+

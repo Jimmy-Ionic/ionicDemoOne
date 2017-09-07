@@ -12,43 +12,20 @@
     var service = {
       getAssessmentStatusDetailsList: getAssessmentStatusDetailsList,
       getPhonePictureData: getPhonePictureData,
-      getPhonePicturePath: getPhonePicturePath
+      getPhonePicturePath: getPhonePicturePath,
+      getAccounts:getAccounts
     }
 
 
     return service;
 
 
-    function getAssessmentStatusDetailsList(questionId) {
-      var path = '' + questionId;
-      return MyHttpService.getCommonData(path);
+    function getAssessmentStatusDetailsList(data, fun) {
+      var path = '/hwweb/AssignmentAssessment/findFacilities.action?' + 'typeId=' + data.typeId + '&infraId=' + data.infraId;
+      MyHttpService.getCommonData(path,fun);
     }
 
     function getPhonePictureData() {
-
-      document.addEventListener("deviceready", function () {
-
-        var options = {
-          quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: true,
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 100,
-          targetHeight: 100,
-          popoverOptions: CameraPopoverOptions,
-          saveToPhotoAlbum: false,
-          correctOrientation: true
-        };
-
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-          var image = document.getElementById('myImage');
-          image.src = "data:image/jpeg;base64," + imageData;
-        }, function (err) {
-          // error
-        });
-
-      }, false);
     }
 
     function getPhonePicturePath() {
@@ -69,6 +46,11 @@
 
         $cordovaCamera.cleanup().then();
       }, false);
+    }
+
+    function getAccounts(fun){
+      var url = '';
+      MyHttpService.getCommonData(url,fun);
     }
   }
 })();
