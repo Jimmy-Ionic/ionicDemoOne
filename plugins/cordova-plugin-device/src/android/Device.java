@@ -88,8 +88,11 @@ public class Device extends CordovaPlugin {
     //--------------------------------------------------------------------------
     // LOCAL METHODS
     //--------------------------------------------------------------------------
-    //imei
+    // 获取本地Imei号码
     private String imei() {
+//      String  Imei = ((TelephonyManager) cordova.getActivity().getSystemService(cordova.getActivity().TELEPHONY_SERVICE))
+//              .getDeviceId();
+//      return Imei;
 
            TelephonyManager systemService = (TelephonyManager)cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
            String deviceId = systemService.getDeviceId();

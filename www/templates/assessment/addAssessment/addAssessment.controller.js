@@ -16,8 +16,6 @@
     vm.spinnerShow = false;
     vm.picBase64DataArray = [];
     vm.uploadData = {
-      type: '',
-      address: '',
       level: '',
       road: '',
       length: '',
@@ -27,20 +25,22 @@
       remark: '',
       img: []
     };
-    vm.line = '120.352728,36.086514,120.352788,36.086477,' +
-      '120.352849,36.08644,120.35291,36.086403,120.35297,36.086365,' +
-      '120.353031,36.086328,120.353092,36.086291,120.353152,36.086254,120.353213,' +
-      '36.086217,120.353283,36.086178,120.353354,36.086138,120.353425,36.086099,120.353425,' +
-      '36.086099';
 
-    vm.assessmentStatusDetailsList = {};
+    //查询条件
+    vm.queryCriteria = {
+      type: '',
+      address: ''
+    };
+
+    vm.addAssessmentDetails = {};
 
     //台帐数据
-    vm.accountList =
-      {
-        type: ['道路', '公厕'],
-        reason: ['道路不净', '垃圾桶占路']
-      };
+    vm.accountList = [
+      {name: '公厕', type: '01'},
+      {name: '转运站', type: '02'},
+      {name: '道路', type: '05'},
+      {name: '车辆', type: '06'}
+    ];
 
     //获取到的所有的匹配的台帐信息
     vm.accountAddressData = [{
@@ -77,7 +77,8 @@
       takePicture: takePicture,
       spinnerHide: spinnerHide,
       queryAccount: queryAccount,
-      deletePic: deletePic
+      deletePic: deletePic,
+      queryAccountList:queryAccountList
     };
 
 
@@ -85,13 +86,11 @@
 
 
     function activate() {
-      // queryAccountList();
-      vm.mapPositionObj.roadPositionArray = AddAssessmentService.getPositionArray(vm.line);
-      console.log(vm.mapPositionObj.roadPositionArray);
+
     }
 
     function toAddAssessmentMap() {
-      $state.go('addAssessmentMap',{mapPositionObj:vm.mapPositionObj});
+      $state.go('addAssessmentMap', {mapPositionObj: vm.mapPositionObj});
     }
 
     //启动摄像头拍照
@@ -120,21 +119,19 @@
 
     //根据模糊查询，查询到相关的设施匹配地址
     function queryAccount() {
-      var queryObj = {
-        type: vm.uploadData.type,
-        address: vm.uploadData.address
-      }
-      AddAssessmentService.queryAccount(queryObj, function (resData) {
+      AddAssessmentService.queryAccount(vm.queryCriteria, function (resData) {
+        vm.assessmentStatusDetails = resData[0];
         vm.accountAddressData = resData.accountAddressData;
         vm.mapPositionArray = resData.mapPositionArray;
         vm.spinnerShow = true;
       })
     }
 
-    //获取设施类型，扣分情况，扣分原因等使用<select>Dom的详细数据
+    //根据设施地址模糊查询，获取相关的数据
     function queryAccountList() {
-      AddAssessmentService.queryAccountList(function (resData) {
-        vm.accountList = resData[0];
+      AddAssessmentService.queryAccountList(vm.queryCriteria, function (resData) {
+        vm.addAssessmentDetails = resData[0];
+        vm.spinnerShow = true;
       })
     }
 

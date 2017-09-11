@@ -32,6 +32,12 @@
           vm.assessmentStatusList = resData;
         });
       }
+
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
+          vm.assessmentStatusList = resData;
+        });
+      });
     }
 
     //考核完成
@@ -41,8 +47,7 @@
           AssessmentStatusService.checkOverAndUpload(vm.data);
         } else {
           $ionicPopup.alert({
-            title: '该考核任务已经完成！',
-            template: response.data
+            title: '该考核任务已经完成！'
           }).then(function (res) {
 
           });
@@ -68,9 +73,9 @@
 
     //查看考核情况详情
     function checkStatusDetails(item) {
-          item.typeId = vm.data.typeId;
-          item.infraId = vm.data.infraId;
-          $state.go('assessmentStatusDetails', {assessmentStatusData: item, isEdit: false})
+      item.typeId = vm.data.typeId;
+      item.infraId = vm.data.infraId;
+      $state.go('assessmentStatusDetails', {assessmentStatusData: item, isEdit: false})
     }
 
   }

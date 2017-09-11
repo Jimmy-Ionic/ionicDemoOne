@@ -13,7 +13,7 @@
       </div>
 
       <div class="row wait-work-menu common-margin-top" ng-switch-when="01">
-        <div class="col text-center">公测类型：</div>
+        <div class="col text-center">公厕类型：</div>
       </div>
 
       <div class="row wait-work-menu common-margin-top" ng-switch-when="06">
@@ -54,13 +54,12 @@
 
         <div class="common-center common-margin-top-10">
           <span>扣分情况：</span>
-          <input class="add-assessment-select" ng-model="vm.uploadData.points" ng-disabled="!vm.isEdit"/>
+          <input class="add-assessment-select"  ng-model="vm.uploadData.points" ng-disabled="!vm.isEdit"/>
         </div>
 
         <div class="common-center common-margin-top-10">
           <span>扣分原因：</span>
-          <select class="add-assessment-select" ng-init="vm.uploadData.reason = vm.reasonAccount[0].name"
-                  ng-model="vm.uploadData.reason" ng-disabled="!vm.isEdit">
+          <select class="add-assessment-select" ng-model="vm.uploadData.reason" ng-disabled="!vm.isEdit">
             <option ng-repeat="item in vm.reasonAccount">{{item.name}}</option>
           </select>
         </div>
@@ -72,7 +71,7 @@
         </div>
 
 
-        <div class="common-margin-top common-center">
+        <div class="common-margin-top common-center common-height-80">
           <img class="add-assessment-img"
                ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.serverUrl+item}}"
                on-hold="vm.fun.deletePic($index)">

@@ -26,6 +26,7 @@
       reason: '',
       remarks: ''
     };
+
     vm.fun = {
       uploadAssessmentStatusDetailsData: uploadAssessmentStatusDetailsData,
       toCommonMap: toCommonMap,
@@ -58,7 +59,6 @@
             vm.assessmentStatusDetails = resData[0];
             if (vm.assessmentStatusDetails) {
               vm.type = vm.assessmentStatusDetails.type;
-              vm.reasonAccount[0] = vm.assessmentStatusDetails.dItem;
               vm.uploadData.points = vm.assessmentStatusDetails.deducted;
               vm.uploadData.reason = vm.assessmentStatusDetails.dItem;
               vm.uploadData.remarks = vm.assessmentStatusDetails.remarks;
@@ -189,12 +189,13 @@
 
 
     function toCommonMap() {
-      $state.go('addAssessmentMap', {mapPositionObj: vm.assessmentStatusDetailsList, from: 'assessmentStatusDetails'});
+      $state.go('addAssessmentMap', {mapPositionObj: vm.assessmentStatusDetails, from: 'assessmentStatusDetails'});
     }
 
     function getAccounts() {
       AssessmentStatusDetailsService.getAccounts(vm.data, function (resData) {
         vm.reasonAccount = resData;
+        vm.uploadData.reason = vm.reasonAccount[0].name;
         console.log('扣分原因数据：');
         console.log(vm.reasonAccount);
       });

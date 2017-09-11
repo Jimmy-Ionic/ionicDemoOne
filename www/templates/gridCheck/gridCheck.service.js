@@ -26,7 +26,7 @@
 
     //上传网格化巡检的数据
     function uploadGridCheckData(jsonStr,fun) {
-      var url = '';
+      var url = '/hwweb/GridInspection/saveRegionPro.action';
       MyHttpService.uploadCommonData(url,jsonStr,fun);
       // var options = new FileUploadOptions();
       // var params = {

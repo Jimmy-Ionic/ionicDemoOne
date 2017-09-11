@@ -44,7 +44,7 @@ function Device() {
   this.manufacturer = null;
   this.isVirtual = null;
   this.serial = null;
-
+  this.imei = null;//添加获取imei功能
   var me = this;
 
   channel.onCordovaReady.subscribe(function () {

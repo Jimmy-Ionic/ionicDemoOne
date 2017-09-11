@@ -15,8 +15,7 @@
       getPhonePictureData: getPhonePictureData,
       getPhonePicturePath: getPhonePicturePath,
       queryAccount: queryAccount,
-      queryAccountList: queryAccountList,
-      getPositionArray: getPositionArray
+      queryAccountList: queryAccountList
     }
 
 
@@ -79,22 +78,10 @@
       MyHttpService.getCommonData(path, fun);
     }
 
-    function queryAccountList(fun) {
-      var path = '';
+    function queryAccountList(queryCriteria, fun) {
+      var path = '/hwweb/Comprehensive/searchFacilities.action?' + 'name=' + queryCriteria.address + '&typeId=' + queryCriteria.type;
       MyHttpService.getCommonData(path, fun);
     }
 
-    function getPositionArray(string) {
-      var roadPositionArray = [];
-      console.log(string);
-      var temArray = string.split(',');
-      for (var i = 0; i < temArray.length - 1; i = i + 2) {
-        var array = new Array();
-        array[0] = temArray[i];
-        array[1] = temArray[i + 1];
-        roadPositionArray.push(array);
-      }
-      return roadPositionArray;
-    }
   }
 })();

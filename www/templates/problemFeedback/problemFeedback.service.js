@@ -6,17 +6,18 @@
     .service('ProblemFeedbackService', ProblemFeedbackService);
 
   ProblemFeedbackService.$inject = ['MyHttpService'];
+
   /** @ngInject */
   function ProblemFeedbackService(MyHttpService) {
     var service = {
-      getProblemList:getProblemList
+      getProblemList: getProblemList
     };
 
     return service;
 
-    function getProblemList(userId,fun) {
-      var path = '' + userId;
-      return MyHttpService.getCommonData(path,fun);
+    function getProblemList(userId, fun) {
+      var path = '/hwweb/GridInspection/CheckProblem.action?' + 'userId=' + userId;
+      MyHttpService.getCommonData(path, fun);
     }
 
   }

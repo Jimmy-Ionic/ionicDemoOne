@@ -9,13 +9,15 @@
     '$scope',
     '$state',
     'LoginService',
-    '$cordovaDevice'
+    '$cordovaDevice',
+    '$ionicPopup'
   ];
 
   function LoginController($scope,
                            $state,
                            LoginService,
-                           $cordovaDevice) {
+                           $cordovaDevice,
+                           $ionicPopup) {
 
     $scope.doLogin = doLogin;
     $scope.setNetAddress = setNetAddress;
@@ -23,7 +25,6 @@
     $scope.isCommonAccount = false;
     $scope.userInfo = LoginService.getUserInfo();
     $scope.imei = '123456';
-    $scope.imei2 = '';
 
     $scope.info = {
       userName: $scope.userInfo.userName,
@@ -36,12 +37,6 @@
 
     function activate() {
 
-      // $scope.imei = device.imei;
-      // var uuid = device.uuid;
-      // $ionicPopup.alert({
-      //   title: 'imei:' + $scope.imei + 'uuid' + uuid
-      // })
-      // ;
     }
 
 
@@ -49,6 +44,7 @@
 
 
     function setNetAddress() {
+      // $scope.imei = device.imei;
       $state.go('setNet', {imei: $scope.imei});
     }
 
@@ -56,6 +52,7 @@
     function doLogin() {
       LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
     }
+
 
   }
 })();

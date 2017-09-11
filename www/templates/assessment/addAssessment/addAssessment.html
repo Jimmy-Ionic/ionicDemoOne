@@ -8,9 +8,9 @@
     <div class="common-center common-margin-top-10">
       <span>设施类型：</span>
       <span>
-        <select class="add-assessment-select" ng-init="vm.uploadData.type = vm.accountList.type[0]"
-                ng-model="vm.uploadData.type">
-            <option ng-repeat="item in vm.accountList.type">{{item}}</option>
+        <select class="add-assessment-select" ng-init="vm.queryCriteria.type = vm.accountList[0].type"
+                ng-model="vm.queryCriteria.type">
+            <option ng-repeat="item in vm.accountList" value="{{item.type}}">{{item.name}}</option>
           </select>
       </span>
     </div>
@@ -19,7 +19,7 @@
       <span>设施地址：</span>
       <div style="height: 30px;">
         <input id="search-form" class="add-assessment-select"/>
-        <button ng-click="vm.fun.queryAccount()">搜索</button>
+        <button ng-click="vm.fun.queryAccountList()">搜索</button>
         <div id="spinner" ng-show="vm.spinnerShow" class="add-assessment-select">
           <ul class="proposal-list" ng-repeat="item in vm.accountAddressData">
             <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item}}</li>
@@ -28,25 +28,47 @@
       </div>
     </div>
 
-    <div class="row wait-work-menu common-margin-top">
-      <div class="col  text-center">保洁等级</div>
-      <div class="col  text-center">主次干道</div>
-      <div class="col  text-center">长度</div>
-      <div class="col  text-center">宽度</div>
+    <div ng-switch="vm.queryCriteria.type">
+      <div class="row wait-work-menu common-margin-top" ng-switch-when="05">
+        <div class="col  text-center">保洁等级</div>
+        <div class="col  text-center">主次干道</div>
+        <div class="col  text-center">长度</div>
+        <div class="col  text-center">宽度</div>
+      </div>
+
+      <div class="row wait-work-menu common-margin-top" ng-switch-when="01">
+        <div class="col text-center">公厕类型：</div>
+      </div>
+
+      <div class="row wait-work-menu common-margin-top" ng-switch-when="06">
+        <div class="col text-center">车辆类型：</div>
+      </div>
     </div>
 
-    <div class="row">
-      <div class="col  text-center">
-        <input class="add-assessment-input text-center" ng-model="vm.uploadData.level"/>
+    <div ng-switch="vm.queryCriteria.type">
+      <div class="row" ng-switch-when="05">
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.cleanLevel"
+                 disabled/>
+        </div>
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.primaryOrSecondary"
+                 disabled/>
+        </div>
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.length" disabled/>
+        </div>
+        <div class="col  text-center">
+          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.width" disabled/>
+        </div>
       </div>
-      <div class="col  text-center">
-        <input class="add-assessment-input text-center" ng-model="vm.uploadData.road"/>
+
+      <div class="row" ng-switch-when="01">
+        <div class="col text-center">{{vm.addAssessmentDetails.condition}}</div>
       </div>
-      <div class="col  text-center">
-        <input class="add-assessment-input text-center" ng-model="vm.uploadData.length"/>
-      </div>
-      <div class="col  text-center">
-        <input class="add-assessment-input text-center" ng-model="vm.uploadData.width"/>
+
+      <div class="row" ng-switch-when="06">
+        <div class="text-center">{{vm.addAssessmentDetails.condition}}</div>
       </div>
     </div>
 
@@ -76,7 +98,7 @@
 
         <div class="row common-margin-top common-center">
           <img class="col add-assessment-img text-center"
-               ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}"  on-hold="vm.fun.deletePic($index)">
+               ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}" on-hold="vm.fun.deletePic($index)">
         </div>
 
         <button class="common-margin-top" ng-click="vm.fun.takePicture()">拍照上传</button>

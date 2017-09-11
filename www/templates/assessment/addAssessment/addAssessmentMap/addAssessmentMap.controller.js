@@ -25,17 +25,19 @@
       refreshRoadOrInstallationPosition: refreshRoadOrInstallationPosition
     };
     vm.mapPositionObj = {
-      address: '市南软件园2号楼',
-      position: [120.41317, 36.07705],
-      roadPositionArray: [
-        ["120.352728", "36.086514"], ["120.352788", "36.086477"],
-        ["120.352849", "36.08644"], ["120.35291", "36.086403"],
-        ["120.35297", "36.086365"], ["120.353031", "36.086328"],
-        ["120.353092", "36.086291"], ["120.353152", "36.086254"],
-        ["120.353213", "36.086217"], ["120.353283", "36.086178"],
-        ["120.353354", "36.086138"], ["120.353425", "36.086099"],
-        ["120.353425", "36.086099"]
-      ]
+      // address: '市南软件园2号楼',
+      // position: [120.41317, 36.07705],
+      // roadPositionArray: [
+      //   ["120.352728", "36.086514"], ["120.352788", "36.086477"],
+      //   ["120.352849", "36.08644"], ["120.35291", "36.086403"],
+      //   ["120.35297", "36.086365"], ["120.353031", "36.086328"],
+      //   ["120.353092", "36.086291"], ["120.353152", "36.086254"],
+      //   ["120.353213", "36.086217"], ["120.353283", "36.086178"],
+      //   ["120.353354", "36.086138"], ["120.353425", "36.086099"],
+      //   ["120.353425", "36.086099"]
+      // ]
+      address: '',
+      position: []
     }
 
 
@@ -44,53 +46,68 @@
 
     function activate() {
 
-      if(vm.from){
+      if ($stateParams.from) {
         vm.from = $stateParams.from;
-      }else{
+      } else {
         vm.from = 'addAssessment';
       }
 
-      if ($stateParams.mapPositionObj != null) {
-        vm.mapPositionObj = $stateParams.mapPositionObj;
-        console.log(vm.mapPositionObj);
+      switch (vm.from) {
+        case 'addAssessment':
+          break;
+        case 'assessmentStatusDetails':
+          if ($stateParams.mapPositionObj) {
+            console.log($stateParams.mapPositionObj);
+            vm.mapPositionObj.address = $stateParams.mapPositionObj.name;
+            vm.mapPositionObj.position = AddAssessmentMapService.getPositionArray($stateParams.mapPositionObj.point);
+          }
+          console.log(vm.mapPositionObj);
+          break;
+        default:
+          break;
       }
 
       initMap();
-
 
     }
 
     function initMap() {
 
-      vm.map = CommonMapService.initMap(vm.mapPositionObj.position);
+
+      vm.map = CommonMapService.initMap();
       vm.markerPerson = new AMap.Marker();
 
-      if (vm.mapPositionObj.roadPositionArray.length <= 0) {
-        //当roadPositionArray.length数量小于等于0的时候，说明道路的坐标没有，
+      if (vm.mapPositionObj.position.length == 1) {
+        //当position.length数量等于1的时候，说明是点坐标
         // 代表着这是一个具体的设施（比如山东路某个公厕，具体到了地址），不是道路
+        var icon = new AMap.Icon({
+          //icon可缺省，缺省时为默认的蓝色水滴图标，
+          size: new AMap.Size(20, 25),  //图标大小
+          image: '../assets/global/map/marker.png',//24px*24px
+          // content: '<img src="/www/assets/global/img/location.png" />',
+          imageOffset: new AMap.Pixel(0, 0)
+
+        })
+
         vm.marker = new AMap.Marker({
           position: vm.mapPositionObj.position,
-          icon: new AMap.Icon({
-            size: new AMap.Size(32, 32),  //图标大小
-            // content: '<img src="/www/assets/global/img/location.png" />',
-            image: "/www/assets/global/img/position.png",
-            imageOffset: new AMap.Pixel(0, 0)
-          })
+          icon: icon
         });
 
         vm.marker.setMap(vm.map);
         vm.map.setCenter(vm.mapPositionObj.position);
-      } else {
+      } else if (vm.mapPositionObj.position.length > 1) {//坐标数组大于1说明是道路
+        console.log('走到这里了');
         vm.polyline = new AMap.Polyline({
-          path: vm.mapPositionObj.roadPositionArray,
+          path: vm.mapPositionObj.position,
           strokeColor: "#1C8B08",
           strokeWeight: 5
         });
         // 添加到地图中
         vm.polyline.setMap(vm.map);
-        vm.map.setZoom(17);
-        vm.centerPositionNum = parseInt(vm.mapPositionObj.roadPositionArray.length / 2);
-        vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
+        vm.map.setZoom(13);
+        vm.centerPositionNum = parseInt(vm.mapPositionObj.position.length / 2);//截取数组中间的位置，当做地图的中心点显示
+        vm.map.setCenter(vm.mapPositionObj.position[vm.centerPositionNum]);
       }
 
       // CommonMapService.getCoordinateInfo(function (data) {
@@ -109,10 +126,10 @@
     }
 
     function refreshRoadOrInstallationPosition() {
-      if (vm.mapPositionObj.roadPositionArray.length <= 0) {
+      if (vm.mapPositionObj.position.length == 1) {
         vm.map.setCenter(vm.mapPositionObj.position);
-      }else{
-        vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
+      } else if (vm.mapPositionObj.position.length > 1) {
+        vm.map.setCenter(vm.mapPositionObj.position[vm.centerPositionNum]);
       }
 
     }

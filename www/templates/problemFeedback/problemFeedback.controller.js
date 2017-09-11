@@ -24,17 +24,17 @@
 
 
     function activate() {
-      for (var i = 0; i < 15; i++) {
-        vm.problemList[i] = {
-          id: '6',
-          institutionsName: '山东路',
-          type: '道路',
-          status: '1',
-          address: "燕儿岛路",
-          question: "公厕不净",
-          position:[120.41317,36.07705]
-        }
-      }
+      // for (var i = 0; i < 15; i++) {
+      //   vm.problemList[i] = {
+      //     id: '6',
+      //     institutionsName: '山东路',
+      //     type: '道路',
+      //     status: '1',
+      //     address: "燕儿岛路",
+      //     question: "公厕不净",
+      //     position:[120.41317,36.07705]
+      //   }
+      // }
       ProblemFeedbackService.getProblemList($rootScope.userId,function (resData) {
         vm.problemList = resData;
       });
