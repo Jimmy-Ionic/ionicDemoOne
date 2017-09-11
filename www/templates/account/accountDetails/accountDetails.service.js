@@ -5,13 +5,18 @@
     .module('app.accountDetails')
     .service('AccountDetailsService', AccountDetailsService);
 
-  AccountDetailsService.$inject = ['$http'];
+  AccountDetailsService.$inject = ['$http','MyHttpService'];
   /** @ngInject */
-  function AccountDetailsService($http) {
-    var service = {};
+  function AccountDetailsService($http,MyHttpService) {
+    var service = {
+      getAccountDetailsData:getAccountDetailsData
+    };
 
     return service;
 
-    ////////////////
+    function getAccountDetailsData(fun) {
+      var url = '';
+      MyHttpService.getCommonData(url, fun);
+    }
   }
 })();

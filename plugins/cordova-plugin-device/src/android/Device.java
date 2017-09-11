@@ -76,6 +76,7 @@ public class Device extends CordovaPlugin {
             r.put("manufacturer", this.getManufacturer());
 	        r.put("isVirtual", this.isVirtual());
             r.put("serial", this.getSerialNumber());
+            r.put("imei", this.imei());
             callbackContext.success(r);
         }
         else {
@@ -87,6 +88,16 @@ public class Device extends CordovaPlugin {
     //--------------------------------------------------------------------------
     // LOCAL METHODS
     //--------------------------------------------------------------------------
+    //imei
+    private String imei() {
+
+           TelephonyManager systemService = (TelephonyManager)cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+           String deviceId = systemService.getDeviceId();
+           Log.i("123", deviceId);
+
+        return systemService.getDeviceId();
+    }
+
 
     /**
      * Get the OS name.

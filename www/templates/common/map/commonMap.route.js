@@ -12,7 +12,7 @@
     $stateProvider
       .state('commonMap', {
         url: '/commonMap',
-        params: {'data': null, 'from': null},
+        params: {data: null, from: ''},
         templateUrl: 'templates/common/map/commonMap.html'
       });
   }

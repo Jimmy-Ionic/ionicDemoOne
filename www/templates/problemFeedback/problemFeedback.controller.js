@@ -35,7 +35,9 @@
           position:[120.41317,36.07705]
         }
       }
-      // vm.problemList = ProblemFeedbackService.getProblemList($rootScope.userId);
+      ProblemFeedbackService.getProblemList($rootScope.userId,function (resData) {
+        vm.problemList = resData;
+      });
     }
 
 

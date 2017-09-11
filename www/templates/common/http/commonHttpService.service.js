@@ -10,13 +10,14 @@
   /** @ngInject */
   function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
     var service = {
-      getCommonData: getCommonData
+      getCommonData: getCommonData,
+      uploadCommonData: uploadCommonData
     };
 
     return service;
 
 
-    function getCommonData(urlPath,fun) {
+    function getCommonData(urlPath, fun) {
 
       console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
 
@@ -50,8 +51,7 @@
       }, function (response) {
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: '获取数据失败',
-          template: response.data
+          title: '获取数据失败'
         }).then(function (res) {
           console.log('通信异常');
           console.log(data);
@@ -62,9 +62,59 @@
 
 
     //上传数据通用方法
+    function uploadCommonData(urlPath, jsonStr, fun) {
 
-    function uploadData() {
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        }
+      );
 
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
+      console.log(url);
+      console.log(jsonStr);
+      // $http({
+      //   method: 'post',
+      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
+      //   data: {data: jsonStr}
+      // }).then(function (res) {
+      $http({
+        method: 'post',
+        url: url,
+        data: {data:jsonStr},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          return str.join("&");
+        }
+      }).then(function (res) {
+        if (res.data.success = 1) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: res.data.msg
+          }).then(function (res) {
+            fun(res);
+          })
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '数据上传失败'
+          });
+        }
+      }, function (error) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '数据上传失败'
+        });
+      });
     }
 
 

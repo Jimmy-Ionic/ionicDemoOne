@@ -16,7 +16,7 @@
           planDetailsData: null,
           formWhere:''
         },
-        cache: true,
+        cache: false,
         templateUrl: 'templates/assessment/planDetails/planDetails.html'
       });
   }

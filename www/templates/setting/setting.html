@@ -5,19 +5,21 @@
     <div class="padding common-margin-top" ng-include="'templates/common/common.weather.html'"></div>
 
     <div class="common-center padding-top-50">
-      <div>
-        <div class="common-center common-margin-top">
-          <span>姓名：</span>
-          <span>{{vm.name}}</span>
+
+      <div class="content has-header ionic-pseudo">
+
+        <div class="list card">
+          <a class="item item-icon-left">
+            <i class="icon ion-person"></i>
+            姓名：{{vm.name}}
+          </a>
+          <a class="item item-icon-left">
+            <i class="icon ion-person-stalker"></i>
+            所属小组：{{vm.group}}
+          </a>
         </div>
-        <div class="common-center common-margin-top">
-          <span>所属小组：</span>
-          <span>{{vm.group}}</span>
-        </div>
-      </div>
+
     </div>
 
   </div>
-  <div ng-include="'templates/common/common.footer.html'"></div>
-
 </ion-view>

@@ -33,24 +33,7 @@
       '36.086217,120.353283,36.086178,120.353354,36.086138,120.353425,36.086099,120.353425,' +
       '36.086099';
 
-    vm.assessmentStatusDetailsList =
-      {
-        questionId: '1',
-        address: '银川路',
-        problem: '垃圾桶占路',
-        cleaningLevel: '特级',
-        roadLevel: '主干道',
-        roadLength: '1600米',
-        roadWidth: '30米',
-        points: '-1.5',
-        remarks: '备注',
-        targetPosition: '129.134',
-        picPath: [
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg',
-          'http://www.chinagvs.com/ShopHome/Tpl/Public/images/left-logo.jpg',
-          'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg'
-        ]
-      };
+    vm.assessmentStatusDetailsList = {};
 
     //台帐数据
     vm.accountList =

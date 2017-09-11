@@ -14,9 +14,9 @@
 
     return service;
 
-    function getProblemList(userId) {
+    function getProblemList(userId,fun) {
       var path = '' + userId;
-      return MyHttpService.getCommonData(path);
+      return MyHttpService.getCommonData(path,fun);
     }
 
   }

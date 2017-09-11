@@ -18,45 +18,35 @@
     return service;
 
 
-    function getGridCheckQuestionCodeArray() {
-      return MyHttpService.getCommonData();
+    function getGridCheckQuestionCodeArray(fun) {
+       var url = '';
+       MyHttpService.getCommonData(url,fun);
     }
 
 
-    function uploadGridCheckData(data) {
-
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>数据上传中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        });
-
-      var options = new FileUploadOptions();
-
-      var params = {
-        facilityIdentify: '217ae60e5bc746f',
-        cyberkeyCode: 'AQOhlmsQAAKgCoi',
-        tenantId: 1
-      };
-      options.params = params;
-
-      $cordovaFileTransfer.upload(encodeURI(url),data, options).then(function (result) {
-        console.log(JSON.stringify(result.response));
-        console.log("success");
-        $ionicLoading.hide();
-
-      }, function (err) {
-        console.log(JSON.stringify(err));
-        console.log("fail");
-        $ionicLoading.hide();
-      }, function (progress) {
-
-      })
+    //上传网格化巡检的数据
+    function uploadGridCheckData(jsonStr,fun) {
+      var url = '';
+      MyHttpService.uploadCommonData(url,jsonStr,fun);
+      // var options = new FileUploadOptions();
+      // var params = {
+      //   facilityIdentify: '217ae60e5bc746f',
+      //   cyberkeyCode: 'AQOhlmsQAAKgCoi',
+      //   tenantId: 1
+      // };
+      // options.params = params;
+      // $cordovaFileTransfer.upload(encodeURI(url),data, options).then(function (result) {
+      //   console.log(JSON.stringify(result.response));
+      //   console.log("success");
+      //   $ionicLoading.hide();
+      //
+      // }, function (err) {
+      //   console.log(JSON.stringify(err));
+      //   console.log("fail");
+      //   $ionicLoading.hide();
+      // }, function (progress) {
+      //
+      // })
     }
-
-
   }
 })();

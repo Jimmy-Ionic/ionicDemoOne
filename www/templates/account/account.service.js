@@ -5,13 +5,26 @@
     .module('app.account')
     .service('AccountService', AccountService);
 
-  AccountService.$inject = ['$http'];
+  AccountService.$inject = ['$http', 'MyHttpService'];
+
   /** @ngInject */
-  function AccountService($http) {
-    var service = {};
+  function AccountService($http, MyHttpService) {
+
+    var service = {
+      getAccountList: getAccountList,
+      getAccountListByQueryCriteria:getAccountListByQueryCriteria
+    };
 
     return service;
 
-    ////////////////
+    function getAccountList(fun) {
+      var url = '';
+      MyHttpService.getCommonData(url, fun);
+    }
+
+    function getAccountListByQueryCriteria() {
+      var url = '';
+      MyHttpService.getCommonData(url, fun);
+    }
   }
 })();

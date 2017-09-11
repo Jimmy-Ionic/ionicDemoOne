@@ -18,10 +18,9 @@
     activate();
 
     function activate() {
-      var weatherInfo = GetWeatherService.getWeather();
-      if (weatherInfo) {
-        vm.weather = weatherInfo;
-      }
+      GetWeatherService.getWeather(function (resData) {
+        vm.weather = resData;
+      });
     }
   }
 })();

@@ -616,3 +616,15 @@ h3 {
   height: 350px;
   width: 320px
 }
+
+.common-ellipsis{
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+
+.common-margin-right-10 {
+  margin-right: 10px; }
+
+.common-bold-font{
+  font-weight: bold
+}

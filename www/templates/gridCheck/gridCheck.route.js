@@ -12,11 +12,12 @@
     $stateProvider
       .state('gridCheck', {
         url: '/gridCheck',
-        params: {position: []},
+        params: {mapData: null},
         // views: {
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
+        cache: false,
         templateUrl: 'templates/gridCheck/gridCheck.html'
       });
   }

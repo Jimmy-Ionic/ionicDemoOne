@@ -34,7 +34,9 @@
           <div class="col-20 text-center">
             <ul class="list">
               <li class="wait-work-list-item" ng-repeat="item in vm.planDetailsList">
-                {{item.status==null?'未考核':'已考核'}}
+                <span ng-show="item.status == null">未考核</span>
+                <span ng-show="item.status == true">考核完成</span>
+                <span ng-show="item.status == false">已考核</span>
               </li>
             </ul>
           </div>
@@ -52,7 +54,7 @@
       </div>
     </div>
 
-    <button ng-show="vm.fromWhere=='assessment'" class=" common-center" ng-click="vm.fun.toAddAssessment()">录入计划
+    <button  class=" common-center" ng-show="vm.data.simpleInput == 1" ng-click="vm.fun.toAddAssessment()">录入计划
     </button>
 
   </ion-content>

@@ -5,52 +5,43 @@
     .module('app.assessmentStatusDetails')
     .service('AssessmentStatusDetailsService', AssessmentStatusDetailsService);
 
-  AssessmentStatusDetailsService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera'];
+  AssessmentStatusDetailsService.$inject = ['MyHttpService'];
 
   /** @ngInject */
-  function AssessmentStatusDetailsService($http, SYS_INFO, $cordovaCamera) {
+  function AssessmentStatusDetailsService(MyHttpService) {
     var service = {
-      getAssessmentStatusDetailsList: getAssessmentStatusDetailsList,
-      getPhonePictureData: getPhonePictureData,
-      getPhonePicturePath: getPhonePicturePath,
-      getAccounts:getAccounts
+      getAssessmentStatusDetailsListIsEdit: getAssessmentStatusDetailsListIsEdit,
+      getAssessmentStatusDetailsListNotEdit: getAssessmentStatusDetailsListNotEdit,
+      getAccounts: getAccounts,
+      uploadAssessmentStatusDetailsData: uploadAssessmentStatusDetailsData
     }
 
 
     return service;
 
 
-    function getAssessmentStatusDetailsList(data, fun) {
+    //录入的时候请求数据的方法
+    function getAssessmentStatusDetailsListIsEdit(data, fun) {
       var path = '/hwweb/AssignmentAssessment/findFacilities.action?' + 'typeId=' + data.typeId + '&infraId=' + data.infraId;
-      MyHttpService.getCommonData(path,fun);
+      MyHttpService.getCommonData(path, fun);
     }
 
-    function getPhonePictureData() {
+    //查看问题的时候请求数据的方法
+    function getAssessmentStatusDetailsListNotEdit(data, fun) {
+      var path = '/hwweb/AssignmentAssessment/findFacilitiesViews.action?' + 'typeId=' + data.typeId + '&infraId=' + data.infraId+'&resultsId=' +data.id;
+      MyHttpService.getCommonData(path, fun);
     }
 
-    function getPhonePicturePath() {
-
-      document.addEventListener("deviceready", function () {
-
-        var options = {
-          destinationType: Camera.DestinationType.FILE_URI,
-          sourceType: Camera.PictureSourceType.CAMERA,
-        };
-
-        $cordovaCamera.getPicture(options).then(function (imageURI) {
-          var image = document.getElementById('myImage');
-          image.src = imageURI;
-        }, function (err) {
-          // error
-        });
-
-        $cordovaCamera.cleanup().then();
-      }, false);
+    function getAccounts(data, fun) {
+      var url = '/hwweb/AssignmentAssessment/findDItem.action?' + 'typeId=' + data.typeId;
+      MyHttpService.getCommonData(url, fun);
     }
 
-    function getAccounts(fun){
-      var url = '';
-      MyHttpService.getCommonData(url,fun);
+    //上传数据
+    function uploadAssessmentStatusDetailsData(jsonObj, fun) {
+      var url = '/hwweb/AssignmentAssessment/reportPro.action';
+      var jsonStr = JSON.stringify(jsonObj);
+      MyHttpService.uploadCommonData(url, jsonStr, fun);
     }
   }
 })();

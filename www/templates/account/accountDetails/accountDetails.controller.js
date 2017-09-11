@@ -3,19 +3,30 @@
 
   angular
     .module('app.accountDetails')
-    .controller('AccountDetailsController',AccountDetailsController);
+    .controller('AccountDetailsController', AccountDetailsController);
 
-  AccountDetailsController.$inject = ['$scope'];
+  AccountDetailsController.$inject = ['$scope', 'AccountDetailsService', '$stateParams'];
+
   /** @ngInject */
-  function AccountDetailsController($scope) {
+  function AccountDetailsController($scope, AccountDetailsService, $stateParams) {
+
     var vm = this;
+    vm.data = {};
     vm.installationName = '';
+    vm.accountDetailsData = {};
 
     activate();
 
-    ////////////////
-
     function activate() {
+      if ($stateParams.accountData != null) {
+
+      }
+    }
+
+    function getAccountDetailsData() {
+      AccountDetailsService.getAccountDetailsData(function () {
+
+      });
     }
   }
 })();

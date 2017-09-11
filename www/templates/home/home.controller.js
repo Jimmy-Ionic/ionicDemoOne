@@ -15,7 +15,8 @@
     'SYS_INFO',
     'GetWeatherService',
     '$stateParams',
-    '$interval'
+    '$interval',
+    '$cordovaCamera'
   ];
 
   function HomeController($rootScope,
@@ -27,7 +28,8 @@
                           SYS_INFO,
                           GetWeatherService,
                           $stateParams,
-                          $interval) {
+                          $interval,
+                          $cordovaCamera) {
     var vm = this;
     vm.title = '请选择工作';
     vm.hasSavedData = true;
@@ -47,7 +49,7 @@
       toMessage: toMessage,
       toSettings: toSettings,
       toSavedData: toSavedData
-    };
+    }
 
     activate();
 

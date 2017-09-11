@@ -10,7 +10,7 @@
   /** @ngInject */
   function PlanDetailsController($rootScope, $scope, $state, $stateParams, PlanDetailsService) {
     var vm = this;
-    vm.data = $stateParams.planDetailsData;
+    vm.data = {}
     vm.title = '';
     vm.fromWhere = $stateParams.fromWhere;
     vm.fun = {
@@ -28,8 +28,22 @@
       if (vm.fromWhere == null) {
         vm.fromWhere = 'waitForWork'
       }
-      if (vm.data) {
+
+      if ($stateParams.planDetailsData) {
+        vm.data = $stateParams.planDetailsData;
         vm.title = vm.data.planName;
+      }
+
+      //判断上一页面是代办工作，综合考核，还是历史记录
+      switch (vm.fromWhere) {
+        case 'waitForWork':
+          break;
+        case 'assessment':
+          break;
+        case 'history':
+          break;
+        default:
+          break;
       }
       PlanDetailsService.getPlanDetailsList(vm.data.id, vm.fromWhere, function (responseData) {
         vm.planDetailsList = responseData;

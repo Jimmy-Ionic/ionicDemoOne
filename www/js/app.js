@@ -24,6 +24,7 @@
     'app.addAssessment',
     'app.addAssessmentMap',
     'app.gridCheck',
+    'app.gridCheckMap',
     'app.problemFeedback',
     'app.problemFeedbackDetails',
     'app.account',

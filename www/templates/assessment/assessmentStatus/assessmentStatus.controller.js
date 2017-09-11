@@ -11,11 +11,11 @@
   function AssessmentStatusController($rootScope, $scope, $state, $stateParams, AssessmentStatusService, $ionicLoading, $ionicPopup) {
     var vm = this;
     vm.title = '考核情况';
-    vm.data = $stateParams.planDetailsData;
+    vm.data = {};//来自上一个页面的数据
     vm.fun = {
-      toAssessmentStatusDetails:toAssessmentStatusDetails,
-      upload:upload,
-      checkStatusDetails:checkStatusDetails
+      toAssessmentStatusDetails: toAssessmentStatusDetails,
+      upload: upload,
+      checkStatusDetails: checkStatusDetails
     };
 
 
@@ -25,49 +25,53 @@
     activate();
 
     function activate() {
-      console.log(vm.data);
-      if(vm.data){
-        AssessmentStatusService.getAssessmentStatusList(vm.data,function (resData) {
+      if ($stateParams.planDetailsData) {
+        vm.data = $stateParams.planDetailsData;
+        console.log(vm.data);
+        AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
           vm.assessmentStatusList = resData;
         });
       }
     }
 
-    //上传数据
+    //考核完成
     function upload() {
-      if(vm.planDetailsData!=null&&vm.planDetailsData.status == null){
+      if (vm.data != null) {
+        if (vm.data.status == null || vm.data.status == false) {
+          AssessmentStatusService.checkOverAndUpload(vm.data);
+        } else {
+          $ionicPopup.alert({
+            title: '该考核任务已经完成！',
+            template: response.data
+          }).then(function (res) {
 
-      }else{
-        $ionicPopup.alert({
-          title: '该项目已考核',
-          template: response.data
-        }).then(function (res) {
-
-        });
+          });
+        }
       }
     }
 
+    //录入考核情况
     function toAssessmentStatusDetails() {
-      if(vm.data!=null&&vm.data.status == null){
-        $state.go('assessmentStatusDetails', {assessmentStatusData: vm.data,isEdit:true})
-      }else{
-        $ionicPopup.alert({
-          title: '该项目已考核',
-          template: response.data
-        }).then(function (res) {
+      if (vm.data != null) {
+        if (vm.data.status == null || vm.data.status == false) {
+          $state.go('assessmentStatusDetails', {assessmentStatusData: vm.data, isEdit: true})
+        } else {
+          $ionicPopup.alert({
+            title: '该考核任务已经完成！'
+          }).then(function (res) {
 
-        });
+          });
+        }
       }
+
     }
 
+    //查看考核情况详情
     function checkStatusDetails(item) {
-      if (vm.data != null && vm.data.status == null) {
-        item.typeId = vm.data.typeId;
-        item.infraId = vm.data.infraId;
-        $state.go('assessmentStatusDetails', {assessmentStatusData: item, isEdit: false})
-      }
+          item.typeId = vm.data.typeId;
+          item.infraId = vm.data.infraId;
+          $state.go('assessmentStatusDetails', {assessmentStatusData: item, isEdit: false})
     }
-
 
   }
 })();

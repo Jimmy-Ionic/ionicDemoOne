@@ -8,7 +8,7 @@
     <div class="padding common-center">
       <label class="item item-input">
         <!--<i class="icon ion-search"></i>-->
-        <input type="text" placeholder="请输入关键字搜索" ng-model="vm.keyword"/>
+        <input type="text" placeholder="请输入关键字搜索" ng-model="vm.queryCriteria.keyword"/>
       </label>
       <button class="button button-positive icon ion-search common-margin-left-20"
               ng-click="vm.fun.getHistoryDataByCondition()"></button>
@@ -16,12 +16,12 @@
 
     <div class="row">
       <div class="col col-20 text-center">
-        <select ng-init="vm.selectedYeah = vm.thisYeah" ng-model="vm.selectedYeah">
+        <select ng-init="vm.queryCriteria.selectedYeah = vm.thisYeah" ng-model="vm.selectedYeah">
           <option ng-repeat="x in vm.yeahArray">{{x}}</option>
         </select>
       </div>
       <div class="col col-20 text-center">
-        <select ng-init="vm.selectedMonth = vm.thisMonth" ng-model="vm.selectedMonth">
+        <select ng-init="vm.queryCriteria.selectedMonth = vm.thisMonth" ng-model="vm.selectedMonth">
           <option ng-repeat="x in vm.monthArray track by $index">{{x}}</option>
         </select>
       </div>
@@ -37,7 +37,7 @@
 
   </div>
 
-  <ion-content class="padding scroll-bar-fade-out padding-top common-ion-content-top-200">
+  <ion-content class="padding common-ion-content-top-200 has-footer common-border common-margin-left-10 common-margin-right-10">
 
     <div>
       <div class="row">

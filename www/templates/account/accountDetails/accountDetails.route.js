@@ -12,11 +12,12 @@
     $stateProvider
       .state('accountDetails', {
         url: '/accountDetails',
+        params: {accountData: null},
         // views: {
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
-        templateUrl: 'templates/account/account.html'
+        templateUrl: 'templates/account/accountDetails/accountDetails.html'
       });
   }
 }());

@@ -12,18 +12,16 @@
 
     var vm = this;
     vm.title = '网格化巡检';
-    vm.picPath = 'http://www.runoob.com/wp-content/uploads/2014/06/angular.jpg';
-    vm.picData = '';
-    vm.picName = '';
-    vm.pickPositon = $stateParams.position;
-
-    vm.selectedQuesCode = '';
     vm.questionCode = [];
-    vm.question = '';
-    vm.locationObj = {
+    vm.uploadData = {
       district: '',
-      street: ''
-    };
+      street: '',
+      selectedQuesCode: '',
+      question: '',
+      picData: '',
+      picName: '',
+      pickPosition: []
+    }
 
     vm.fun = {
       toGridCheckMap: toGridCheckMap,
@@ -36,18 +34,22 @@
     activate();
 
     function activate() {
-      var data = GridCheckService.getGridCheckQuestionCodeArray();
-      if (data) {
-        vm.questionCode = data;
-      } else {
-        vm.questionCode = ['道路不干净', '垃圾桶占路'];
+
+      if ($stateParams.mapData) {
+        vm.uploadData.pickPosition = $stateParams.mapData;
       }
+
+      GridCheckService.getGridCheckQuestionCodeArray(function (resData) {
+        vm.questionCode = resData;
+      });
+
     }
 
     function toGridCheckMap() {
-      $state.go('commonMap', {data: {}, from: 'gridCheck'});
+      $state.go('gridCheckMap');
     }
 
+    //拍照
     function takeGridCheckPicture() {
 
       var options = {
@@ -64,33 +66,32 @@
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        $ionicPopup.alert({
-          title: 'sdda',
-          template: 'deviceready获取图片' + imageData + ' ' + new moment().unix()
-        });
 
-        var image = document.getElementById('img');
+        var image = document.getElementById('gridCheckImg');
         image.src = "data:image/jpeg;base64," + imageData;
-        vm.picName = moment().format('YYYY-MM-DD-HH:mm:ss') + '.jpg';
-        vm.picData = imageData;
-        console.log(vm.picName);
+        vm.uploadData.picName = moment().format('YYYY-MM-DD HH:mm:ss') + '.jpeg';
+        vm.uploadData.picData = imageData;
       }, function (err) {
         $ionicPopup.alert({
-          title: '照片获取失败，请重新拍照',
+          title: '照片获取失败，请重新拍照'
         });
       })
     }
 
     function getGridCheckLocation() {
       CommonMapService.getAddressByGPS(function (res) {
-        vm.locationObj.district = res.district;
-        vm.locationObj.street = res.street;
+        vm.uploadData.district = res.district;
+        vm.uploadData.street = res.street;
         $scope.$apply();
       });
     }
 
+    //上传数据
     function uploadGridCheckData() {
-      GridCheckService.uploadGridCheckData();
+
+      GridCheckService.uploadGridCheckData(function (resData) {
+
+      });
     }
   }
 })();

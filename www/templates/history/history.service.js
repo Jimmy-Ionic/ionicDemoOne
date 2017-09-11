@@ -6,24 +6,25 @@
     .service('HistoryService', HistoryService);
 
   HistoryService.$inject = ['MyHttpService'];
+
   /** @ngInject */
   function HistoryService(MyHttpService) {
     var service = {
-      getHistoryData:getHistoryData,
-      getHistoryDataByCondition:getHistoryDataByCondition
+      getHistoryData: getHistoryData,
+      getHistoryDataByCondition: getHistoryDataByCondition
     };
 
     return service;
 
-    function getHistoryData(userId) {
+    function getHistoryData(userId, fun) {
       var url = '';
-      return MyHttpService.getCommonData(url);
+      MyHttpService.getCommonData(url, fun);
     }
 
-    function getHistoryDataByCondition(year,month,keyword) {
+    function getHistoryDataByCondition(queryCriteria,fun) {
       var url = '';
-      return MyHttpService.getCommonData(url);
+      MyHttpService.getCommonData(url,fun);
     }
-    
+
   }
 })();

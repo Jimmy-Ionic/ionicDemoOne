@@ -13,35 +13,7 @@
     var vm = this;
     vm.data = {};
     vm.title = '地图详情';
-    //台帐数据
-    vm.accountList =
-      {
-        type: ['全部','公厕','街道','车辆','收集站','垃圾桶'],
-        reason: ['道路不净', '垃圾桶占路']
-      };
-
-    //获取到的所有的匹配的台帐信息
-    vm.accountAddressData = [{
-      name: '百度1',
-      position: [],
-      roadPositionArray: [],
-      info: {level: '', road: '', length: '', width: ''}
-    }, {
-      name: '百度2',
-      position: [],
-      roadPositionArray: [],
-      info: {level: '', road: '', length: '', width: ''}
-    }, {
-      name: '百度3',
-      position: [],
-      roadPositionArray: [],
-      info: {level: '', road: '', length: '', width: ''}
-    }, {
-      address: '百度4',
-      position: [],
-      roadPositionArray: [],
-      info: {level: '', road: '', length: '', width: ''}
-    }];
+    vm.from = '';
 
     vm.map;
     vm.marker;
@@ -55,16 +27,15 @@
     vm.mapPositionObj = {
       address: '市南软件园2号楼',
       position: [120.41317, 36.07705],
-      roadPositionArray: []
-      // roadPositionArray: [
-      //   ["120.352728", "36.086514"], ["120.352788", "36.086477"],
-      //   ["120.352849", "36.08644"], ["120.35291", "36.086403"],
-      //   ["120.35297", "36.086365"], ["120.353031", "36.086328"],
-      //   ["120.353092", "36.086291"], ["120.353152", "36.086254"],
-      //   ["120.353213", "36.086217"], ["120.353283", "36.086178"],
-      //   ["120.353354", "36.086138"], ["120.353425", "36.086099"],
-      //   ["120.353425", "36.086099"]
-      // ]
+      roadPositionArray: [
+        ["120.352728", "36.086514"], ["120.352788", "36.086477"],
+        ["120.352849", "36.08644"], ["120.35291", "36.086403"],
+        ["120.35297", "36.086365"], ["120.353031", "36.086328"],
+        ["120.353092", "36.086291"], ["120.353152", "36.086254"],
+        ["120.353213", "36.086217"], ["120.353283", "36.086178"],
+        ["120.353354", "36.086138"], ["120.353425", "36.086099"],
+        ["120.353425", "36.086099"]
+      ]
     }
 
 
@@ -72,6 +43,12 @@
 
 
     function activate() {
+
+      if(vm.from){
+        vm.from = $stateParams.from;
+      }else{
+        vm.from = 'addAssessment';
+      }
 
       if ($stateParams.mapPositionObj != null) {
         vm.mapPositionObj = $stateParams.mapPositionObj;

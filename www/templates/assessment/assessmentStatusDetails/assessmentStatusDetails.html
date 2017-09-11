@@ -1,4 +1,4 @@
-<ion-view class="padding " ng-controller="AddAssessmentController as vm">
+<ion-view class="padding " ng-controller="AssessmentStatusDetailsController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
@@ -12,22 +12,39 @@
         <div class="col  text-center">宽度</div>
       </div>
 
+      <div class="row wait-work-menu common-margin-top" ng-switch-when="01">
+        <div class="col text-center">公测类型：</div>
+      </div>
+
+      <div class="row wait-work-menu common-margin-top" ng-switch-when="06">
+        <div class="col text-center">车辆类型：</div>
+      </div>
     </div>
 
     <div ng-switch="vm.type">
       <div class="row" ng-switch-when="05">
         <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.uploadData.level"/>
+          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.cleanLevel"
+                 disabled/>
         </div>
         <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.uploadData.road"/>
+          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.primaryOrSecondary"
+                 disabled/>
         </div>
         <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.uploadData.length"/>
+          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.length" disabled/>
         </div>
         <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.uploadData.width"/>
+          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.width" disabled/>
         </div>
+      </div>
+
+      <div class="row" ng-switch-when="01">
+        <div class="col text-center">{{vm.assessmentStatusDetails.condition}}</div>
+      </div>
+
+      <div class="row" ng-switch-when="06">
+        <div class="text-center">{{vm.assessmentStatusDetails.condition}}</div>
       </div>
     </div>
 
@@ -37,39 +54,46 @@
 
         <div class="common-center common-margin-top-10">
           <span>扣分情况：</span>
-          <input class="add-assessment-select" ng-model="vm.uploadData.points"/>
+          <input class="add-assessment-select" ng-model="vm.uploadData.points" ng-disabled="!vm.isEdit"/>
         </div>
 
         <div class="common-center common-margin-top-10">
           <span>扣分原因：</span>
-          <select class="add-assessment-select" ng-init="vm.uploadData.reason = vm.accountList.reason[0]"
-                  ng-model="vm.uploadData.reason">
-            <option ng-repeat="item in vm.accountList.reason">{{item}}</option>
+          <select class="add-assessment-select" ng-init="vm.uploadData.reason = vm.reasonAccount[0].name"
+                  ng-model="vm.uploadData.reason" ng-disabled="!vm.isEdit">
+            <option ng-repeat="item in vm.reasonAccount">{{item.name}}</option>
           </select>
         </div>
 
         <div class="common-center common-margin-top-10">
           <span>备注：</span>
-          <textarea class="common-border add-assessment-textArea"></textarea>
+          <textarea class="common-border add-assessment-textArea" ng-model="vm.uploadData.remarks"
+                    ng-disabled="!vm.isEdit"></textarea>
         </div>
 
 
-        <div class="row common-margin-top common-center">
-          <img class="col add-assessment-img text-center"
-               ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}" on-hold="vm.fun.deletePic($index)">
+        <div class="common-margin-top common-center">
+          <img class="add-assessment-img"
+               ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.serverUrl+item}}"
+               on-hold="vm.fun.deletePic($index)">
         </div>
 
-        <button class="common-margin-top" ng-click="vm.fun.takePicture()">拍照上传</button>
+        <button class="common-margin-top" ng-disabled="!vm.isEdit" ng-click="vm.fun.takePicture()">拍照上传</button>
 
         <div>
-          <button class="common-margin-top" ng-click="vm.fun.toAddAssessmentMap()">查看地图</button>
+          <button class="common-margin-top" ng-click="vm.fun.toCommonMap()">查看地图</button>
         </div>
       </div>
     </div>
   </ion-content>
 
 
-  <div ng-include="'templates/common/common.footerConfirm.html'"></div>
+  <div class="bar bar-footer">
+    <button class="button common-center button-positive" ng-disabled="!vm.isEdit"
+            ng-click="vm.fun.uploadAssessmentStatusDetailsData()">确定
+    </button>
+  </div>
+
 
 </ion-view>
 

@@ -20,7 +20,7 @@
         <button ng-click="vm.fun.getAccountsPostionData()">搜索</button>
         <div id="spinner" ng-show="vm.spinnerShow" class="add-assessment-select">
           <ul class="proposal-list" ng-repeat="item in vm.accountAddressData">
-            <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item}}</li>
+            <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item.name}}</li>
           </ul>
         </div>
       </div>

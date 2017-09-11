@@ -17,9 +17,12 @@
     vm.footerContent = '确定'
     vm.fun = {
       initCamera: initCamera,
-      uploadProblemFeedbackData:uploadProblemFeedbackData
+      uploadProblemFeedbackData: uploadProblemFeedbackData
     }
     vm.problemFeedbackData = {};
+    vm.uploadData = {
+
+    };
 
     activate();
 
@@ -27,7 +30,7 @@
 
       if (vm.problemDetails == null) {
         vm.problemDetails = {};
-        vm.problemDetails.postion = [120.41317,36.07705];
+        vm.problemDetails.postion = [120.41317, 36.07705];
         vm.problemDetails.address = '燕儿岛路';
       }
 
@@ -38,28 +41,28 @@
     function initCamera() {
 
       var options = {
-        quality: 50,
+        quality: 100,
         destinationType: Camera.DestinationType.DATA_URL,
         sourceType: Camera.PictureSourceType.CAMERA,
         allowEdit: true,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
+        targetWidth: 200,
+        targetHeight: 200,
         popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: false,
+        saveToPhotoAlbum: true,
         correctOrientation: true
       };
 
       $cordovaCamera.getPicture(options).then(function (imageData) {
-        var image = document.getElementById('myImage');
-        image.problemFeedbackDetailsImg = "data:image/jpeg;base64," + imageData;
+        var image = document.getElementById('problemFeedbackDetailsImg');
+        image.src = "data:image/jpeg;base64," + imageData;
       }, function (err) {
 
       });
     }
 
     function uploadProblemFeedbackData() {
-      ProblemFeedbackDetailsService.uploadProblemFeedbackData(vm.problemFeedbackData,vm.fromWhere);
+      ProblemFeedbackDetailsService.uploadProblemFeedbackData(vm.problemFeedbackData, vm.fromWhere);
     }
   }
 })();
