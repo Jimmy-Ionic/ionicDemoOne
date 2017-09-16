@@ -12,7 +12,6 @@
     $stateProvider
       .state('gridCheck', {
         url: '/gridCheck',
-        params: {mapData: null},
         // views: {
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'

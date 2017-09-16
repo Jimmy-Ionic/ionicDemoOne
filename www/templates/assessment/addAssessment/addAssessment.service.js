@@ -14,8 +14,9 @@
       addNewAssessment: addNewAssessment,
       getPhonePictureData: getPhonePictureData,
       getPhonePicturePath: getPhonePicturePath,
-      queryAccount: queryAccount,
-      queryAccountList: queryAccountList
+      queryAccountList: queryAccountList,
+      uploadAccountData:uploadAccountData,
+      uploadPointAndPicData:uploadPointAndPicData
     }
 
 
@@ -73,15 +74,21 @@
       }, false);
     }
 
-    function queryAccount(queryArray, fun) {
-      var path = '';
-      MyHttpService.getCommonData(path, fun);
-    }
 
+    //模糊查询对应的台帐信息
     function queryAccountList(queryCriteria, fun) {
       var path = '/hwweb/Comprehensive/searchFacilities.action?' + 'name=' + queryCriteria.address + '&typeId=' + queryCriteria.type;
       MyHttpService.getCommonData(path, fun);
     }
 
+    function uploadAccountData(jsonStr, fun) {
+      var url = '/hwweb/AssignmentAssessment/comprehensive.action'
+      MyHttpService.uploadCommonData(url, jsonStr, fun);
+    }
+
+    function uploadPointAndPicData(jsonStr, fun) {
+      var url = '/hwweb/AssignmentAssessment/reportPro.action'
+      MyHttpService.uploadCommonData(url, jsonStr, fun);
+    }
   }
 })();

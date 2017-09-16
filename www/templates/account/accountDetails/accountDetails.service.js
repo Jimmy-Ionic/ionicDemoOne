@@ -9,14 +9,7 @@
   /** @ngInject */
   function AccountDetailsService($http,MyHttpService) {
     var service = {
-      getAccountDetailsData:getAccountDetailsData
     };
-
     return service;
-
-    function getAccountDetailsData(fun) {
-      var url = '';
-      MyHttpService.getCommonData(url, fun);
-    }
   }
 })();

@@ -31,6 +31,7 @@
       $http({
         method: 'GET',
         url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
+        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       }).then(function (response) {
         if (response.data.success == 1) {
           $ionicLoading.hide();
@@ -41,7 +42,8 @@
         } else {
           $ionicLoading.hide();
           $ionicPopup.alert({
-            title: response.data.msg
+            title: '提示',
+            template: '获取数据失败'
           }).then(function (res) {
             console.log('数据获取失败');
             console.log(data);
@@ -51,7 +53,8 @@
       }, function (response) {
         $ionicLoading.hide();
         $ionicPopup.alert({
-          title: '获取数据失败'
+          title: '提示',
+          template: '获取数据失败'
         }).then(function (res) {
           console.log('通信异常');
           console.log(data);
@@ -85,7 +88,7 @@
       $http({
         method: 'post',
         url: url,
-        data: {data:jsonStr},
+        data: {data: jsonStr},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         transformRequest: function (obj) {
           var str = [];
@@ -96,12 +99,13 @@
         }
       }).then(function (res) {
         if (res.data.success = 1) {
+          var resData = res.data.data;
           $ionicLoading.hide();
           $ionicPopup.alert({
             title: '提示',
             template: res.data.msg
           }).then(function (res) {
-            fun(res);
+            fun(resData);
           })
         } else {
           $ionicLoading.hide();

@@ -5,29 +5,32 @@
     .module('app.addAssessmentMap')
     .service('AddAssessmentMapService', AddAssessmentMapService);
 
-  AddAssessmentMapService.$inject = ['$http', 'SYS_INFO', '$cordovaCamera', 'CommonMapService'];
+  AddAssessmentMapService.$inject = [];
 
   /** @ngInject */
-  function AddAssessmentMapService($http, SYS_INFO, $cordovaCamera, CommonMapService) {
+  function AddAssessmentMapService() {
     var service = {
       initAddAssessmentMap: initAddAssessmentMap,
-      getPositionArray:getPositionArray
+      getPositionArray: getPositionArray
     }
 
     return service;
 
-    function initAddAssessmentMap() {}
+    function initAddAssessmentMap() {
+    }
 
 
     function getPositionArray(string) {
       var roadPositionArray = [];
-      console.log(string);
-      var temArray = string.split(',');
-      for (var i = 0; i < temArray.length - 1; i = i + 2) {
-        var array = new Array();
-        array[0] = temArray[i];
-        array[1] = temArray[i + 1];
-        roadPositionArray.push(array);
+      if (string && string.indexOf(',') >= 0) {
+        var temArray = string.split(',');
+        for (var i = 0; i < temArray.length - 1; i = i + 2) {
+          var array = new Array();
+          array[0] = temArray[i];
+          array[1] = temArray[i + 1];
+          roadPositionArray.push(array);
+        }
+        return roadPositionArray;
       }
       return roadPositionArray;
     }

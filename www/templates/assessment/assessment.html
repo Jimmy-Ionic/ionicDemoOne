@@ -1,4 +1,4 @@
-<ion-view class="padding" ng-controller="AssessmentController as vm">
+ <ion-view class="padding" ng-controller="AssessmentController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
@@ -18,21 +18,21 @@
         <div class="col-40 text-center">
           <ul class="list">
             <li class="wait-work-list-item " ng-repeat="item in vm.planList">
-              {{item.workName}}
+              {{item.planName}}
             </li>
           </ul>
         </div>
         <div class="col-20 text-center">
           <ul class="list">
             <li class="wait-work-list-item" ng-repeat="item in vm.planList">
-              {{item.startTime}}
+              {{item.sDate}}
             </li>
           </ul>
         </div>
         <div class="col-20 text-center">
           <ul class="list">
             <li class="wait-work-list-item" ng-repeat="item in vm.planList">
-              {{item.endTime}}
+              {{item.eDate}}
             </li>
           </ul>
         </div>

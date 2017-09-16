@@ -2,21 +2,43 @@
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <div class="content has-header">
-    <div class="common-center">
-      <span>消息：</span>
-      <span>消息简介</span>
+
+  <ion-content class="has-header common-center" scroll="false">
+    <div class="card common-width-300">
+      <ul class="list">
+        <div class="item item-divider text-center">
+          {{vm.msg.title}}
+        </div>
+        <li class="item">
+          <i class="icon ion-person-stalker"></i>
+          收件人：{{vm.msg.addressee}}
+        </li>
+        <li class="item">
+          <i class="icon ion-person-stalker"></i>
+          发件人：{{vm.msg.sender}}
+        </li>
+        <li class="item">
+          <i class="icon ion-clock"></i>
+          邮件时间：{{vm.msg.sendDate}}
+        </li>
+        <li class="item">
+          <i class="icon ion-clock"></i>
+          消息详细内容：{{vm.msg.context}}
+        </li>
+        <div class="item item-divider text-center">
+          附件
+        </div>
+        <li class="item">
+          <i class="icon ion-document"></i>
+          附件名称：{{vm.msgView.name}}
+        </li>
+        <a class="item text-center" href="http://172.72.100.61:8090/hwweb/Trash/export?ids=fbe58ca3-5909-4bf4-988d-b82b5146f7cb,6792d9ac-2078-42d5-b3d0-60ac1099e1e6">
+          <i class="icon ion-link"></i>
+          点击下载
+        </a>
+      </ul>
     </div>
 
-    <div class="common-center">
-      <span>消息详细内容：</span>
-      <span>这是一条消息的详细内容。</span>
-    </div>
-
-    <div class="common-center">
-      <span>附件下载：</span>
-      <a href="http://www.baidu.com">这是附件的名字</a>
-    </div>
-  </div>
+  </ion-content>
 
 </ion-view>

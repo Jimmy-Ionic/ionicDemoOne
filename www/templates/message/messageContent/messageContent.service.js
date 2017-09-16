@@ -5,18 +5,19 @@
     .module('app.messageContent')
     .service('MessageContentService', MessageContentService);
 
-  MessageContentService.$inject = ['$http'];
+  MessageContentService.$inject = ['MyHttpService'];
 
   /** @ngInject */
-  function MessageContentService($http) {
+  function MessageContentService(MyHttpService) {
     var service = {
-
+      getMessagesByMsgId: getMessagesByMsgId
     };
 
     return service;
 
-    function getMessage(url){
-
+    function getMessagesByMsgId(msgId, fun) {
+      var url = '/hwweb/AppMessage/msgView.action?msgId=' + 12;
+      MyHttpService.getCommonData(url, fun);
     }
 
   }

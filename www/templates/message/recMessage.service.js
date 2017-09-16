@@ -5,30 +5,34 @@
     .module('app.appReceivedMessage')
     .service('MessageService', MessageService);
 
-  MessageService.$inject = ['$http', 'SYS_INFO'];
+  MessageService.$inject = ['MyHttpService', 'SYS_INFO', '$http'];
 
   /** @ngInject */
-  function MessageService($http, SYS_INFO) {
+  function MessageService(MyHttpService, SYS_INFO, $http) {
     var service = {
-      getMessage:getMessages
+      getMessagesByUserId: getMessagesByUserId,
+      doRefresh: doRefresh
     };
 
     return service;
 
 
-    function getMessages() {
-      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT;
-      $http.get(url, function (response) {
-         if(response.data.success == 1){
-           var messages = response.date.data;
-           return messages;
-         }else{
-           return;
-         }
-      }, function (response) {
-         return;
-      });
+    function getMessagesByUserId(userId, fun) {
+      var url = '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
+      MyHttpService.getCommonData(url, fun);
+    }
 
+
+    //刷新
+    function doRefresh(userId, fun,hideRefreshFun) {
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
+      $http.get(url)
+        .success(function (response) {
+          fun(response);
+        })
+        .finally(function () {
+          hideRefreshFun();
+        });
     }
 
   }

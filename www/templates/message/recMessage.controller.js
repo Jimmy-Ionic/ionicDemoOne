@@ -5,35 +5,48 @@
     .module('app.appReceivedMessage')
     .controller('MessageController', MessageController);
 
-  MessageController.$inject = ['$scope','MessageService'];
+  MessageController.$inject = ['$scope', 'MessageService', '$rootScope'];
+
   /** @ngInject */
-  function MessageController($scope,MessageService) {
+  function MessageController($scope, MessageService, $rootScope) {
 
     var vm = this;
     vm.title = '已收到消息';
     vm.refreshMessageList = refreshMessageList;
     vm.openMsgContent = openMsgContent;
+    vm.fun = {
+      refreshMessageList: refreshMessageList
+    }
 
-    vm.messages = [
-      {title:'测试消息1',status:0,date:'2017/8/10',content:'有要事相讨~','attachmentAddress':'http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg'},
-      {title:'测试消息1',status:1,date:'2017/8/10',content:'有要事相讨~','attachmentAddress':'http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg'},
-      {title:'测试消息1',status:0,date:'2017/8/10',content:'有要事相讨~','attachmentAddress':'http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg'},
-      {title:'测试消息1',status:1,date:'2017/8/10',content:'有要事相讨~','attachmentAddress':'http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg'}
-    ];
+    //http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg
+    vm.messages = [];
 
     activate();
 
     function activate() {
-      // vm.messages = MessageService.getMessage();
+      MessageService.getMessagesByUserId($rootScope.userId, function (resData) {
+        vm.messages = resData;
+      });
     }
 
-
-    function refreshMessageList() {
-
-    }
 
     function openMsgContent(msg) {
 
+    }
+
+    //刷新数据
+    function refreshMessageList() {
+      vm.messages = [];
+      var userId = '';
+      if ($rootScope.userId) {
+        userId = $rootScope.userId;
+      }
+      MessageService.doRefresh(userId, function (resData) {
+        vm.messages = resData;
+        $scope.$apply();
+      }, function () {
+        $scope.$broadcast('scroll.refreshComplete');
+      });
     }
 
   }

@@ -11,7 +11,7 @@
   function messageContentConfig($stateProvider) {
     $stateProvider
       .state('messageContent', {
-        url: '/messageContent',
+        url: '/messageContent/:msgId',
         templateUrl: 'templates/message/messageContent/messageContent.html'
       });
   }

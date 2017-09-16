@@ -5,10 +5,16 @@
   <ion-content class=" padding has-header" scroll="false">
 
     <div class="common-center common-margin-top-10">
+      <div>
+        <label class="checkbox checkbox-square common-center">
+          <input type="checkbox" ng-checked="vm.allCheck.selected" ng-model="vm.allCheck.selected">
+          <span>{{vm.allCheck.account}}</span>
+        </label>
+      </div>
       <div ng-repeat="item in vm.accountList">
-        <label class="checkbox checkbox-square common-center" >
-          <input type="checkbox" ng-checked="item.selected">
-          <span >{{item.account}}</span>
+        <label class="checkbox checkbox-square common-center">
+          <input type="checkbox" ng-model="item.selected" ng-checked="vm.allCheck.selected" >
+          <span>{{item.account}}</span>
         </label>
       </div>
     </div>
@@ -16,13 +22,8 @@
     <div class="common-center common-margin-top-10">
       <span>设施地址：</span>
       <div style="height: 30px;">
-        <input id="search-form" class="add-assessment-select"/>
-        <button ng-click="vm.fun.getAccountsPostionData()">搜索</button>
-        <div id="spinner" ng-show="vm.spinnerShow" class="add-assessment-select">
-          <ul class="proposal-list" ng-repeat="item in vm.accountAddressData">
-            <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item.name}}</li>
-          </ul>
-        </div>
+        <input id="search-form" class="add-assessment-select" ng-model="vm.queryCriteria.keyword"/>
+        <button ng-click="">搜索</button>
       </div>
     </div>
 
@@ -34,11 +35,10 @@
 
         <div class="common-margin-top-20 common-center">
           <span>所在位置：</span>
-          <span>{{vm.mapPositionObj.address}}</span>
+          <span>{{}}</span>
         </div>
       </div>
     </div>
-
 
 
   </ion-content>

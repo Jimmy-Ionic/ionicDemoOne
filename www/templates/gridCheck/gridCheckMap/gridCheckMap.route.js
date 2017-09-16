@@ -12,6 +12,8 @@
     $stateProvider
       .state('gridCheckMap', {
         url: '/gridCheckMap',
+        params: {mapData: null},
+        cache:true,
         templateUrl: 'templates/gridCheck/gridCheckMap/gridCheckMap.html'
       });
   }

@@ -8,109 +8,107 @@
     <div class="common-center common-margin-top-10">
       <span>设施类型：</span>
       <span>
-        <select class="add-assessment-select" ng-init="vm.queryCriteria.type = vm.accountList[0].type"
+        <select class="add-assessment-select" ng-init="vm.queryCriteria.type = vm.facilityTypeList[0].type"
                 ng-model="vm.queryCriteria.type">
-            <option ng-repeat="item in vm.accountList" value="{{item.type}}">{{item.name}}</option>
+            <option ng-repeat="item in vm.facilityTypeList" value="{{item.type}}">{{item.name}}</option>
           </select>
       </span>
     </div>
 
     <div class="common-center common-margin-top-10">
       <span>设施地址：</span>
-      <div style="height: 30px;">
-        <input id="search-form" class="add-assessment-select"/>
+      <div class="add-assessment-select common-height-30">
+        <input id="search-form" class="common-width-100 common-height-30" ng-model="vm.queryCriteria.address"/>
         <button ng-click="vm.fun.queryAccountList()">搜索</button>
-        <div id="spinner" ng-show="vm.spinnerShow" class="add-assessment-select">
-          <ul class="proposal-list" ng-repeat="item in vm.accountAddressData">
-            <li class="proposal" ng-click="vm.fun.spinnerHide(item)">{{item}}</li>
+        <div id="spinner" ng-show="vm.spinnerShow">
+          <ul class="proposal-list">
+            <li style="height: auto" ng-repeat="item in vm.accountList" ng-click="vm.fun.spinnerHide(item)">
+              {{item.name}}
+            </li>
           </ul>
         </div>
       </div>
     </div>
 
     <div ng-switch="vm.queryCriteria.type">
-      <div class="row wait-work-menu common-margin-top" ng-switch-when="05">
+      <div class="row wait-work-menu" ng-switch-when="05">
         <div class="col  text-center">保洁等级</div>
         <div class="col  text-center">主次干道</div>
         <div class="col  text-center">长度</div>
         <div class="col  text-center">宽度</div>
       </div>
 
-      <div class="row wait-work-menu common-margin-top" ng-switch-when="01">
-        <div class="col text-center">公厕类型：</div>
+      <div ng-switch="vm.queryCriteria.type">
+        <div class="row" ng-switch-when="05">
+          <div class="col  text-center">
+            <input class="add-assessment-input text-center" ng-model="vm.accountObj.level"
+                   disabled/>
+          </div>
+          <div class="col  text-center">
+            <input class="add-assessment-input text-center" ng-model="vm.accountObj.road"
+                   disabled/>
+          </div>
+          <div class="col  text-center">
+            <input class="add-assessment-input text-center" ng-model="vm.accountObj.length" disabled/>
+          </div>
+          <div class="col  text-center">
+            <input class="add-assessment-input text-center" ng-model="vm.accountObj.width" disabled/>
+          </div>
+        </div>
+
+        <div class="row common-center" ng-switch-when="01">
+          <span>公厕类型：</span>
+          <input class="add-assessment-select text-center" ng-model="vm.accountObj.wcCondition" disabled/>
+        </div>
+
+        <div class="row common-center" ng-switch-when="06">
+          <span>车辆类型：</span>
+          <input class="add-assessment-select text-center" ng-model="vm.accountObj.carCondition" disabled/>
+        </div>
       </div>
 
-      <div class="row wait-work-menu common-margin-top" ng-switch-when="06">
-        <div class="col text-center">车辆类型：</div>
-      </div>
-    </div>
+      <i class="devider"></i>
 
-    <div ng-switch="vm.queryCriteria.type">
-      <div class="row" ng-switch-when="05">
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.cleanLevel"
-                 disabled/>
-        </div>
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.primaryOrSecondary"
-                 disabled/>
-        </div>
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.length" disabled/>
-        </div>
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.addAssessmentDetails.width" disabled/>
-        </div>
-      </div>
+      <div class="row">
+        <div class="col text-center">
 
-      <div class="row" ng-switch-when="01">
-        <div class="col text-center">{{vm.addAssessmentDetails.condition}}</div>
-      </div>
+          <div class="common-center common-margin-top-10">
+            <span class="common-width-80">扣分情况：</span>
+            <input class="add-assessment-select" ng-model="vm.uploadData.points"/>
+          </div>
 
-      <div class="row" ng-switch-when="06">
-        <div class="text-center">{{vm.addAssessmentDetails.condition}}</div>
-      </div>
-    </div>
+          <div class="common-center common-margin-top-10">
+            <span class="common-width-80">扣分原因：</span>
+            <select class="add-assessment-select" ng-model="vm.uploadData.reason">
+              <option ng-repeat="item in vm.pointReasonArray">{{item.name}}</option>
+            </select>
+          </div>
 
-    <i class="devider"></i>
-
-    <div class="row">
-      <div class="col text-center">
-
-        <div class="common-center common-margin-top-10">
-          <span>扣分情况：</span>
-          <input class="add-assessment-select" ng-model="vm.uploadData.points"/>
-        </div>
-
-        <div class="common-center common-margin-top-10">
-          <span>扣分原因：</span>
-          <select class="add-assessment-select" ng-init="vm.uploadData.reason = vm.accountList.reason[0]"
-                  ng-model="vm.uploadData.reason">
-            <option ng-repeat="item in vm.accountList.reason">{{item}}</option>
-          </select>
-        </div>
-
-        <div class="common-center common-margin-top-10">
-          <span>备注：</span>
-          <textarea class="common-border add-assessment-textArea"></textarea>
-        </div>
+          <div class="common-center common-margin-top-10">
+            <span class="common-width-80">备注：</span>
+            <textarea class="common-border add-assessment-textArea" ng-model="vm.uploadData.remark"></textarea>
+          </div>
 
 
-        <div class="row common-margin-top common-center">
-          <img class="col add-assessment-img text-center"
-               ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}" on-hold="vm.fun.deletePic($index)">
-        </div>
+          <div class="row common-margin-top-5 common-center add-assessment-img">
+            <img class="col add-assessment-img text-center"
+                 ng-repeat="item in vm.picBase64DataArray" ng-srcset="{{item}}" on-hold="vm.fun.deletePic($index)">
+          </div>
 
-        <button class="common-margin-top" ng-click="vm.fun.takePicture()">拍照上传</button>
+          <button class="common-margin-top-10" ng-click="vm.fun.takePicture()">拍照上传</button>
 
-        <div>
-          <button class="common-margin-top" ng-click="vm.fun.toAddAssessmentMap()">查看地图</button>
+          <div>
+            <button class="common-margin-top-10" ng-click="vm.fun.toAddAssessmentMap()">查看地图</button>
+          </div>
         </div>
       </div>
     </div>
   </ion-content>
 
 
-  <div ng-include="'templates/common/common.footerConfirm.html'"></div>
+  <div class="bar bar-footer">
+    <button class="button common-center button-positive" ng-click="vm.uploadDataFun()">确定</button>
+  </div>
+
 
 </ion-view>

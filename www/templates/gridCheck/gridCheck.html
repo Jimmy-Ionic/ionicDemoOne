@@ -2,7 +2,7 @@
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class=" padding has-header has-footer padding-top">
+  <ion-content class=" padding has-header has-footer padding-top" scroll="false">
 
     <div class="padding-top common-center">
       <button class=" button button-small button-positive gride-check-top-btn-margin"
@@ -19,29 +19,30 @@
     <div class="common-center common-margin-top-10">
       <span class="common-span-width">区市：</span>
       <span>
-        <input class="add-assessment-select" ng-model="vm.uploadData.district" disabled/>
+        <input class="add-assessment-select" ng-model="vm.uploadData.areaName" disabled/>
       </span>
     </div>
 
     <div class="common-center common-margin-top-10">
       <span class="common-span-width">街道：</span>
       <span>
-        <input class="add-assessment-select" ng-model="vm.uploadData.street" disabled/>
+        <input class="add-assessment-select" ng-model="vm.uploadData.streetName" disabled/>
       </span>
     </div>
 
     <div class="common-center common-margin-top-10">
       <span class="common-span-width">问题代码：</span>
       <span>
-        <select class="add-assessment-select" ng-init="vm.uploadData.selectedQuesCode = vm.questionCode[0]"
-                ng-model="vm.uploadData.selectedQuesCode" ng-options="x for x in vm.questionCode">
+        <select class="add-assessment-select" ng-model="vm.questionCodeObj"
+                ng-options="item.name for item in vm.questionCode">
+          <!--<option ng-repeat="item in vm.questionCode" value="{{item}}">{{item.name}}</option>-->
         </select>
       </span>
     </div>
 
     <div class="common-center common-margin-top-10">
       <span class="common-span-width">问题描述：</span>
-      <textarea class="common-border add-assessment-textArea" ng-modele="vm.uploadData.question"></textarea>
+      <textarea class="common-border add-assessment-textArea" ng-modele="vm.uploadData.description"></textarea>
     </div>
 
 

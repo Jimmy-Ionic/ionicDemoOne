@@ -17,9 +17,9 @@
     return service;
 
 
-    function getPlanList(userId,fun) {
-      var path = '' + userId;
-      MyHttpService.getCommonData(path,fun);
+    function getPlanList(userId, fun) {
+      var path = '/hwweb/Comprehensive/findDataByUserId.action?userId=' + userId;
+      MyHttpService.getCommonData(path, fun);
     }
   }
 })();

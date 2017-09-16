@@ -10,7 +10,7 @@
   /** @ngInject */
   function WaitForWorkController($scope,WaitForWorkService,$rootScope,$state) {
     var vm = this;
-    vm.title = '代办工作';
+    vm.title = '待办工作';
     vm.titleController = {};
     vm.workList = [];
     vm.toJobDetails = toJobDetails;

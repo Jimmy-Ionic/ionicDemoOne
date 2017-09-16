@@ -12,7 +12,7 @@
     $stateProvider
       .state('accountDetails', {
         url: '/accountDetails',
-        params: {accountData: null},
+        params: {accountData: null, code: null},
         // views: {
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'

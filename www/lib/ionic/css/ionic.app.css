@@ -10049,7 +10049,9 @@ a.button {
 
 .add-assessment-select {
   width: 150px;
-  height: 30px; }
+  height: 30px;
+  line-height: 30px;
+  margin-left: 10px; }
 
 .common-margin-top-10 {
   margin-top: 10px; }
@@ -10145,7 +10147,7 @@ a.button {
 
 .add-assessment-img {
   height: 80px;
-  width: 80px; }
+  width: 120px; }
 
 .common-z-index {
   position: absolute;
@@ -10218,8 +10220,9 @@ a.button {
   left: 0px; }
 
 .proposal-list {
-  width: 150px;
-  height: 300px;
+  width: 100px;
+  height: auto;
+  max-height: 300px;
   position: relative;
   background: white;
   overflow-y: scroll;
@@ -10307,3 +10310,95 @@ h3 {
 
 .common-height-80 {
   height: 80px; }
+
+.common-width-250 {
+  width: 250px; }
+
+.common-width-100 {
+  width: 100px; }
+
+.common-height-30 {
+  height: 30px; }
+
+.common-width-80 {
+  width: 80px; }
+
+.devider {
+  background: #f2f2f2;
+  height: 1px; }
+
+.common-height-auto {
+  height: auto; }
+
+.common-vertical-center {
+  display: -webkit-flex;
+  /* Safari */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center; }
+
+.common-horizontal-center {
+  display: -webkit-flex;
+  /* Safari */
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.common-width-260 {
+  width: 260px; }
+
+.common-width-270 {
+  width: 270px; }
+
+.common-width-280 {
+  width: 280px; }
+
+.common-with-290 {
+  width: 290px; }
+
+.common-width-300 {
+  width: 300px; }
+
+.common-width-310 {
+  width: 310px; }
+
+.common-width-320 {
+  width: 320px; }
+
+.common-width-330 {
+  width: 330px; }
+
+.common-width-340 {
+  width: 340px; }
+
+.common-width-350 {
+  width: 350px; }
+
+.common-max-width-100 {
+  max-width: 100px; }
+
+.common-text-ellipsis {
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis; }
+
+.account-area {
+  width: 60px;
+  max-width: 70px; }
+
+.account-type {
+  width: 110px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis; }
+
+.account-level {
+  width: 50px;
+  max-width: 60px; }
+
+.account-check {
+  width: 50px;
+  max-width: 60px; }

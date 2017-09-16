@@ -2,20 +2,26 @@
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <div class="content has-header">
+  <ion-content class="content has-header">
+    <ion-refresher
+      pulling-text="下拉刷新..."
+      on-refresh="vm.refreshMessageList()">
+    </ion-refresher>
     <div class="list">
-
-      <a class="item item-icon-left item-icon-right" ng-repeat="msg in vm.messages" href="#/messageContent">
-        <span class="icon" ng-switch="msg.status">
+      <a class="item item-icon-left item-icon-right" ng-repeat="msg in vm.messages" href="#/messageContent/{{msg.id}}">
+        <span class="icon" ng-switch="msg.state">
           <span class="icon ion-email-unread" ng-switch-when="0"></span>
           <span class="icon ion-email" ng-switch-when="1"></span>
         </span>
         <span>{{msg.title}}</span>
-        <span>({{msg.status==0?'未读':'已读'}})</span>
-        <span class="item-note">{{msg.date}}</span>
+        <span ng-switch="msg.state">
+          <span ng-switch-when="0">(未读)</span>
+           <span ng-switch-when="1">(已读)</span>
+        </span>
+        <span class="item-note">{{msg.sendDate}}</span>
 
       </a>
     </div>
-  </div>
+  </ion-content>
 
 </ion-view>

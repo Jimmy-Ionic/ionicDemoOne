@@ -24,18 +24,7 @@
 
 
     function activate() {
-      // for (var i = 0; i < 15; i++) {
-      //   vm.problemList[i] = {
-      //     id: '6',
-      //     institutionsName: '山东路',
-      //     type: '道路',
-      //     status: '1',
-      //     address: "燕儿岛路",
-      //     question: "公厕不净",
-      //     position:[120.41317,36.07705]
-      //   }
-      // }
-      ProblemFeedbackService.getProblemList($rootScope.userId,function (resData) {
+      ProblemFeedbackService.getProblemList($rootScope.userId, function (resData) {
         vm.problemList = resData;
       });
     }
@@ -46,21 +35,21 @@
     }
 
     function feedbackProblem(item) {
-      if (item.status == 0) {
-        toProblemFeedbackDetails(item);
-      } else {
-        $ionicPopup.alert({
-          title: '提示',
-          template: '您已经反馈过问题啦'
-        }).then(function (res) {
-
-        });
-      }
-
+      // if (item.status == 0) {
+      //   toProblemFeedbackDetails(item);
+      // } else {
+      //   $ionicPopup.alert({
+      //     title: '提示',
+      //     template: '您已经反馈过问题啦'
+      //   }).then(function (res) {
+      //
+      //   });
+      // }
+      toProblemFeedbackDetails(item);
     }
 
     function toProblemFeedbackDetails(item) {
-      $state.go('problemFeedbackDetails', {problemItem: item,fromWhere:'problemFeedbackDetails'});
+      $state.go('problemFeedbackDetails', {problemItem: item, fromWhere: 'problemFeedback'});
     }
 
 

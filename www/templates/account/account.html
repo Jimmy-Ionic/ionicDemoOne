@@ -8,7 +8,7 @@
     <div class="padding common-center">
       <label class="item item-input">
         <!--<i class="icon ion-search"></i>-->
-        <input type="text" placeholder="请输入关键字搜索" ng-model="vm.keyword"/>
+        <input type="text" placeholder="请输入关键字搜索" ng-model="vm.queryCriteria.keyword"/>
       </label>
       <button class="button button-positive icon ion-search common-margin-left-20"
               ng-click="vm.fun.getAccountListByQueryCriteria()"></button>
@@ -16,19 +16,26 @@
 
     <div class="row">
       <div class="col  text-center">
-        <select ng-init="vm.queryCriteria.cityPlace = vm.cityPlace[0]" ng-model="vm.queryCriteria.cityPlace">
-          <option ng-repeat="x in vm.cityPlace">{{x}}</option>
+        <select ng-init="vm.queryCriteria.cityPlace = ''" ng-model="vm.queryCriteria.cityPlace">
+          <option value="">全部区</option>
+          <option ng-repeat="x in vm.queryCriteriaObj.area" value="{{x.id}}">{{x.name}}</option>
         </select>
       </div>
       <div class="col  text-center">
-        <select ng-init="vm.queryCriteria.accountType = vm.accountType[0]" ng-model="vm.queryCriteria.accountType">
-          <option ng-repeat="x in vm.accountType" ng-click="vm.fun.updateLevelArrayByType(x)">{{x}}</option>
+        <select class="common-max-width-100 common-text-ellipsis" ng-init="vm.accountType = ''"
+                ng-model="vm.accountType" ng-change="vm.fun.updateLevelArrayByType(vm.accountType)">
+          <option value="">全部类型</option>
+          <option class="common-max-width-100 common-text-ellipsis" ng-repeat="x in vm.queryCriteriaObj.item"
+                  value="{{x}}">{{x.name}}
+          </option>
         </select>
       </div>
 
       <div class="col  text-center">
-        <select ng-init="vm.queryCriteria.leve = vm.level[0]" ng-model="vm.queryCriteria.level">
-          <option ng-repeat="x in vm.level">{{x}}</option>
+        <select class="common-max-width-100 common-text-ellipsis" ng-init="vm.queryCriteria.leve = ''"
+                ng-model="vm.queryCriteria.level">
+          <option value="">全部子类</option>
+          <option ng-repeat="x in vm.levelList" value="{{x.id}}">{{x.name}}</option>
         </select>
       </div>
 
@@ -39,39 +46,131 @@
 
   </div>
 
-  <ion-content class="padding common-ion-content-top-200 has-footer common-border common-margin-left-10 common-margin-right-10">
+  <ion-content
+    class="padding common-ion-content-top-200 has-footer common-border common-margin-left-10 common-margin-right-10">
 
-    <div>
-      <div class="row">
-        <div class="col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.accountList">
-              {{item.cityPlace}}
-            </li>
-          </ul>
-        </div>
-        <div class="col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.accountList">
-              {{item.accountType}}
-            </li>
-          </ul>
-        </div>
-        <div class="col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.accountList">
-              {{item.level}}
-            </li>
-          </ul>
-        </div>
-        <div class="col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.accountList">
-              <span class="wait-work-list-item-btn" ng-click="vm.fun.toAccountDetails(item)">查看</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <!--车辆-->
+    <div ng-switch="vm.accountList">
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.cheliang">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{}}</div>
+          <div class="account-level">{{item.toiletType}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'cheliang')">查看
+          </div>
+        </li>
+      </ul>
+      <!--冲洗作业-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.congxizuoye">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{item.roadName}}</div>
+          <div class="account-level">{{item.cleanLevel}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'congxizuoye')">查看
+          </div>
+        </li>
+      </ul>
+      <!--道路-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.daolu">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{item.roadName}}</div>
+          <div class="account-level">{{item.cleanLevel}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'daolu')">查看
+          </div>
+        </li>
+      </ul>
+      <!--公厕-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.gongche">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{}}</div>
+          <div class="account-level">{{item.toiletType}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'gongche')">查看
+          </div>
+        </li>
+      </ul>
+      <!--过街天桥-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.guojietianqiao">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{item.startEnd}}</div>
+          <div class="account-level">{{item.cleanLevel}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'guojietianqiao')">查看
+          </div>
+        </li>
+      </ul>
+      <!--机扫作业-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.jishaozuoye">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{}}</div>
+          <div class="account-level">{{item.toiletType}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'jishaozuoye')">查看
+          </div>
+        </li>
+      </ul>
+      <!--机械作业-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.jixiezuoye">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{}}</div>
+          <div class="account-level">{{item.toiletType}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'jixiezuoye')">查看
+          </div>
+        </li>
+      </ul>
+      <!--垃圾桶-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.cheliang">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{}}</div>
+          <div class="account-level">{{item.toiletType}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'lajitong')">查看
+          </div>
+        </li>
+      </ul>
+      <!--洒水作业-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.shashuizuoye">
+          <div class="account-area">{{item.AreaId}}</div>
+          <div class="account-type">{{item.operateType}}</div>
+          <div class="account-level">{{item.frequency}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'shashuizuoye')">查看
+          </div>
+        </li>
+      </ul>
+      <!--收集站-->
+      <ul class="list" ng>
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.shoujizhan">
+          <div class="account-area">{{item.areaid}}</div>
+          <div class="account-type">{{}}</div>
+          <div class="account-level">{{item.toiletType}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'shoujizhan')">查看
+          </div>
+        </li>
+      </ul>
+      <!--收运作业-->
+      <ul class="list">
+        <li class="item common-horizontal-center" ng-repeat="item in vm.accountList.shouyunzuoye">
+          <div class="account-area">{{item.areaId}}</div>
+          <div class="account-type">{{item.collectType}}</div>
+          <div class="account-level">{{item.shortIntroduce}}</div>
+          <div class="wait-work-list-item-btn"
+               ng-click="vm.toAccountDetails(item,'shouyunzuoye')">查看
+          </div>
+        </li>
+      </ul>
     </div>
 
   </ion-content>

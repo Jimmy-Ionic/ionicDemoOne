@@ -12,7 +12,6 @@
     var vm = this;
     vm.data = {}
     vm.title = '';
-    vm.fromWhere = $stateParams.fromWhere;
     vm.fun = {
       toAddAssessment: toAddAssessment
     }
@@ -25,34 +24,25 @@
 
 
     function activate() {
-      if (vm.fromWhere == null) {
-        vm.fromWhere = 'waitForWork'
-      }
 
       if ($stateParams.planDetailsData) {
         vm.data = $stateParams.planDetailsData;
-        vm.title = vm.data.planName;
+        vm.title = $stateParams.planDetailsData.planName;
       }
-
-      //判断上一页面是代办工作，综合考核，还是历史记录
-      switch (vm.fromWhere) {
-        case 'waitForWork':
-          break;
-        case 'assessment':
-          break;
-        case 'history':
-          break;
-        default:
-          break;
-      }
-      PlanDetailsService.getPlanDetailsList(vm.data.id, vm.fromWhere, function (responseData) {
+      PlanDetailsService.getPlanDetailsList(vm.data.id, function (responseData) {
         vm.planDetailsList = responseData;
       });
     }
 
 
     function toAddAssessment() {
-      $state.go('addAssessment');
+
+      if (vm.data.id) {
+        var planObj = {
+          id: vm.data.id
+        }
+        $state.go('addAssessment', {addAssessmentData: planObj});
+      }
     }
 
     function toAssessmentStatus(item) {

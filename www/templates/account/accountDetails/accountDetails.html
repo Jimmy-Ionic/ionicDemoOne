@@ -4,248 +4,426 @@
 
 
 
-  <ion-content class="padding has-header has-footer padding-top scroll-bar-fade-out calm-border">
+  <ion-content class="padding has-header has-footer padding-top scroll-bar-fade-out calm-border" ng-switch="vm.code">
 
-    <div class="item item-borderless text-center">
-      银川路公厕
-    </div>
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="cheliang">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="congxizuoye">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="daolu">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="gongche">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="guojietianqiao">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="jishaozuoye">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
 
-
-    <!--公厕的台帐具体信息-->
-    <div class="card">
-      <div>
-        <div class="item common-bold-font">
-          <span>哈哈哈哈</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕名称：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class= "item item-borderless">
-          <span>公厕面积：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕类型：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>负责人：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>所属位置：</span>
-          <span>{{vm.group}}</span>
-        </div>
-        <div class="item item-borderless">
-          <span>公厕位置：</span>
-          <span>{{vm.group}}</span>
+    <div ng-switch-when="jixiezuoye">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <div ng-switch-when="cheliang">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="shashuizuoye">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="shoujizhan">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="shouyunzuoye">
+      <div class="item item-borderless text-center">
+        银川路公厕
+      </div>
+      <!--公厕的台帐具体信息-->
+      <div class="card">
+        <div>
+          <div class="item common-bold-font">
+            <span>哈哈哈哈</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕名称：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class= "item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类型：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>负责人：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕位置：</span>
+            <span>{{vm.group}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </ion-content>
 </ion-view>

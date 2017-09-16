@@ -25,17 +25,6 @@
       refreshRoadOrInstallationPosition: refreshRoadOrInstallationPosition
     };
     vm.mapPositionObj = {
-      // address: '市南软件园2号楼',
-      // position: [120.41317, 36.07705],
-      // roadPositionArray: [
-      //   ["120.352728", "36.086514"], ["120.352788", "36.086477"],
-      //   ["120.352849", "36.08644"], ["120.35291", "36.086403"],
-      //   ["120.35297", "36.086365"], ["120.353031", "36.086328"],
-      //   ["120.353092", "36.086291"], ["120.353152", "36.086254"],
-      //   ["120.353213", "36.086217"], ["120.353283", "36.086178"],
-      //   ["120.353354", "36.086138"], ["120.353425", "36.086099"],
-      //   ["120.353425", "36.086099"]
-      // ]
       address: '',
       position: []
     }
@@ -54,6 +43,14 @@
 
       switch (vm.from) {
         case 'addAssessment':
+          if ($stateParams.mapPositionObj) {
+            console.log($stateParams.mapPositionObj);
+            if($stateParams.mapPositionObj.name){
+              vm.mapPositionObj.address = $stateParams.mapPositionObj.name;
+            }
+            vm.mapPositionObj.position = AddAssessmentMapService.getPositionArray($stateParams.mapPositionObj.point);
+          }
+          console.log(vm.mapPositionObj);
           break;
         case 'assessmentStatusDetails':
           if ($stateParams.mapPositionObj) {
@@ -77,6 +74,11 @@
       vm.map = CommonMapService.initMap();
       vm.markerPerson = new AMap.Marker();
 
+      CommonMapService.getCoordinateInfo(function (data) {
+        vm.markerPerson.setPosition(data);
+        vm.markerPerson.setMap(vm.map);
+      });
+
       if (vm.mapPositionObj.position.length == 1) {
         //当position.length数量等于1的时候，说明是点坐标
         // 代表着这是一个具体的设施（比如山东路某个公厕，具体到了地址），不是道路
@@ -86,16 +88,15 @@
           image: '../assets/global/map/marker.png',//24px*24px
           // content: '<img src="/www/assets/global/img/location.png" />',
           imageOffset: new AMap.Pixel(0, 0)
-
         })
 
         vm.marker = new AMap.Marker({
-          position: vm.mapPositionObj.position,
+          position: vm.mapPositionObj.position[0],
           icon: icon
         });
 
         vm.marker.setMap(vm.map);
-        vm.map.setCenter(vm.mapPositionObj.position);
+        vm.map.setCenter(vm.mapPositionObj.position[0]);
       } else if (vm.mapPositionObj.position.length > 1) {//坐标数组大于1说明是道路
         console.log('走到这里了');
         vm.polyline = new AMap.Polyline({
@@ -127,11 +128,10 @@
 
     function refreshRoadOrInstallationPosition() {
       if (vm.mapPositionObj.position.length == 1) {
-        vm.map.setCenter(vm.mapPositionObj.position);
+        vm.map.setCenter(vm.mapPositionObj.position[0]);
       } else if (vm.mapPositionObj.position.length > 1) {
         vm.map.setCenter(vm.mapPositionObj.position[vm.centerPositionNum]);
       }
-
     }
   }
 })();

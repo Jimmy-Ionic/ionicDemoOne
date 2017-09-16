@@ -6,39 +6,42 @@
     <button class="button" ng-click="vm.fun.uploadProblemFeedbackData()">确定</button>
   </div>
 
-  <ion-content class=" padding has-header padding-top common-center">
+  <ion-content class="padding has-header" scroll="false">
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">考核设施：</span>
+      <div class="add-assessment-select ">{{vm.problemDetails.name}}</div>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">考核地址：</span>
+      <div class="add-assessment-select">{{vm.problemDetails.location}}</div>
+    </div>
+
+    <div class="common-center common-margin-top-10">
+      <span class="common-span-width">问题原因：</span>
+      <div class="add-assessment-select ">{{vm.problemDetails.describe}}</div>
+    </div>
 
     <div class="common-center">
-      <span class="common-span-width">考核设施：</span>
-      <span class="add-assessment-select">{{vm.problemDetails.institutionsName}}</span>
-    </div>
-
-    <div class="common-center common-margin-top-5">
-      <span class="common-span-width">考核地址：</span>
-      <span class="add-assessment-select">{{vm.problemDetails.address}}</span>
-    </div>
-
-    <div class="common-center common-margin-top-5">
-      <span class="common-span-width">问题原因：</span>
-      <span class="add-assessment-select">{{vm.problemDetails.question}}</span>
-    </div>
-
-    <div class="common-center common-margin-top-5">
       <span class="common-span-width">整改情况：</span>
-      <textarea class="common-border add-assessment-textArea" ng-modele="vm.feedBack"></textarea>
+      <textarea class="common-border add-assessment-textArea"
+                ng-modele="vm.uploadData.feedbackDescription"></textarea>
     </div>
 
 
-    <div id="problemFeedbackDetailsMap" class="feedback-map-div common-margin-top-10">
+    <div class="common-center">
+      <div id="problemFeedbackDetailsMap" class="feedback-map-div common-margin-top-10">
+      </div>
     </div>
 
     <div class="common-margin-top-5 common-center">目标定位地点</div>
 
     <div class="common-center common-margin-top-10">
-      <img id="problemFeedbackDetailsImg" class="feedback-img" ng-srcset="{{vm.picPath}}">
-      <button class="button button-small button-positive common-margin-left-10" ng-click="vm.fun.initCamera()">拍照上传</button>
+      <img id="problemFeedbackDetailsImg" class="feedback-img" on-hold="vm.deletePic()" >
+      <button class="button button-small button-positive common-margin-left-10" ng-click="vm.fun.initCamera()">拍照上传
+      </button>
     </div>
-
 
 
   </ion-content>

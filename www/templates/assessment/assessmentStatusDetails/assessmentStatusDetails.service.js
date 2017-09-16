@@ -32,8 +32,13 @@
       MyHttpService.getCommonData(path, fun);
     }
 
+    //扣分原因查询
     function getAccounts(data, fun) {
-      var url = '/hwweb/AssignmentAssessment/findDItem.action?' + 'typeId=' + data.typeId;
+      if(data){
+        var url = '/hwweb/AssignmentAssessment/findDItem.action?' + 'typeId=' + data.typeId;
+      }else{
+        var url = '/hwweb/AssignmentAssessment/findDItem.action'
+      }
       MyHttpService.getCommonData(url, fun);
     }
 

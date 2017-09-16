@@ -13,20 +13,18 @@
     var vm = this;
     vm.data = {};
     vm.installationName = '';
+    vm.code = ''
     vm.accountDetailsData = {};
 
     activate();
 
     function activate() {
       if ($stateParams.accountData != null) {
-
+        vm.accountDetailsData = $stateParams.accountData;
       }
-    }
-
-    function getAccountDetailsData() {
-      AccountDetailsService.getAccountDetailsData(function () {
-
-      });
+      if ($stateParams.code != null) {
+        vm.code = $stateParams.code;
+      }
     }
   }
 })();

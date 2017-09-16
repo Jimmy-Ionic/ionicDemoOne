@@ -5,14 +5,15 @@
     .module('app.problemFeedbackDetails')
     .service('ProblemFeedbackDetailsService', ProblemFeedbackDetailsService);
 
-  ProblemFeedbackDetailsService.$inject = ['$http', '$ionicLoading', '$ionicPopup'];
+  ProblemFeedbackDetailsService.$inject = ['MyHttpService', 'AddAssessmentMapService'];
 
   /** @ngInject */
-  function ProblemFeedbackDetailsService($http, $ionicLoading, $ionicPopup) {
+  function ProblemFeedbackDetailsService(MyHttpService, AddAssessmentMapService) {
 
     var service = {
       getProblemFeedbackDetailsMap: getProblemFeedbackDetailsMap,
-      uploadProblemFeedbackData: uploadProblemFeedbackData
+      uploadProblemFeedbackData: uploadProblemFeedbackData,
+      getProblemDetailsData: getProblemDetailsData
     };
 
     return service;
@@ -20,15 +21,25 @@
 
     function getProblemFeedbackDetailsMap(positionObj) {
 
+      console.log('问题饭详情页面的相关数据')
+      console.log(positionObj);
+      var point = AddAssessmentMapService.getPositionArray(positionObj.point);
+      if (point.length <= 0) {
+        point = null;
+      } else {
+        point = point[0];
+      }
+      console.log('问题饭详情页面设施坐标')
+      console.log(point);
+
       var map = new AMap.Map('problemFeedbackDetailsMap', {
         resizeEnable: true,
-        zoom: 18,
-        center: positionObj.position
+        zoom: 15,
+        center: point
       });
 
       var marker = new AMap.Marker({
-        position: positionObj.position,
-        title: positionObj.address,
+        position: point,
         map: map
       });
 
@@ -36,30 +47,20 @@
         var toolBar = new AMap.ToolBar();
         map.addControl(toolBar);
       });
-    }
-
-    function uploadProblemFeedbackData(problemFeedbackData, fromWhere) {
-
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>数据上传中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        });
-
-      switch (fromWhere) {
-        case 'problemFeedbackDetails':
-          break;
-        case 'waitForWork':
-          break;
-        default:
-          break;
-      }
 
     }
 
+    //这是代办任务跳转到这个页面获取数据的方法
+    function getProblemDetailsData(data, fun) {
+      var url = '/hwweb/GridInspection/CheckProblemById.action?planId=' + data.id;
+      MyHttpService.getCommonData(url, fun);
+    }
+
+    function uploadProblemFeedbackData(jsonObj, fun) {
+      var url = '/hwweb/GridInspection/UploadProblem.action';
+      var jsonStr = JSON.stringify(jsonObj);
+      MyHttpService.uploadCommonData(url, jsonStr, fun);
+    }
 
   }
 })();

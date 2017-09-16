@@ -51,14 +51,14 @@
     })
     .controller('AppController', AppController);
 
-  AppController.$inject['$scope', '$rootScope', '$interval', '$http', ' $ionicHistory', '$state','LoginService'];
+  AppController.$inject['$scope', 'SYS_INFO', '$rootScope', '$interval', '$http', ' $ionicHistory', '$state', 'LoginService'];
 
-  function AppController($scope, $rootScope, $interval, $http, $ionicHistory, $state,LoginService) {
+  function AppController($scope, SYS_INFO, $rootScope, $interval, $http, $ionicHistory, $state, LoginService) {
     $rootScope.unReadMsgCount = 0;
     $rootScope.goBack = goBack;
     $rootScope.toMessagePage = toMessagePage;
 
-    var messageApi = '';
+    var messageApi = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
 
     LoginService.setServerInfo();
 

@@ -12,7 +12,8 @@
 
     var service = {
       getAccountList: getAccountList,
-      getAccountListByQueryCriteria:getAccountListByQueryCriteria
+      getAccountListByQueryCriteria: getAccountListByQueryCriteria,
+      getQueryCriteriaList: getQueryCriteriaList
     };
 
     return service;
@@ -22,8 +23,15 @@
       MyHttpService.getCommonData(url, fun);
     }
 
-    function getAccountListByQueryCriteria() {
-      var url = '';
+    function getAccountListByQueryCriteria(queryCriteria,fun) {
+      var url = '/hwweb/Ledger/findFacilitiesByCondition.action?areaId=' +
+        queryCriteria.cityPlace + '&code=' + queryCriteria.accountType +
+        '&subclassId=' + queryCriteria.level + '&name=' + queryCriteria.keyword;
+      MyHttpService.getCommonData(url, fun);
+    }
+
+    function getQueryCriteriaList(fun) {
+      var url = '/hwweb/Ledger/findAllAreaAndItem.action';
       MyHttpService.getCommonData(url, fun);
     }
   }

@@ -5,21 +5,21 @@
     .module('app.map')
     .service('MapService', MapService);
 
-  MapService.$inject = ['$http','MyHttpService'];
+  MapService.$inject = ['MyHttpService'];
 
   /** @ngInject */
-  function MapService($http,MyHttpService) {
+  function MapService(MyHttpService) {
     var service = {
-      getAccountList:getAccountList
+      getAccountList: getAccountList
     }
 
     return service;
 
 
     //获取街道，车辆等相关的台帐信息
-    function getAccountList(fun) {
-      var url = '';
-      MyHttpService.getCommonData(url,fun);
+    function getAccountList(queryCriteria, fun) {
+      var url = '/hwweb/Ledger/findMap.action?code=' + queryCriteria.type + '&name=' + queryCriteria.keyword;
+      MyHttpService.getCommonData(url, fun);
     }
   }
 })();
