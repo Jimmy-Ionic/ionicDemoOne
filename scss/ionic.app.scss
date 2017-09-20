@@ -21,6 +21,10 @@ $ionicons-font-path: "../fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+*{
+  font-size: 16px;
+}
+
 //lyq 通用样式
 
 .currency-textAlign-right {
@@ -170,8 +174,8 @@ $ionicons-font-path: "../fonts" !default;
 }
 
 .home-work-div {
-  width: 100px;
-  height: 90px;
+  width: 90px;
+  height: 100px;
 }
 
 .common-font {
@@ -727,28 +731,533 @@ h3 {
 
 .account-area {
   width: 60px;
-  max-width: 70px;
+  max-width: 70px
 }
 
 .account-type {
-  width:110px;
+  width: 110px;
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  -o-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis
 }
 
-.account-level {
+.account-check, .account-level {
   width: 50px;
-  max-width: 60px;
+  max-width: 60px
 }
 
-.account-check {
-  width: 50px;
-  max-width: 60px;
+.login-bg {
+  background: url('/www/assets/global/img/login/login_bg.jpg')
+}
+
+.login-title {
+  margin-top: 100px;
+  font-family: "微软雅黑";
+  font-weight: 700;
+  color: #fff;
+  font-size: 60px
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 15px
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #fff;
+  font-size: 15px
+}
+
+/*自定义checkbox的样式，发现目前ionic的默认样式不影响*/
+input[type="checkbox"] {
+  /* width: 40px; */
+  /* height: 40px; */
+  /* -webkit-border-radius: 50%; */
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  display: inline-block;
+  width: 100px;
+  color: #28642b;
+  margin-top: 10px;
+  margin-left: 5px;
+  text-align: left;
+  -webkit-box-sizing: border-box;
+}
+
+label::before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: #EEE;
+  vertical-align: middle;
+  -webkit-border-radius: 50%;
+  margin-right: 5px;
+  -webkit-box-sizing: border-box;
+  -webkit-transition: background ease-in .5s
+}
+
+input[type="checkbox"]:checked + label::before {
+  background-color: rgb(53, 183, 111);
+  border: 5px #EEEEEE solid;
+}
+
+/*****************主页的样式*********************/
+
+.login-bg {
+  background: url(/www/assets/global/img/login/login_bg.jpg)
+}
+
+.login-title {
+  margin-top: 100px;
+  font-family: "微软雅黑";
+  font-weight: 700;
+  color: #fff;
+  font-size: 60px
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 15px
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #fff;
+  font-size: 15px
+}
+
+input[type=checkbox] {
+  display: none
+}
+
+input[type=checkbox] + label {
+  display: inline-block;
+  width: 100px;
+  color: #28642b;
+  margin-top: 10px;
+  margin-left: 5px;
+  text-align: left;
+  -webkit-box-sizing: border-box
+}
+
+label::before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: #EEE;
+  vertical-align: middle;
+  -webkit-border-radius: 50%;
+  margin-right: 5px;
+  -webkit-box-sizing: border-box;
+  -webkit-transition: background ease-in .5s
+}
+
+input[type=checkbox]:checked + label::before {
+  background-color: #35b76f;
+  border: 5px solid #EEE
+}
+
+.home-bg {
+  background: #86d2c6
+}
+
+.home-top {
+  height: 130px;
+  padding: 0 10px;
+  margin-top: 20px
+}
+
+.common-font-white-size-16 {
+  font-size: 16px;
+  color: #fff
+}
+
+.common-font-white-size-15 {
+  font-size: 15px;
+  color: #fff
+}
+
+.common-font-white-size-14 {
+  font-size: 14px;
+  color: #fff
+}
+
+.common-margin-0-auto {
+  margin: 0 auto
+}
+
+.common-no-padding {
+  padding: 0
+}
+
+.home-temperature {
+  font-size: 20px;
+  color: #fff
+}
+
+.home-top-bar {
+  width: 100%;
+  height: 50px;
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  -khtml-display: flex;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px
+}
+
+.home-top-button {
+  width: auto;
+  height: 32px;
+  background: #4cb2ae;
+  border-radius: 5px;
+  border-style: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+.home-top-button:active {
+  background: #61D8D1
+}
+
+.home-bottom-bg {
+  width: 100%;
+  height: 100%;
+  background: #F9F9F9
+}
+
+.home-bottom-title {
+  font-size: 19px;
+  color: #666;
+  margin-top: 30px
+}
+
+.home-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  padding: 5px;
+  width: 100%
+}
+
+.home-work-img {
+  width: 40px;
+  height: 42px;
+  margin: 0 auto
+}
+
+.home-work-img-text {
+  color: #4cb2ae
+}
+
+.home-work-div {
+  width: 95px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  background: #fff;
+  border: solid;
+  border-color: #ddd;
+  border-width: 1px;
+  border-radius: 5px;
+  padding:5px;
+}
+
+.home-waitforwork {
+  background-image: url(/assets/global/img/home/icon_waitforwork_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-assessment {
+  background-image: url(/assets/global/img/home/icon_assessment_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+
+.home-gridcheck {
+  background-image: url(/assets/global/img/home/icon_gridcheck_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-problemfeedback {
+  background-image: url(/assets/global/img/home/icon_problemfeedback_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+
+.home-account {
+  background-image: url(/assets/global/img/home/icon_account_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-history {
+  background-image: url(/assets/global/img/home/icon_history_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-map {
+  background-image: url(/assets/global/img/home/icon_map_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-message {
+  background-image: url(/assets/global/img/home/icon_message_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-setting {
+  background-image: url(/assets/global/img/home/icon_setting_default.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+
+.home-work-div:active {
+  background: #86d2c6
+}
+
+.home-work-div:active .home-waitforwork {
+  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-assessment {
+  background-image: url(/assets/global/img/home/icon_assessment_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-gridcheck {
+  background-image: url(/assets/global/img/home/icon_gridcheck_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-problemfeedback {
+  background-image: url(/assets/global/img/home/icon_problemfeedback_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-account {
+  background-image: url(/assets/global/img/home/icon_account_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-history {
+  background-image: url(/assets/global/img/home/icon_history_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-map {
+  background-image: url(/assets/global/img/home/icon_map_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-message {
+  background-image: url(/assets/global/img/home/icon_message_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-setting {
+  background-image: url(/assets/global/img/home/icon_setting_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-waitforwork {
+  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-waitforwork {
+  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active .home-waitforwork {
+  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%
+}
+
+.home-work-div:active span {
+  color: #fff
+}
+
+/****************本地内容*******************/
+
+.save-data-top-bar {
+  width: 100%;
+  height: 80px;
+  padding: 0 10px;
+  margin-top: 20px;
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  -khtml-display: flex;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 17px
+}
+
+.save-data-title {
+  color: #fff;
+  font-size: 18px;
+  text-align: center
+}
+
+.save-data-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 100%
+}
+
+.padding-top-20 {
+  padding-top: 20px
+}
+
+.padding-top-30 {
+  padding-top: 30px
+}
+
+.common-font-4CB1AF-size-18 {
+  font-size: 18px;
+  color: #4CB1AF
+}
+
+.common-font-4CB1AF-size-17 {
+  font-size: 17px;
+  color: #4CB1AF
+}
+
+.common-font-4CB1AF-size-16 {
+  font-size: 16px;
+  color: #4CB1AF
+}
+
+.save-data-line {
+  height: 1px;
+  width: 100%;
+  margin-top: 10px;
+  background-color: #86D2C6
+}
+
+.common-ion-content {
+  position: relative;
+}
+
+.padding-20 {
+  padding: 20px
+}
+
+.padding-30 {
+  padding: 10px
+}
+
+.padding-left-right-15 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.padding-left-right-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.padding-left-right-25 {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.common-ion-content-child-div {
+  height: 400px;
+  width: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.common-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /*white-space: nowrap;这是禁止换行*/
+  color: #444;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin: -1px;
+  padding: 10px;
+  border-bottom: solid;
+  border-bottom-width: 1px;
+  border-color: #ddd;
+  font-size: 16px
+}
+
+.common-query-btn {
+  width: 20px;
+  height: 20px;
+  background: url("/assets/global/img/waitForWork/icon_query.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.common-query-btn :active {
+  background: url("/assets/global/img/waitForWork/icon_query.png") no-repeat;
+  background-size: 100% 100%;
 }
 
 
 
+/******************综合考核********************/
 
+
+.assessment-plan-div{
+  border: solid;
+  border-width: 1px;
+  border-radius: 4px;
+  border-color: #86d2c6;
+  background: #83e4d1;
+}

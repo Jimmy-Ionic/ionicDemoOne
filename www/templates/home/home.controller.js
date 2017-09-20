@@ -16,7 +16,8 @@
     'GetWeatherService',
     '$stateParams',
     '$interval',
-    '$cordovaCamera'
+    '$cordovaCamera',
+    '$ionicPopup'
   ];
 
   function HomeController($rootScope,
@@ -29,7 +30,8 @@
                           GetWeatherService,
                           $stateParams,
                           $interval,
-                          $cordovaCamera) {
+                          $cordovaCamera,
+                          $ionicPopup) {
     var vm = this;
     vm.title = '请选择工作';
     vm.hasSavedData = true;
@@ -72,7 +74,16 @@
 
 
     function toWaitForWork() {
-      $state.go('waitForWork');
+      if(vm.isCommonAccount){
+        $ionicPopup.alert(
+          {
+            title:'提示',
+            template:'公共账户无法查看代办工作'
+          }
+        );
+      }else{
+        $state.go('waitForWork');
+      }
     }
 
     function toComprehensiveAssessment() {
@@ -109,7 +120,7 @@
     }
 
     function toSavedData() {
-      $state.go('savedData', {savedData: vm.savedData});
+      $state.go('savedData');
     }
 
   }

@@ -289,12 +289,6 @@
 (function () {
   'use strict';
 
-  angular.module('app.setNet', []);
-})();
-
-(function () {
-  'use strict';
-
   angular.module('app.setting', []);
 })();
 
@@ -302,6 +296,12 @@
   'use strict';
 
   angular.module('app.waitForWork', []);
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('app.setNet', []);
 })();
 
 (function () {
@@ -390,6 +390,7 @@
 
     var vm = this;
     vm.title = '环卫台帐';
+    vm.optionAll = '{"code":"", "id": "", "name": "全部类型", "subclass": []}';
     vm.queryCriteriaObj = {};
     vm.accountType;
     vm.levelList = [];
@@ -424,7 +425,11 @@
     //根据查询条件来查询台帐
     function getAccountListByQueryCriteria() {
       if (vm.accountType && vm.accountType != '') {
-        vm.queryCriteria.accountType = JSON.parse(vm.accountType).code;
+        if (vm.accountType == "") {
+          vm.queryCriteria.accountType = "";
+        } else {
+          vm.queryCriteria.accountType = JSON.parse(vm.accountType).code;
+        }
       }
       AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
         vm.accountList = resData[0];
@@ -462,6 +467,7 @@
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
+        cache:true,
         templateUrl: 'templates/account/account.html'
       });
   }
@@ -599,11 +605,11 @@
     .controller('GridCheckController', GridCheckController);
 
   GridCheckController.$inject = ['$rootScope', '$cacheFactory', '$scope', '$state', 'GridCheckService',
-    'CommonMapService', '$ionicPopup'];
+    'CommonMapService', '$ionicPopup','$cordovaCamera'];
 
   /** @ngInject */
   function GridCheckController($rootScope, $cacheFactory, $scope, $state, GridCheckService, CommonMapService,
-                               $ionicPopup) {
+                               $ionicPopup,$cordovaCamera) {
 
     var vm = this;
     vm.title = '网格化巡检';
@@ -683,7 +689,7 @@
       CommonMapService.getAddressByGPS(function (res) {
         vm.uploadData.areaName = res.district;
         vm.uploadData.streetName = res.street;
-        // $scope.$apply();
+        $scope.$apply();
       });
     }
 
@@ -695,7 +701,7 @@
         vm.uploadData.point = $cacheFactory.get("cacheGridCheckMapData").get('position');
         vm.uploadData.address = $cacheFactory.get("cacheGridCheckMapData").get('address');
       }
-      vm.uploadData.questionCode = vm.questionCodeObj.id;
+      vm.uploadData.problemCode = vm.questionCodeObj.id;
       vm.uploadData.problemName = vm.questionCodeObj.name;
       console.log('网格化巡检需要上传的数据：');
       console.log(vm.uploadData);
@@ -795,10 +801,10 @@
     .module('app.history')
     .controller('HistoryController', HistoryController);
 
-  HistoryController.$inject = ['$scope', '$state', 'HistoryService'];
+  HistoryController.$inject = ['$rootScope', '$scope', '$state', 'HistoryService'];
 
   /** @ngInject */
-  function HistoryController($scope, $state, HistoryService) {
+  function HistoryController($rootScope, $scope, $state, HistoryService) {
     var vm = this;
     vm.title = '历史考核记录';
     vm.fun = {
@@ -824,15 +830,6 @@
 
     function activate() {
 
-      for (var i = 0; i < 15; i++) {
-        vm.historyList[i] = {
-          id: '1',
-          workName: '6月份考核计划',
-          year: '2017年',
-          month: '六月'
-        }
-      }
-
       for (var i = 0; i < 12; i++) {
         vm.monthArray[i] = i + 1;
       }
@@ -842,8 +839,15 @@
       for (var i = 0; i < 5; i++) {
         vm.yeahArray[i] = vm.thisYeah - i;
       }
-      HistoryService.getHistoryData($rootScope.userId, function (resData) {
 
+      var queryCriteria = {
+        keyword: '',
+        selectedYeah: vm.thisYeah,
+        selectedMonth: vm.thisMonth
+      }
+
+      HistoryService.getHistoryDataByCondition(queryCriteria, function (resData) {
+        vm.historyList = resData;
       });
     }
 
@@ -854,7 +858,7 @@
     //根据查询条件来查询历史考核记录
     function getHistoryDataByCondition() {
       HistoryService.getHistoryDataByCondition(vm.queryCriteria, function (resData) {
-
+        vm.historyList = resData;
       });
     }
 
@@ -897,16 +901,10 @@
   /** @ngInject */
   function HistoryService(MyHttpService) {
     var service = {
-      getHistoryData: getHistoryData,
       getHistoryDataByCondition: getHistoryDataByCondition
     };
 
     return service;
-
-    function getHistoryData(userId, fun) {
-      var url = '';
-      MyHttpService.getCommonData(url, fun);
-    }
 
     function getHistoryDataByCondition(queryCriteria, fun) {
       var url = '/hwweb/Comprehensive/viewHistory.action?name=' + queryCriteria.keyword +
@@ -934,7 +932,8 @@
     'GetWeatherService',
     '$stateParams',
     '$interval',
-    '$cordovaCamera'
+    '$cordovaCamera',
+    '$ionicPopup'
   ];
 
   function HomeController($rootScope,
@@ -947,7 +946,8 @@
                           GetWeatherService,
                           $stateParams,
                           $interval,
-                          $cordovaCamera) {
+                          $cordovaCamera,
+                          $ionicPopup) {
     var vm = this;
     vm.title = '请选择工作';
     vm.hasSavedData = true;
@@ -990,7 +990,16 @@
 
 
     function toWaitForWork() {
-      $state.go('waitForWork');
+      if(vm.isCommonAccount){
+        $ionicPopup.alert(
+          {
+            title:'提示',
+            template:'公共账户无法查看代办工作'
+          }
+        );
+      }else{
+        $state.go('waitForWork');
+      }
     }
 
     function toComprehensiveAssessment() {
@@ -1027,7 +1036,7 @@
     }
 
     function toSavedData() {
-      $state.go('savedData', {savedData: vm.savedData});
+      $state.go('savedData');
     }
 
   }
@@ -1124,7 +1133,7 @@
       if (data.data) {
         var low = data.data.forecast[0].low.substring(3, 5);
         var high = data.data.forecast[0].high.substring(3, 5);
-        var temperature = low + '~' + high + '度';
+        var temperature = low + '~' + high + '℃';
         return temperature;
       } else {
         return '';
@@ -1161,7 +1170,7 @@
 
     $scope.isCommonAccount = false;
     $scope.userInfo = LoginService.getUserInfo();
-    $scope.imei = '123456';
+    $scope.imei = '';
 
     $scope.info = {
       userName: $scope.userInfo.userName,
@@ -1177,11 +1186,15 @@
     }
 
 
-    // LoginService.setServerInfo();
+    LoginService.setServerInfo();
 
 
     function setNetAddress() {
-      // $scope.imei = device.imei;
+      // if (device) {
+      //   $scope.imei = device.imei;
+      // } else {
+      //   $scope.imei = '123456';
+      // }
       $state.go('setNet', {imei: $scope.imei});
     }
 
@@ -1204,6 +1217,7 @@
     $stateProvider
       .state('login', {
         url: '/login',
+        cache: false,
         templateUrl: 'templates/login/login.html'
       });
   }
@@ -1384,13 +1398,8 @@
   function MapController(CommonMapService, MapService, $ionicPopup, AddAssessmentMapService) {
 
     var vm = this;
-    vm.data = {};
     vm.title = '地图查询';
-    vm.spinnerShow = false;
-    vm.queryObj = {
-      account: [],
-      keyword: ''
-    }
+
     //查询条件
     vm.queryCriteria = {
       type: '',
@@ -1399,20 +1408,14 @@
 
     vm.allCheck = {account: '全部', selected: true, code: ''};
 
-    vm.accountList = [{id: '0', account: '公厕', selected: false, code: 'gongche'},
-      {id: '1', account: '道路', selected: false, code: 'jiedao'}, {
-        id: '2',
-        account: '车辆',
-        selected: false,
-        code: 'cheliang'
-      },
-      {id: '3', account: '垃圾桶', selected: false, code: 'lajitong'}, {
-        id: '4',
-        account: '收集站',
-        selected: false,
-        code: 'shoujizhan'
-      },
-      {id: '5', account: '过街天桥', selected: false, code: 'guojietianqiao'}];
+    vm.accountList = [
+      {id: '0', account: '公厕', selected: true, code: 'gongche'},
+      {id: '1', account: '道路', selected: true, code: 'jiedao'},
+      {id: '2', account: '车辆', selected: true, code: 'cheliang'},
+      {id: '3', account: '垃圾桶', selected: true, code: 'lajitong'},
+      {id: '4', account: '收集站', selected: true, code: 'shoujizhan'},
+      {id: '5', account: '过街天桥', selected: true, code: 'guojietianqiao'}
+    ];
 
 
     vm.map;
@@ -1422,13 +1425,13 @@
     vm.circle;
     vm.polyline;
     vm.markers = [];
+
     vm.centerPositionNum = 0;
 
-    vm.mapPositionObj = null;
+    vm.mapPositionObj = {};
 
     vm.fun = {
-      // getAccountsPositionData: getAccountsPositionData,
-      // unSelectedAllCheck: unSelectedAllCheck
+      getAccountsPositionData: getAccountsPositionData
     }
 
 
@@ -1441,25 +1444,211 @@
 
       MapService.getAccountList(vm.queryCriteria, function (resData) {
         vm.mapPositionObj = resData[0];
+        // if (vm.mapPositionObj) {
+        //   if (vm.mapPositionObj.cheliang) {
+        //     for (var x in vm.mapPositionObj.cheliang) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.cheliang[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.cheliang[x].plateNo
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0]
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.congxizuoye) {
+        //     for (var x in vm.mapPositionObj.congxizuoye) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.congxizuoye[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.congxizuoye[x].plateId
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0]
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.daolu) {
+        //     for (var x in vm.mapPositionObj.daolu) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.daolu[x].point);
+        //       vm.polyline = new AMap.Polyline({
+        //         path: position,
+        //         strokeColor: "#1C8B08",
+        //         strokeWeight: 5
+        //       });
+        //       // 添加到地图中
+        //       vm.polyline.setMap(vm.map);
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.gongche) {
+        //     for (var x in vm.mapPositionObj.gongche) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.gongche[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.gongche[x].toiletName
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0]
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.guojietianqiao) {
+        //     for (var x in vm.mapPositionObj.guojietianqiao) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.guojietianqiao[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.guojietianqiao[x].bridgeName
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('收集站');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.jishaozuoye) {
+        //     for (var x in vm.mapPositionObj.jishaozuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.jishaozuoye[x].plateId
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.jishaozuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.jixiezuoye) {
+        //     for (var x in vm.mapPositionObj.jixiezuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.jixiezuoye[x].operateVehicle
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.jixiezuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.lajitong) {
+        //     for (var x in vm.mapPositionObj.lajitong) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.lajitong[x].trashArea
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.lajitong[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.shashuizuoye) {
+        //     for (var x in vm.mapPositionObj.shashuizuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.shashuizuoye[x].plateId
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shashuizuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.shoujizhan) {
+        //     for (var x in vm.mapPositionObj.shoujizhan) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.shashuizuoye[x].site
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shoujizhan[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.shouyunzuoye) {
+        //     for (var x in vm.mapPositionObj.shouyunzuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.shouyunzuoye[x].operatePlate
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shouyunzuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        // }
+        // //初始化点聚合
+        // addCluster(0);
         if (vm.mapPositionObj) {
-          if (vm.mapPositionObj.gongche) {
-            for (var x in vm.mapPositionObj.gongche) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.gongche[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0]
-              }
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
           if (vm.mapPositionObj.daolu) {
             for (var x in vm.mapPositionObj.daolu) {
               var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.daolu[x].point);
@@ -1472,68 +1661,11 @@
               vm.polyline.setMap(vm.map);
             }
           }
-          if (vm.mapPositionObj.cheliang) {
-            for (var x in vm.mapPositionObj.cheliang) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.cheliang[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0]
-              }
-              console.log(position);
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
-          if (vm.mapPositionObj.lajitong) {
-            for (var x in vm.mapPositionObj.lajitong) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.lajitong[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0]
-              }
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
-          if (vm.mapPositionObj.shoujizhan) {
-            for (var x in vm.mapPositionObj.shoujizhan) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shoujizhan[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0];
-                console.log('收集站');
-                console.log(position);
-              }
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
+
           if (vm.mapPositionObj.guojietianqiao) {
             for (var x in vm.mapPositionObj.guojietianqiao) {
               var infoObj = {
-                name: vm.mapPositionObj.guojietianqiao[x].RCPsname,
-                info: vm.mapPositionObj.guojietianqiao[x].site
+                name: vm.mapPositionObj.guojietianqiao[x].bridgeName
               }
               var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.guojietianqiao[x].point);
               if (position.length > 0) {
@@ -1541,35 +1673,51 @@
                 console.log('过街天桥');
                 console.log(position);
               }
-              vm.markers.push(new AMap.Marker({
+              new AMap.Marker({
                 position: position,
                 extData: infoObj,
                 content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
+                offset: new AMap.Pixel(-15, -15),
+                map: vm.map
+              }).on('click', openInfo);
+            }
+          }
+
+          if (vm.mapPositionObj.shoujizhan) {
+            for (var x in vm.mapPositionObj.shoujizhan) {
+              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shoujizhan[x].point);
+              var infoObj = {
+                name: vm.mapPositionObj.shoujizhan[x].RCPsname
+              }
+              if (position.length > 0) {
+                position = position[0];
+                console.log('收集站');
+                console.log(position);
+              }
+              new AMap.Marker({
+                position: position,
+                extData: infoObj,
+                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+                offset: new AMap.Pixel(-15, -15),
+                map: vm.map
+              }).on('click', openInfo);
             }
           }
         }
-        //初始化点聚合
-        addCluster(0);
       })
-
     }
 
     function openInfo(e) {
       //构建信息窗体中显示的内容
       var info = [];
-      info.push("<div>" + e.target.getExtData().name);
-      info.push(e.target.getExtData().info + "</div>");
+      info.push("<div>" + e.target.getExtData().name + "</div>");
       var infoWindow = new AMap.InfoWindow({
         content: info.join("<br/>") //使用默认信息窗体框样式，显示信息内容
       });
       infoWindow.open(vm.map, e.target.getPosition());
-      console.log('已经执行了点击！！！');
     }
 
     function initMap() {
-
       vm.map = CommonMapService.initMap();
       vm.map.setZoom(17);
       vm.markerPerson = new AMap.Marker();
@@ -1693,48 +1841,70 @@
         vm.cluster = new AMap.MarkerClusterer(vm.map, vm.markers, {gridSize: 80});
         console.log('点聚合已经走完哈哈');
       }
+    }
+
+    //根据台帐获取对应的台帐定位信息
+    // function getAccountsPositionData() {
+    //
+    //   console.log(vm.accountList);
+    //
+    //   var selected = false;
+    //   var x;
+    //   for (x in vm.accountList) {
+    //     selected = selected || vm.accountList[x].selected;
+    //   }
+    //   if (!selected) {
+    //     $ionicPopup.alert({
+    //       title: '提示',
+    //       template: '请至少选择一项'
+    //     }).then(function (res) {
+    //       return;
+    //     });
+    //   } else {
+    //     var querySelected = true;
+    //     var x;
+    //     for (x in vm.accountList) {
+    //       querySelected = querySelected && vm.accountList[x].selected;
+    //     }
+    //
+    //     if (querySelected) {
+    //       vm.queryCriteria.type = '';
+    //     } else {
+    //       var x;
+    //       for (x in vm.accountList) {
+    //         vm.queryCriteria.type += vm.accountList[x].code + ',';
+    //       }
+    //       vm.queryCriteria.type = vm.queryCriteria.type.substring(0, vm.queryCriteria.type - 1);
+    //     }
+    //
+    //     MapService.getAccountList(vm.queryCriteria, function (resData) {
+    //       vm.mapPositionObj = resData;
+    //     })
+    //   }
+    //
 
 
-      //根据台帐获取对应的台帐定位信息
-      // function getAccountsPositionData() {
-      //
-      //   console.log(vm.accountList);
-      //
-      //   var selected = false;
-      //   var x;
-      //   for (x in vm.accountList) {
-      //     selected = selected || vm.accountList[x].selected;
-      //   }
-      //   if (!selected) {
-      //     $ionicPopup.alert({
-      //       title: '提示',
-      //       template: '请至少选择一项'
-      //     }).then(function (res) {
-      //       return;
-      //     });
-      //   } else {
-      //     var querySelected = true;
-      //     var x;
-      //     for (x in vm.accountList) {
-      //       querySelected = querySelected && vm.accountList[x].selected;
-      //     }
-      //
-      //     if (querySelected) {
-      //       vm.queryCriteria.type = '';
-      //     } else {
-      //       var x;
-      //       for (x in vm.accountList) {
-      //         vm.queryCriteria.type += vm.accountList[x].code + ',';
-      //       }
-      //       vm.queryCriteria.type = vm.queryCriteria.type.substring(0, vm.queryCriteria.type - 1);
-      //     }
-      //
-      //     MapService.getAccountList(vm.queryCriteria, function (resData) {
-      //       vm.mapPositionObj = resData;
-      //     })
-      //   }
-      // }
-
+    //根据台帐获取对应的台帐定位信息
+    function getAccountsPositionData() {
+      console.log(vm.accountList);
+      vm.queryCriteria.type = '';
+      for (var x in vm.accountList) {
+        if (vm.accountList[x].selected) {
+          vm.queryCriteria.type += vm.accountList[x].code + ',';
+          console.log(vm.queryCriteria);
+        }
+      }
+      if (vm.queryCriteria.type.split(',').length == 6) {
+        vm.queryCriteria.type = '';
+      } else {
+        vm.queryCriteria.type = vm.queryCriteria.type.substring(0, vm.queryCriteria.type.length - 1);
+        console.log(vm.queryCriteria.type);
+      }
+      console.log(vm.queryCriteria.type);
+      var query = vm.queryCriteria;
+      MapService.getAccountList(query, function (resData) {
+        vm.mapPositionObj = resData;
+      })
     }
 
   }
@@ -2008,83 +2178,6 @@
   }
 })();
 
-/* global hex_md5 */
-(function () {
-  'use strict';
-
-  angular.module('app.setNet')
-    .controller('SetNetController', SetNetController);
-
-  SetNetController.$inject = ['$scope', 'SetNetService', 'SYS_INFO', '$ionicHistory', '$stateParams'];
-
-  function SetNetController($scope, SetNetService, SYS_INFO, $ionicHistory, $stateParams) {
-    $scope.netSetList = [
-      {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
-      {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
-    ];
-    $scope.IMEI = $stateParams.imei;
-
-    $scope.setNet = function () {
-      SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {
-        $ionicHistory.goBack();
-      });
-    }
-
-    $scope.backToLogin = function () {
-      $ionicHistory.goBack();
-    }
-
-  }
-})();
-
-(function () {
-  angular.module('app.setNet')
-    .config(NetRouteConfig);
-
-  NetRouteConfig.$inject = ['$stateProvider',];
-
-  function NetRouteConfig($stateProvider) {
-    $stateProvider
-      .state('setNet', {
-        url: '/setNet',
-        params: {imei: ''},
-        cache: false,
-        controller: 'SetNetController',
-        templateUrl: 'templates/setNet/net.html'
-      });
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.setNet')
-    .service('SetNetService', SetNetService)
-
-  SetNetService.$inject = ['$localStorage','SYS_INFO'];
-
-  function SetNetService($localStorage,SYS_INFO) {
-
-    var service = {
-      saveNetSettings: saveNetSettings
-    }
-
-
-    function saveNetSettings(address, port ,back) {
-      var serverInfo = {
-        SERVER_PATH:address,
-        SERVER_PORT:port
-      }
-      $localStorage.serverInfo= serverInfo;
-      SYS_INFO.SERVER_PATH = serverInfo.SERVER_PATH;
-      SYS_INFO.SERVER_PORT = serverInfo.SERVER_PORT;
-      back();
-    }
-    return service;
-  }
-})();
-
 (function () {
   'use strict';
 
@@ -2211,6 +2304,7 @@
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
+        cache:true,
         templateUrl: 'templates/waitForWork/waitForWork.html'
       });
   }
@@ -2244,6 +2338,86 @@
   }
 })
 ();
+
+/* global hex_md5 */
+(function () {
+  'use strict';
+
+  angular.module('app.setNet')
+    .controller('SetNetController', SetNetController);
+
+  SetNetController.$inject = ['$scope', 'SetNetService', 'SYS_INFO', '$ionicHistory', '$stateParams'];
+
+  function SetNetController($scope, SetNetService, SYS_INFO, $ionicHistory, $stateParams) {
+    $scope.netSetList = [
+      {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
+      {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
+    ];
+    if ($stateParams.imei) {
+      $scope.IMEI = $stateParams.imei;
+    }
+
+
+    $scope.setNet = function () {
+      SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {
+        $ionicHistory.goBack();
+      });
+    }
+
+    $scope.backToLogin = function () {
+      $ionicHistory.goBack();
+    }
+
+  }
+})();
+
+(function () {
+  angular.module('app.setNet')
+    .config(NetRouteConfig);
+
+  NetRouteConfig.$inject = ['$stateProvider',];
+
+  function NetRouteConfig($stateProvider) {
+    $stateProvider
+      .state('setNet', {
+        url: '/setNet',
+        params: {imei: ''},
+        cache: false,
+        controller: 'SetNetController',
+        templateUrl: 'templates/setNet/net.html'
+      });
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.setNet')
+    .service('SetNetService', SetNetService)
+
+  SetNetService.$inject = ['$localStorage','SYS_INFO'];
+
+  function SetNetService($localStorage,SYS_INFO) {
+
+    var service = {
+      saveNetSettings: saveNetSettings
+    }
+
+
+    function saveNetSettings(address, port ,back) {
+      var serverInfo = {
+        SERVER_PATH:address,
+        SERVER_PORT:port
+      }
+      $localStorage.serverInfo= serverInfo;
+      SYS_INFO.SERVER_PATH = serverInfo.SERVER_PATH;
+      SYS_INFO.SERVER_PORT = serverInfo.SERVER_PORT;
+      back();
+    }
+    return service;
+  }
+})();
 
 (function () {
   'use strict';
@@ -2295,6 +2469,7 @@
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
+        cache:true,
         templateUrl: 'templates/account/accountDetails/accountDetails.html'
       });
   }
@@ -2323,10 +2498,12 @@
     .module('app.addAssessment')
     .controller('AddAssessmentController', AddAssessmentController);
 
-  AddAssessmentController.$inject = ['$rootScope', '$state', '$stateParams', 'AddAssessmentService', 'AssessmentStatusDetailsService'];
+  AddAssessmentController.$inject = ['$rootScope', '$state', '$stateParams', 'AddAssessmentService',
+    'AssessmentStatusDetailsService', '$ionicPopup', '$ionicHistory', '$cordovaCamera'];
 
   /** @ngInject */
-  function AddAssessmentController($rootScope, $state, $stateParams, AddAssessmentService, AssessmentStatusDetailsService) {
+  function AddAssessmentController($rootScope, $state, $stateParams, AddAssessmentService,
+                                   AssessmentStatusDetailsService, $ionicPopup, $ionicHistory, $cordovaCamera) {
 
     var vm = this;
     vm.data = {};
@@ -2499,7 +2676,17 @@
 
     //提交数据
     function uploadDataFun() {
-      if (vm.uploadData.points == '') {
+      if (!vm.addAssessmentData || !vm.addAssessmentData.id) {
+        $ionicPopup.alert({
+          title: '提示',
+          template: '计划id未获取到，请退出此页面重新进入！'
+        });
+      } else if (!vm.infraId) {
+        $ionicPopup.alert({
+          title: '提示',
+          template: '您没有选择相关的设施，请先选择！'
+        });
+      } else if (vm.uploadData.points == '') {
         $ionicPopup.alert({
           title: '扣分情况不能为空'
         });
@@ -2542,7 +2729,9 @@
             jsonObj.imgJson = vm.uploadData.img;
             var jsonStr = JSON.stringify(jsonObj);
             AddAssessmentService.uploadPointAndPicData(jsonStr, function (resData) {
-
+              // if(resData){
+              //   $ionicHistory.goBack();
+              // }
             });
           }
         });
@@ -2582,18 +2771,18 @@
     .module('app.addAssessment')
     .service('AddAssessmentService', AddAssessmentService);
 
-  AddAssessmentService.$inject = ['$cordovaCamera', 'MyHttpService'];
+  AddAssessmentService.$inject = ['$cordovaCamera', 'MyHttpService', '$ionicLoading', 'SYS_INFO', '$http', '$ionicPopup'];
 
   /** @ngInject */
-  function AddAssessmentService($cordovaCamera, MyHttpService) {
+  function AddAssessmentService($cordovaCamera, MyHttpService, $ionicLoading, SYS_INFO, $http, $ionicPopup) {
 
     var service = {
       addNewAssessment: addNewAssessment,
       getPhonePictureData: getPhonePictureData,
       getPhonePicturePath: getPhonePicturePath,
       queryAccountList: queryAccountList,
-      uploadAccountData:uploadAccountData,
-      uploadPointAndPicData:uploadPointAndPicData
+      uploadAccountData: uploadAccountData,
+      uploadPointAndPicData: uploadPointAndPicData
     }
 
 
@@ -2659,9 +2848,51 @@
     }
 
     function uploadAccountData(jsonStr, fun) {
-      var url = '/hwweb/AssignmentAssessment/comprehensive.action'
-      MyHttpService.uploadCommonData(url, jsonStr, fun);
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        }
+      );
+
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AssignmentAssessment/comprehensive.action';
+      console.log(url);
+      console.log(jsonStr);
+      $http({
+        method: 'post',
+        url: url,
+        data: {data: jsonStr},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          return str.join("&");
+        }
+      }).then(function (res) {
+        if (res.data.success = 1) {
+          var resData = res.data.data;
+          $ionicLoading.hide();
+          fun(resData);
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '数据上传失败'
+          });
+        }
+      }, function (error) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '数据上传失败'
+        });
+      });
     }
+
 
     function uploadPointAndPicData(jsonStr, fun) {
       var url = '/hwweb/AssignmentAssessment/reportPro.action'
@@ -2784,13 +3015,13 @@
     .module('app.assessmentStatus')
     .service('AssessmentStatusService', AssessmentStatusService);
 
-  AssessmentStatusService.$inject = ['$http', 'SYS_INFO', 'MyHttpService','$ionicLoading','$ionicPopup','$ionicHistory'];
+  AssessmentStatusService.$inject = ['$http', 'SYS_INFO', 'MyHttpService', '$ionicLoading', '$ionicPopup', '$ionicHistory'];
 
   /** @ngInject */
-  function AssessmentStatusService($http, SYS_INFO, MyHttpService,$ionicLoading,$ionicPopup,$ionicHistory) {
+  function AssessmentStatusService($http, SYS_INFO, MyHttpService, $ionicLoading, $ionicPopup, $ionicHistory) {
     var service = {
       getAssessmentStatusList: getAssessmentStatusList,
-      checkOverAndUpload:checkOverAndUpload
+      checkOverAndUpload: checkOverAndUpload
     }
 
     return service;
@@ -2816,7 +3047,8 @@
         method: 'GET',
         url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path
       }).then(function (response) {
-        if(response.data.success == 1){
+        if (response.data.success == 1) {
+          $ionicLoading.hide();
           $ionicPopup.alert({
             title: '提示',
             template: '考核完成...'
@@ -2824,7 +3056,8 @@
             $ionicHistory.goBack();
           })
         }
-      },function (err) {
+      }, function (err) {
+        $ionicLoading.hide();
         $ionicPopup.alert({
           title: '失败提示',
           template: '上传失败，请重试！'
@@ -2857,8 +3090,7 @@
     vm.reasonAccount = [];
     vm.picBase64DataArray = [];
     vm.serverUrl = '';
-    vm.uploadPicBase64DataArray = ["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"];
-    vm.picNameArray = [];
+    vm.uploadPicBase64DataArray = [];
     vm.uploadData = {
       points: '',
       reason: '',
@@ -3327,7 +3559,9 @@
           for (var p in obj) {
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
           }
+          console.log(str.join("&"));
           return str.join("&");
+
         }
       }).then(function (res) {
         if (res.data.success = 1) {
@@ -3987,27 +4221,9 @@
     .module('app.savedData')
     .controller('SavedDataController', SavedDataController);
 
-  SavedDataController.$inject = [
-    '$scope',
-    '$state',
-    '$filter',
-    'Session',
-    'homeService',
-    'SYS_INFO',
-    'GetWeather',
-    '$stateParams',
-    'SavedDataService'
-  ];
+  SavedDataController.$inject = ['SavedDataService'];
 
-  function SavedDataController($scope,
-                               $state,
-                               $filter,
-                               Session,
-                               homeService,
-                               SYS_INFO,
-                               GetWeather,
-                               $stateParams,
-                               SavedDataService) {
+  function SavedDataController(SavedDataService) {
     var vm = this;
     vm.title = '本地内容';
     vm.savedData = {
@@ -4054,9 +4270,6 @@
       .state('savedData', {
         url: '/savedData',
         cache:true,
-        params: {
-          savedData: null
-        },
         templateUrl: 'templates/home/savedData/savedData.html'
       });
   }
@@ -4070,9 +4283,9 @@
     .service('SavedDataService', SavedDataService)
 
 
-  SavedDataService.$inject = ['$http', 'SYS_INFO', 'Session', '$interval', '$localStorage','$stateParams'];
+  SavedDataService.$inject = ['$stateParams'];
 
-  function SavedDataService($http, SYS_INFO, Session, $interval, $localStorage,$stateParams) {
+  function SavedDataService($stateParams) {
 
     var service = {
       getSavedUploadedData: getSavedUploadedData,
@@ -4108,16 +4321,19 @@
     .module('app.messageContent')
     .controller('MessageContentController', MessageContentController);
 
-  MessageContentController.$inject = ['$scope', 'MessageContentService', '$stateParams'];
+  MessageContentController.$inject = ['$scope', 'MessageContentService', '$stateParams', '$cordovaFileTransfer'];
 
   /** @ngInject */
-  function MessageContentController($scope, MessageContentService, $stateParams) {
+  function MessageContentController($scope, MessageContentService, $stateParams, $cordovaFileTransfer) {
 
     var vm = this;
     vm.title = '消息详情';
     vm.msgView = {};
     vm.msg = {};
     vm.msgId = '';
+    vm.fun = {
+      downloadFile: downloadFile
+    }
 
     activate();
 
@@ -4136,6 +4352,36 @@
           vm.msg = resData[0].msg[0];
         }
       });
+    }
+
+    function downloadFile(fileUrl) {
+      var url = 'http://172.72.100.61:8090/hwweb/Trash/export?ids=fbe58ca3-5909-4bf4-988d-b82b5146f7cb,6792d9ac-2078-42d5-b3d0-60ac1099e1e6';
+      var filename = url.split("/").pop();
+      alert(filename);
+      var targetPath = cordova.file.externalRootDirectory + filename;
+      alert(cordova.file.externalRootDirectory);
+      var trustHosts = true;
+      var options = {};
+      $cordovaFileTransfer.download(fileUrl, targetPath, options, trustHosts)
+        .then(function (result) {
+          // Success!
+          alert(JSON.stringify(result));
+        }, function (error) {
+          // Error
+          alert(JSON.stringify(error));
+        }, function (progress) {
+          $timeout(function () {
+            $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+          })
+        });
+      console.log(cordova.file.externalApplicationStorageDirectory); //file:///storage/emulated/0/Android/data/com.bntake.driver.in/
+      console.log(cordova.file.dataDirectory); //file:///data/user/0/com.bntake.driver.in/files/
+      console.log(cordova.file.externalDataDirectory); //file:///storage/emulated/0/Android/data/com.bntake.driver.in/files/
+      console.log(cordova.file.externalRootDirectory);//file:///storage/emulated/0/
+      console.log(cordova.file.externalCacheDirectory); //file:///storage/emulated/0/Android/data/com.bntake.driver.in/cache/
+      console.log(cordova.file.applicationStorageDirectory); //file:///data/user/0/com.bntake.driver.in/
+      console.log(cordova.file.cacheDirectory); //file:///data/user/0/com.bntake.driver.in/cache/
+      console.log(cordova.file);  //object
     }
   }
 })();
@@ -4191,10 +4437,12 @@
     .module('app.problemFeedbackDetails')
     .controller('ProblemFeedbackDetailsController', ProblemFeedbackDetailsController);
 
-  ProblemFeedbackDetailsController.$inject = ['$scope', '$rootScope', '$stateParams', 'ProblemFeedbackDetailsService', '$ionicPopup', '$ionicHistory'];
+  ProblemFeedbackDetailsController.$inject = ['$scope', '$rootScope', '$stateParams',
+    'ProblemFeedbackDetailsService', '$ionicPopup', '$ionicHistory','$cordovaCamera'];
 
   /** @ngInject */
-  function ProblemFeedbackDetailsController($scope, $rootScope, $stateParams, ProblemFeedbackDetailsService, $ionicPopup, $ionicHistory) {
+  function ProblemFeedbackDetailsController($scope, $rootScope, $stateParams,
+                                            ProblemFeedbackDetailsService, $ionicPopup, $ionicHistory,$cordovaCamera) {
     var vm = this;
     vm.title = '问题详情'
     vm.fromWhere = '';

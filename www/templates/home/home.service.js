@@ -71,7 +71,7 @@
       if (data.data) {
         var low = data.data.forecast[0].low.substring(3, 5);
         var high = data.data.forecast[0].high.substring(3, 5);
-        var temperature = low + '~' + high + '度';
+        var temperature = low + '~' + high + '℃';
         return temperature;
       } else {
         return '';

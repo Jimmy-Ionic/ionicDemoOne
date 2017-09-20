@@ -10,16 +10,10 @@
   /** @ngInject */
   function HistoryService(MyHttpService) {
     var service = {
-      getHistoryData: getHistoryData,
       getHistoryDataByCondition: getHistoryDataByCondition
     };
 
     return service;
-
-    function getHistoryData(userId, fun) {
-      var url = '';
-      MyHttpService.getCommonData(url, fun);
-    }
 
     function getHistoryDataByCondition(queryCriteria, fun) {
       var url = '/hwweb/Comprehensive/viewHistory.action?name=' + queryCriteria.keyword +

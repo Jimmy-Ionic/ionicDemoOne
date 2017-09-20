@@ -5,27 +5,9 @@
     .module('app.savedData')
     .controller('SavedDataController', SavedDataController);
 
-  SavedDataController.$inject = [
-    '$scope',
-    '$state',
-    '$filter',
-    'Session',
-    'homeService',
-    'SYS_INFO',
-    'GetWeather',
-    '$stateParams',
-    'SavedDataService'
-  ];
+  SavedDataController.$inject = ['SavedDataService'];
 
-  function SavedDataController($scope,
-                               $state,
-                               $filter,
-                               Session,
-                               homeService,
-                               SYS_INFO,
-                               GetWeather,
-                               $stateParams,
-                               SavedDataService) {
+  function SavedDataController(SavedDataService) {
     var vm = this;
     vm.title = '本地内容';
     vm.savedData = {

@@ -24,7 +24,7 @@
 
     $scope.isCommonAccount = false;
     $scope.userInfo = LoginService.getUserInfo();
-    $scope.imei = '123456';
+    $scope.imei = '';
 
     $scope.info = {
       userName: $scope.userInfo.userName,
@@ -40,11 +40,15 @@
     }
 
 
-    // LoginService.setServerInfo();
+    LoginService.setServerInfo();
 
 
     function setNetAddress() {
-      // $scope.imei = device.imei;
+      // if (device) {
+      //   $scope.imei = device.imei;
+      // } else {
+      //   $scope.imei = '123456';
+      // }
       $state.go('setNet', {imei: $scope.imei});
     }
 

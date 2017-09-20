@@ -12,7 +12,10 @@
       {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
       {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
     ];
-    $scope.IMEI = $stateParams.imei;
+    if ($stateParams.imei) {
+      $scope.IMEI = $stateParams.imei;
+    }
+
 
     $scope.setNet = function () {
       SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {

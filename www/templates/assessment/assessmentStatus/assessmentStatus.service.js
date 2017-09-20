@@ -5,13 +5,13 @@
     .module('app.assessmentStatus')
     .service('AssessmentStatusService', AssessmentStatusService);
 
-  AssessmentStatusService.$inject = ['$http', 'SYS_INFO', 'MyHttpService','$ionicLoading','$ionicPopup','$ionicHistory'];
+  AssessmentStatusService.$inject = ['$http', 'SYS_INFO', 'MyHttpService', '$ionicLoading', '$ionicPopup', '$ionicHistory'];
 
   /** @ngInject */
-  function AssessmentStatusService($http, SYS_INFO, MyHttpService,$ionicLoading,$ionicPopup,$ionicHistory) {
+  function AssessmentStatusService($http, SYS_INFO, MyHttpService, $ionicLoading, $ionicPopup, $ionicHistory) {
     var service = {
       getAssessmentStatusList: getAssessmentStatusList,
-      checkOverAndUpload:checkOverAndUpload
+      checkOverAndUpload: checkOverAndUpload
     }
 
     return service;
@@ -37,7 +37,8 @@
         method: 'GET',
         url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path
       }).then(function (response) {
-        if(response.data.success == 1){
+        if (response.data.success == 1) {
+          $ionicLoading.hide();
           $ionicPopup.alert({
             title: '提示',
             template: '考核完成...'
@@ -45,7 +46,8 @@
             $ionicHistory.goBack();
           })
         }
-      },function (err) {
+      }, function (err) {
+        $ionicLoading.hide();
         $ionicPopup.alert({
           title: '失败提示',
           template: '上传失败，请重试！'

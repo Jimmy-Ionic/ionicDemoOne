@@ -1,38 +1,54 @@
-<ion-view class="padding" ng-controller="SavedDataController as vm" title="vm.title">
+<ion-view class="home-bg" ng-controller="SavedDataController as vm" title="vm.title">
 
-  <div ng-include="'templates/common/common.title.html'"></div>
-
-  <ion-content class="has-header has-footer padding-top scroll-bar-fade-out">
-    <div class="row wait-work-menu padding-top">
-      <div class="col text-center">时间</div>
-      <div class="col text-center">地址</div>
-      <div class="col text-center">操作</div>
+  <div class="save-data-top-bar">
+    <div class="row">
+      <div class="col">
+        <button class=" home-top-button">&lt;返回</button>
+      </div>
+      <div class="col common-center save-data-title">本地内容</div>
+      <div class="col"></div>
     </div>
-    <div class="padding-top">
-      <div class="row">
-        <div class="col col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item " ng-repeat="item in vm.savedData.data">
-              {{item.time}}
-            </li>
-          </ul>
-        </div>
-        <div class="col col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.savedData.data">
-              {{item.address}}
-            </li>
-          </ul>
-        </div>
-        <div class="col col text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.savedData.data">
-              <span class="wait-work-list-item-btn" ng-click="vm.uploadData(item)">上传</span>
-              <span class="wait-work-list-item-btn" ng-click="vm.deleteSavedData(item)">删除</span>
-            </li>
-          </ul>
+  </div>
+
+  <div class="home-bottom-bg">
+
+    <div class="save-data-row padding-top-20 common-font-4CB1AF-size-17">
+      <div class="col col-50 text-center">时间</div>
+      <div class="col col-25 text-center">地点</div>
+      <div class="col col-25 text-center">操作</div>
+    </div>
+
+    <div class="padding">
+      <a class="save-data-line"></a>
+    </div>
+
+    <ion-content class="has-header has-footer padding-top scroll-bar-fade-out" style="position: relative">
+      <div class="padding-top">
+        <div class="row">
+          <div class="col col text-center">
+            <ul class="list">
+              <li class="wait-work-list-item " ng-repeat="item in vm.savedData.data">
+                {{item.time}}
+              </li>
+            </ul>
+          </div>
+          <div class="col col text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.savedData.data">
+                {{item.address}}
+              </li>
+            </ul>
+          </div>
+          <div class="col col text-center">
+            <ul class="list">
+              <li class="wait-work-list-item" ng-repeat="item in vm.savedData.data">
+                <span class="wait-work-list-item-btn" ng-click="vm.uploadData(item)">上传</span>
+                <span class="wait-work-list-item-btn" ng-click="vm.deleteSavedData(item)">删除</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </ion-content>
+    </ion-content>
+  </div>
 </ion-view>

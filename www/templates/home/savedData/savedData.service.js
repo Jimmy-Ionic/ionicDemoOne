@@ -6,9 +6,9 @@
     .service('SavedDataService', SavedDataService)
 
 
-  SavedDataService.$inject = ['$http', 'SYS_INFO', 'Session', '$interval', '$localStorage','$stateParams'];
+  SavedDataService.$inject = ['$stateParams'];
 
-  function SavedDataService($http, SYS_INFO, Session, $interval, $localStorage,$stateParams) {
+  function SavedDataService($stateParams) {
 
     var service = {
       getSavedUploadedData: getSavedUploadedData,

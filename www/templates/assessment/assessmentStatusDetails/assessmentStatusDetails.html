@@ -71,9 +71,15 @@
         </div>
 
 
-        <div class="common-margin-top common-center common-height-80">
+        <div class="common-margin-top common-center common-height-80" ng-hide="vm.isEdit">
           <img class="add-assessment-img"
                ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.serverUrl+item}}"
+               on-hold="vm.fun.deletePic($index)">
+        </div>
+
+        <div class="common-margin-top common-center common-height-80" ng-show="vm.isEdit">
+          <img class="add-assessment-img"
+               ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.picBase64DataArray[$index]}}"
                on-hold="vm.fun.deletePic($index)">
         </div>
 

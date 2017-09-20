@@ -13,7 +13,7 @@
       </div>
       <div ng-repeat="item in vm.accountList">
         <label class="checkbox checkbox-square common-center">
-          <input type="checkbox" ng-model="item.selected" ng-checked="vm.allCheck.selected" >
+          <input type="checkbox" ng-model="vm.accountList[$index].selected" ng-checked="vm.allCheck.selected" >
           <span>{{item.account}}</span>
         </label>
       </div>
@@ -23,7 +23,7 @@
       <span>设施地址：</span>
       <div style="height: 30px;">
         <input id="search-form" class="add-assessment-select" ng-model="vm.queryCriteria.keyword"/>
-        <button ng-click="">搜索</button>
+        <button ng-click="vm.fun.getAccountsPositionData()">搜索</button>
       </div>
     </div>
 

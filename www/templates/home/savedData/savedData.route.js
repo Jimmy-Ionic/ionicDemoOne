@@ -11,9 +11,6 @@
       .state('savedData', {
         url: '/savedData',
         cache:true,
-        params: {
-          savedData: null
-        },
         templateUrl: 'templates/home/savedData/savedData.html'
       });
   }

@@ -12,6 +12,7 @@
 
     var vm = this;
     vm.title = '环卫台帐';
+    vm.optionAll = '{"code":"", "id": "", "name": "全部类型", "subclass": []}';
     vm.queryCriteriaObj = {};
     vm.accountType;
     vm.levelList = [];
@@ -46,7 +47,11 @@
     //根据查询条件来查询台帐
     function getAccountListByQueryCriteria() {
       if (vm.accountType && vm.accountType != '') {
-        vm.queryCriteria.accountType = JSON.parse(vm.accountType).code;
+        if (vm.accountType == "") {
+          vm.queryCriteria.accountType = "";
+        } else {
+          vm.queryCriteria.accountType = JSON.parse(vm.accountType).code;
+        }
       }
       AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
         vm.accountList = resData[0];

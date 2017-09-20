@@ -32,7 +32,7 @@
           <i class="icon ion-document"></i>
           附件名称：{{vm.msgView.name}}
         </li>
-        <a class="item text-center" href="http://172.72.100.61:8090/hwweb/Trash/export?ids=fbe58ca3-5909-4bf4-988d-b82b5146f7cb,6792d9ac-2078-42d5-b3d0-60ac1099e1e6">
+        <a ng-click="vm.fun.downloadFile()" class="item text-center" href="http://172.72.100.61:8090/hwweb/Trash/export?ids=fbe58ca3-5909-4bf4-988d-b82b5146f7cb,6792d9ac-2078-42d5-b3d0-60ac1099e1e6">
           <i class="icon ion-link"></i>
           点击下载
         </a>

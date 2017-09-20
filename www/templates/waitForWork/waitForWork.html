@@ -1,52 +1,42 @@
-<ion-view class="padding " ng-controller="WaitForWorkController as vm">
+<ion-view class="home-bg" ng-controller="WaitForWorkController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
 
-  <ion-content class="has-header padding-top">
-    <div class="row wait-work-menu padding-top">
-      <div class="col-40 text-center">工作名称</div>
-      <div class="col-20 text-center">开始时间</div>
-      <div class="col-20 text-center">结束时间</div>
-      <div class="col-20 text-center"></div>
-    </div>
-  </ion-content>
+  <div class="home-bottom-bg">
 
-  <ion-content class="has-footer common-margin common-border">
-
-    <div class="padding-top">
-      <div class="row">
-        <div class="col-40 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
-              {{item.planName}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
-              {{item.sDate}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
-              {{item.eDate}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.workList">
-              <span class="wait-work-list-item-btn" ng-click="vm.toJobDetails(item)">查看</span>
-              <!--<button class="button button-small button-positive" ng-click="vm.toJobDetails(item)">查看</button>-->
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="padding-left-right-20 save-data-row padding-top-30 common-font-4CB1AF-size-17">
+      <div class="col col-40 text-center">工作名称</div>
+      <div class="col col-25 text-center">开始时间</div>
+      <div class="col col-25 text-center">结束时间</div>
+      <div class="col col-10 text-center"></div>
     </div>
 
-  </ion-content>
+    <div class="padding-left-right-20">
+
+      <div class="save-data-line"></div>
+
+      <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+
+        <div class="common-ion-content-child-div">
+          <div class="list">
+            <li class="common-item" ng-repeat="item in vm.workList">
+              <div class="row">
+                <span class="col col-40 col-center text-center">{{item.planName}}</span>
+                <span class="col col-25 col-center text-center">{{item.sDate}}</span>
+                <span class="col col-25 col-center text-center">{{item.eDate}}</span>
+                <div class="col col-10 common-center">
+                  <div class="common-query-btn" ng-click="vm.toJobDetails(item)"></div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+
+      </ion-content>
+
+      <div class="save-data-line"></div>
+    </div>
+
+  </div>
 </ion-view>

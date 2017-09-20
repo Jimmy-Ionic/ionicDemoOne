@@ -5,18 +5,18 @@
     .module('app.addAssessment')
     .service('AddAssessmentService', AddAssessmentService);
 
-  AddAssessmentService.$inject = ['$cordovaCamera', 'MyHttpService'];
+  AddAssessmentService.$inject = ['$cordovaCamera', 'MyHttpService', '$ionicLoading', 'SYS_INFO', '$http', '$ionicPopup'];
 
   /** @ngInject */
-  function AddAssessmentService($cordovaCamera, MyHttpService) {
+  function AddAssessmentService($cordovaCamera, MyHttpService, $ionicLoading, SYS_INFO, $http, $ionicPopup) {
 
     var service = {
       addNewAssessment: addNewAssessment,
       getPhonePictureData: getPhonePictureData,
       getPhonePicturePath: getPhonePicturePath,
       queryAccountList: queryAccountList,
-      uploadAccountData:uploadAccountData,
-      uploadPointAndPicData:uploadPointAndPicData
+      uploadAccountData: uploadAccountData,
+      uploadPointAndPicData: uploadPointAndPicData
     }
 
 
@@ -82,9 +82,51 @@
     }
 
     function uploadAccountData(jsonStr, fun) {
-      var url = '/hwweb/AssignmentAssessment/comprehensive.action'
-      MyHttpService.uploadCommonData(url, jsonStr, fun);
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        }
+      );
+
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AssignmentAssessment/comprehensive.action';
+      console.log(url);
+      console.log(jsonStr);
+      $http({
+        method: 'post',
+        url: url,
+        data: {data: jsonStr},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          return str.join("&");
+        }
+      }).then(function (res) {
+        if (res.data.success = 1) {
+          var resData = res.data.data;
+          $ionicLoading.hide();
+          fun(resData);
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '数据上传失败'
+          });
+        }
+      }, function (error) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '数据上传失败'
+        });
+      });
     }
+
 
     function uploadPointAndPicData(jsonStr, fun) {
       var url = '/hwweb/AssignmentAssessment/reportPro.action'

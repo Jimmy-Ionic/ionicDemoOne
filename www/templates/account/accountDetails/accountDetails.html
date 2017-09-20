@@ -1,44 +1,87 @@
-<ion-view class="padding " ng-controller="AccountDetailsController as vm">
+<ion-view class="home-bg" ng-controller="AccountDetailsController as vm">
 
-  <div ng-include="'templates/common/common.title.html'"></div>
-
+  <div class="save-data-top-bar">
+    <div class="row">
+      <div class="col">
+        <button class="home-top-button">&lt;返回</button>
+      </div>
+      <div class="col common-center save-data-title"></div>
+      <div class="col text-right">
+        <button class="home-top-button">消息(0)</button>
+      </div>
+    </div>
+  </div>
 
 
   <ion-content class="padding has-header has-footer padding-top scroll-bar-fade-out calm-border" ng-switch="vm.code">
 
     <div ng-switch-when="cheliang">
-      <div class="item item-borderless text-center">
-        银川路公厕
-      </div>
-      <!--公厕的台帐具体信息-->
+      <div class="item item-borderless text-center">{{vm.accountDetailsData.plateNo}}</div>
+      <!--车辆的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.plateNo}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>责任单位：</span>
+            <span>{{vm.accountDetailsData.companyId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>驾驶员：</span>
+            <span>{{vm.accountDetailsData.driver}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>车辆大类：</span>
+            <span>{{vm.accountDetailsData.vehicleFirstType}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>车辆类型：</span>
+            <span>{{vm.accountDetailsData.vehicleType}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>车辆型号：</span>
+            <span>{{vm.accountDetailsData.VehicleModelType}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>购买日期：</span>
+            <span>{{vm.accountDetailsData.buyDate}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>编号：</span>
+            <span>{{vm.accountDetailsData.code}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>创建时间：</span>
+            <span>{{vm.accountDetailsData.createDate}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>创建人：</span>
+            <span>{{vm.accountDetailsData.createUser}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>吨数：</span>
+            <span>{{vm.accountDetailsData.tunnage}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改日期：</span>
+            <span>{{vm.accountDetailsData.updateDate}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updateUsere}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>是否监管：</span>
+            <span>{{vm.accountDetailsData.IsMonitor}}</span>
           </div>
         </div>
       </div>
@@ -46,37 +89,69 @@
 
     <div ng-switch-when="congxizuoye">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.plateId}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--冲洗作业的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.plateId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.AreaId}}</span>
           </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+          <div class="item common-bold-font">
+            <span>作业明细：</span>
+            <span>{{vm.accountDetailsData.roadDetails}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>作业人员：</span>
+            <span>{{vm.accountDetailsData.driver}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>作业频率：</span>
+            <span>{{vm.accountDetailsData.frequency}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>作业时间：</span>
+            <span>{{vm.accountDetailsData.operateTime}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>作业类型：</span>
+            <span>{{vm.accountDetailsData.operateType}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
           </div>
-          <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+          <div class="item common-bold-font">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
-          <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+          <div class="item common-bold-font">
+            <span>编号：</span>
+            <span>{{vm.accountDetailsData.code}}</span>
           </div>
-          <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+          <div class="item common-bold-font">
+            <span>创建时间：</span>
+            <span>{{vm.accountDetailsData.creatDate}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updatePeople}}</span>
+          </div>
+          <div class="item common-bold-font">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updateTime}}</span>
           </div>
         </div>
       </div>
@@ -84,37 +159,109 @@
 
     <div ng-switch-when="daolu">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.roadName}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--道路的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.roadName}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>主次干道：</span>
+            <span>{{vm.accountDetailsData.primaryOrSecondary}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>保洁等级：</span>
+            <span>{{vm.accountDetailsData.cleanLevel}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>起始点：</span>
+            <span>{{vm.accountDetailsData.staretRoad+'-'+vm.accountDetailsData.endRoad}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>总面积：</span>
+            <span>{{vm.accountDetailsData.totalArea}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>车行道面积：</span>
+            <span>{{vm.accountDetailsData.roadWayArea}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>人行道面积：</span>
+            <span>{{vm.accountDetailsData.sideWalkArea}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>洒水面积：</span>
+            <span>{{vm.accountDetailsData.sprinklerArea}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>高压冲洗面积：</span>
+            <span>{{vm.accountDetailsData.highFlushArea}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>机扫面积：</span>
+            <span>{{vm.accountDetailsData.machineSweepArea}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>果皮箱数量：</span>
+            <span>{{vm.accountDetailsData.trashBoxNum}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>道路长度：</span>
+            <span>{{vm.accountDetailsData.roadLength}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>道路宽度：</span>
+            <span>{{vm.accountDetailsData.roadWidth}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属街道办事处：</span>
+            <span>{{vm.accountDetailsData.streetId}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>责任单位：</span>
+            <span>{{vm.accountDetailsData.companyId}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>保洁人数：</span>
+            <span>{{vm.accountDetailsData.cleanNum}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.areaId}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>编号：</span>
+            <span>{{vm.accountDetailsData.code}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>是否考核：</span>
+            <span>{{vm.accountDetailsData.isAssessment}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updatePeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updateTime}}</span>
           </div>
         </div>
       </div>
@@ -122,37 +269,149 @@
 
     <div ng-switch-when="gongche">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.toiletName}}
       </div>
       <!--公厕的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
-          </div>
-          <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>{{vm.accountDetailsData.toiletName}}</span>
           </div>
           <div class="item item-borderless">
             <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕面积：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>公厕类别：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>上水情况：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>下水情况：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>电源情况：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>工具间面积：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>小便池（器）数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>洗手盆数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>女蹲位数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>保洁人数（男）：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>保洁人数（女）：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>保洁单位：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>承包人：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>承包人电话：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>残疾人间面积：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>电子显示屏数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>导向牌数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>上年新增显示屏数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>上年新增导向牌数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>管理人员：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>管理人员联系方式：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>管理间面积：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>男蹲位数量：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>产权单位：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属街道办事处：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>创建时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>改造时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
         </div>
       </div>
@@ -160,37 +419,73 @@
 
     <div ng-switch-when="guojietianqiao">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.bridgeName}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--过街天桥的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.bridgeName}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>保洁等级：</span>
+            <span>{{vm.accountDetailsData.cleanLevel}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>起止点：</span>
+            <span>{{vm.accountDetailsData.startEnd}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>长度：</span>
+            <span>{{vm.accountDetailsData.length}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>保洁人数：</span>
+            <span>{{vm.accountDetailsData.cleanerNum}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>人工保洁面积：</span>
+            <span>{{vm.accountDetailsData.personCleanSize}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>所属街道：</span>
+            <span>{{vm.accountDetailsData.belongStreet}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>建造时间：</span>
+            <span>{{vm.accountDetailsData.buildtime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addman}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addtime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.note}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>果皮箱：</span>
+            <span>{{vm.accountDetailsData.trashBox}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>责任单位：</span>
+            <span>{{vm.accountDetailsData.unit}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updateman}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updatetime}}</span>
           </div>
         </div>
       </div>
@@ -198,37 +493,65 @@
 
     <div ng-switch-when="jishaozuoye">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.plateId}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--机扫作业的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.plateId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.AreaId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>作业频率：</span>
+            <span>{{vm.accountDetailsData.frequency}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>作业次数：</span>
+            <span>{{vm.accountDetailsData.operateNum}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>作业时间：</span>
+            <span>{{vm.accountDetailsData.operateTime}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>作业类型：</span>
+            <span>{{vm.accountDetailsData.operateType}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>道路详情：</span>
+            <span>{{vm.accountDetailsData.roadDetails}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>创建时间：</span>
+            <span>{{vm.accountDetailsData.creatDate}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updatePeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updateTime}}</span>
           </div>
         </div>
       </div>
@@ -236,75 +559,116 @@
 
     <div ng-switch-when="jixiezuoye">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.operateVehicle}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--机械作业的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.operateVehicle}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>车辆类型：</span>
+            <span>{{vm.accountDetailsData.vehicleType}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.areaId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>是否监控：</span>
+            <span>{{vm.accountDetailsData.isMonitor}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>作业路线：</span>
+            <span>{{vm.accountDetailsData.operateRoute}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>作业时间：</span>
+            <span>{{vm.accountDetailsData.operateTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>作业类型：</span>
+            <span>{{vm.accountDetailsData.operateType}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>作业人员联系方式：</span>
+            <span>{{vm.accountDetailsData.operatePersonInfo}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updateMan}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updateTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <div ng-switch-when="cheliang">
+
+    <div ng-switch-when="lajitong">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.trashArea}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--垃圾桶的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.trashArea}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.areaid}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>垃圾桶设置具体位置：</span>
+            <span>{{vm.accountDetailsData.trashArea}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>垃圾桶设置数量：</span>
+            <span>{{vm.accountDetailsData.trashNum}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>所属单位：</span>
+            <span>{{vm.accountDetailsData.unit}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.note}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updateman}}</span>
           </div>
         </div>
       </div>
@@ -312,37 +676,65 @@
 
     <div ng-switch-when="shashuizuoye">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.plateId}}
       </div>
       <!--公厕的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.plateId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.AreaId}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>道路详情：</span>
+            <span>{{vm.accountDetailsData.aroadDetails}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>作业频率：</span>
+            <span>{{vm.accountDetailsData.frequency}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>作业次数：</span>
+            <span>{{vm.accountDetailsData.operateNum}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>作业时间：</span>
+            <span>{{vm.accountDetailsData.operateTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>作业类型：</span>
+            <span>{{vm.accountDetailsData.operateType}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updatePeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>创建时间：</span>
+            <span>{{vm.accountDetailsData.creatDate}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updateTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
           </div>
         </div>
       </div>
@@ -350,37 +742,81 @@
 
     <div ng-switch-when="shoujizhan">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.RCPsname}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--收集站的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.RCPsname}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>编码：</span>
+            <span>{{vm.accountDetailsData.code}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>所属区域：</span>
+            <span>{{vm.accountDetailsData.areaid}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>所属街道：</span>
+            <span>{{vm.accountDetailsData.belongsStreet}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>箱数：</span>
+            <span>{{vm.accountDetailsData.boxesQuantity}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>建造时间：</span>
+            <span>{{vm.accountDetailsData.buildtime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>创建地点：</span>
+            <span>{{vm.accountDetailsData.builtArea}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>类别：</span>
+            <span>{{vm.accountDetailsData.category}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>处理能力：</span>
+            <span>{{vm.accountDetailsData.handleAbility}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>责任人：</span>
+            <span>{{vm.accountDetailsData.person}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>地点：</span>
+            <span>{{vm.accountDetailsData.site}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.updatePeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.updateTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>工作时间：</span>
+            <span>{{vm.accountDetailsData.worktime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.remarks}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.shortIntroduce}}</span>
           </div>
         </div>
       </div>
@@ -388,37 +824,61 @@
 
     <div ng-switch-when="shouyunzuoye">
       <div class="item item-borderless text-center">
-        银川路公厕
+        {{vm.accountDetailsData.operatePlate}}
       </div>
-      <!--公厕的台帐具体信息-->
+      <!--收运作业的台帐具体信息-->
       <div class="card">
         <div>
           <div class="item common-bold-font">
-            <span>哈哈哈哈</span>
+            <span>{{vm.accountDetailsData.operatePlate}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕名称：</span>
-            <span>{{vm.group}}</span>
-          </div>
-          <div class= "item item-borderless">
-            <span>公厕面积：</span>
-            <span>{{vm.group}}</span>
+            <span>所属市区：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕类型：</span>
-            <span>{{vm.group}}</span>
+            <span>收集方式：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
           <div class="item item-borderless">
-            <span>负责人：</span>
-            <span>{{vm.group}}</span>
+            <span>收集点明细：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
           <div class="item item-borderless">
-            <span>所属位置：</span>
-            <span>{{vm.group}}</span>
+            <span>工作时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
           <div class="item item-borderless">
-            <span>公厕位置：</span>
-            <span>{{vm.group}}</span>
+            <span>驾驶员：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>责任人：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>备注：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>简介：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加人：</span>
+            <span>{{vm.accountDetailsData.addPeople}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>添加时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改人：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
+          </div>
+          <div class="item item-borderless">
+            <span>修改时间：</span>
+            <span>{{vm.accountDetailsData.addTime}}</span>
           </div>
         </div>
       </div>

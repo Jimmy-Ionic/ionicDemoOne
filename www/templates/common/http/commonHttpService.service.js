@@ -95,7 +95,9 @@
           for (var p in obj) {
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
           }
+          console.log(str.join("&"));
           return str.join("&");
+
         }
       }).then(function (res) {
         if (res.data.success = 1) {

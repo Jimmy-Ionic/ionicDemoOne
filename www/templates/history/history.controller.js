@@ -5,10 +5,10 @@
     .module('app.history')
     .controller('HistoryController', HistoryController);
 
-  HistoryController.$inject = ['$scope', '$state', 'HistoryService'];
+  HistoryController.$inject = ['$rootScope', '$scope', '$state', 'HistoryService'];
 
   /** @ngInject */
-  function HistoryController($scope, $state, HistoryService) {
+  function HistoryController($rootScope, $scope, $state, HistoryService) {
     var vm = this;
     vm.title = '历史考核记录';
     vm.fun = {
@@ -34,15 +34,6 @@
 
     function activate() {
 
-      for (var i = 0; i < 15; i++) {
-        vm.historyList[i] = {
-          id: '1',
-          workName: '6月份考核计划',
-          year: '2017年',
-          month: '六月'
-        }
-      }
-
       for (var i = 0; i < 12; i++) {
         vm.monthArray[i] = i + 1;
       }
@@ -52,8 +43,15 @@
       for (var i = 0; i < 5; i++) {
         vm.yeahArray[i] = vm.thisYeah - i;
       }
-      HistoryService.getHistoryData($rootScope.userId, function (resData) {
 
+      var queryCriteria = {
+        keyword: '',
+        selectedYeah: vm.thisYeah,
+        selectedMonth: vm.thisMonth
+      }
+
+      HistoryService.getHistoryDataByCondition(queryCriteria, function (resData) {
+        vm.historyList = resData;
       });
     }
 
@@ -64,7 +62,7 @@
     //根据查询条件来查询历史考核记录
     function getHistoryDataByCondition() {
       HistoryService.getHistoryDataByCondition(vm.queryCriteria, function (resData) {
-
+        vm.historyList = resData;
       });
     }
 

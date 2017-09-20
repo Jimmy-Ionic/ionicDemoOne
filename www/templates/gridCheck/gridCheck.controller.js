@@ -6,11 +6,11 @@
     .controller('GridCheckController', GridCheckController);
 
   GridCheckController.$inject = ['$rootScope', '$cacheFactory', '$scope', '$state', 'GridCheckService',
-    'CommonMapService', '$ionicPopup'];
+    'CommonMapService', '$ionicPopup','$cordovaCamera'];
 
   /** @ngInject */
   function GridCheckController($rootScope, $cacheFactory, $scope, $state, GridCheckService, CommonMapService,
-                               $ionicPopup) {
+                               $ionicPopup,$cordovaCamera) {
 
     var vm = this;
     vm.title = '网格化巡检';
@@ -90,7 +90,7 @@
       CommonMapService.getAddressByGPS(function (res) {
         vm.uploadData.areaName = res.district;
         vm.uploadData.streetName = res.street;
-        // $scope.$apply();
+        $scope.$apply();
       });
     }
 
@@ -102,7 +102,7 @@
         vm.uploadData.point = $cacheFactory.get("cacheGridCheckMapData").get('position');
         vm.uploadData.address = $cacheFactory.get("cacheGridCheckMapData").get('address');
       }
-      vm.uploadData.questionCode = vm.questionCodeObj.id;
+      vm.uploadData.problemCode = vm.questionCodeObj.id;
       vm.uploadData.problemName = vm.questionCodeObj.name;
       console.log('网格化巡检需要上传的数据：');
       console.log(vm.uploadData);

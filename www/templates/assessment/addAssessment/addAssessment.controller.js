@@ -5,10 +5,12 @@
     .module('app.addAssessment')
     .controller('AddAssessmentController', AddAssessmentController);
 
-  AddAssessmentController.$inject = ['$rootScope', '$state', '$stateParams', 'AddAssessmentService', 'AssessmentStatusDetailsService'];
+  AddAssessmentController.$inject = ['$rootScope', '$state', '$stateParams', 'AddAssessmentService',
+    'AssessmentStatusDetailsService', '$ionicPopup', '$ionicHistory', '$cordovaCamera'];
 
   /** @ngInject */
-  function AddAssessmentController($rootScope, $state, $stateParams, AddAssessmentService, AssessmentStatusDetailsService) {
+  function AddAssessmentController($rootScope, $state, $stateParams, AddAssessmentService,
+                                   AssessmentStatusDetailsService, $ionicPopup, $ionicHistory, $cordovaCamera) {
 
     var vm = this;
     vm.data = {};
@@ -181,7 +183,17 @@
 
     //提交数据
     function uploadDataFun() {
-      if (vm.uploadData.points == '') {
+      if (!vm.addAssessmentData || !vm.addAssessmentData.id) {
+        $ionicPopup.alert({
+          title: '提示',
+          template: '计划id未获取到，请退出此页面重新进入！'
+        });
+      } else if (!vm.infraId) {
+        $ionicPopup.alert({
+          title: '提示',
+          template: '您没有选择相关的设施，请先选择！'
+        });
+      } else if (vm.uploadData.points == '') {
         $ionicPopup.alert({
           title: '扣分情况不能为空'
         });
@@ -224,7 +236,9 @@
             jsonObj.imgJson = vm.uploadData.img;
             var jsonStr = JSON.stringify(jsonObj);
             AddAssessmentService.uploadPointAndPicData(jsonStr, function (resData) {
-
+              // if(resData){
+              //   $ionicHistory.goBack();
+              // }
             });
           }
         });

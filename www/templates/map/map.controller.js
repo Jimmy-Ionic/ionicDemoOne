@@ -11,13 +11,8 @@
   function MapController(CommonMapService, MapService, $ionicPopup, AddAssessmentMapService) {
 
     var vm = this;
-    vm.data = {};
     vm.title = '地图查询';
-    vm.spinnerShow = false;
-    vm.queryObj = {
-      account: [],
-      keyword: ''
-    }
+
     //查询条件
     vm.queryCriteria = {
       type: '',
@@ -26,20 +21,14 @@
 
     vm.allCheck = {account: '全部', selected: true, code: ''};
 
-    vm.accountList = [{id: '0', account: '公厕', selected: false, code: 'gongche'},
-      {id: '1', account: '道路', selected: false, code: 'jiedao'}, {
-        id: '2',
-        account: '车辆',
-        selected: false,
-        code: 'cheliang'
-      },
-      {id: '3', account: '垃圾桶', selected: false, code: 'lajitong'}, {
-        id: '4',
-        account: '收集站',
-        selected: false,
-        code: 'shoujizhan'
-      },
-      {id: '5', account: '过街天桥', selected: false, code: 'guojietianqiao'}];
+    vm.accountList = [
+      {id: '0', account: '公厕', selected: true, code: 'gongche'},
+      {id: '1', account: '道路', selected: true, code: 'jiedao'},
+      {id: '2', account: '车辆', selected: true, code: 'cheliang'},
+      {id: '3', account: '垃圾桶', selected: true, code: 'lajitong'},
+      {id: '4', account: '收集站', selected: true, code: 'shoujizhan'},
+      {id: '5', account: '过街天桥', selected: true, code: 'guojietianqiao'}
+    ];
 
 
     vm.map;
@@ -49,13 +38,13 @@
     vm.circle;
     vm.polyline;
     vm.markers = [];
+
     vm.centerPositionNum = 0;
 
-    vm.mapPositionObj = null;
+    vm.mapPositionObj = {};
 
     vm.fun = {
-      // getAccountsPositionData: getAccountsPositionData,
-      // unSelectedAllCheck: unSelectedAllCheck
+      getAccountsPositionData: getAccountsPositionData
     }
 
 
@@ -68,25 +57,211 @@
 
       MapService.getAccountList(vm.queryCriteria, function (resData) {
         vm.mapPositionObj = resData[0];
+        // if (vm.mapPositionObj) {
+        //   if (vm.mapPositionObj.cheliang) {
+        //     for (var x in vm.mapPositionObj.cheliang) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.cheliang[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.cheliang[x].plateNo
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0]
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.congxizuoye) {
+        //     for (var x in vm.mapPositionObj.congxizuoye) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.congxizuoye[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.congxizuoye[x].plateId
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0]
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.daolu) {
+        //     for (var x in vm.mapPositionObj.daolu) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.daolu[x].point);
+        //       vm.polyline = new AMap.Polyline({
+        //         path: position,
+        //         strokeColor: "#1C8B08",
+        //         strokeWeight: 5
+        //       });
+        //       // 添加到地图中
+        //       vm.polyline.setMap(vm.map);
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.gongche) {
+        //     for (var x in vm.mapPositionObj.gongche) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.gongche[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.gongche[x].toiletName
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0]
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.guojietianqiao) {
+        //     for (var x in vm.mapPositionObj.guojietianqiao) {
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.guojietianqiao[x].point);
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.guojietianqiao[x].bridgeName
+        //       }
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('收集站');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.jishaozuoye) {
+        //     for (var x in vm.mapPositionObj.jishaozuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.jishaozuoye[x].plateId
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.jishaozuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //   if (vm.mapPositionObj.jixiezuoye) {
+        //     for (var x in vm.mapPositionObj.jixiezuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.jixiezuoye[x].operateVehicle
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.jixiezuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.lajitong) {
+        //     for (var x in vm.mapPositionObj.lajitong) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.lajitong[x].trashArea
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.lajitong[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.shashuizuoye) {
+        //     for (var x in vm.mapPositionObj.shashuizuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.shashuizuoye[x].plateId
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shashuizuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.shoujizhan) {
+        //     for (var x in vm.mapPositionObj.shoujizhan) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.shashuizuoye[x].site
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shoujizhan[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        //
+        //   if (vm.mapPositionObj.shouyunzuoye) {
+        //     for (var x in vm.mapPositionObj.shouyunzuoye) {
+        //       var infoObj = {
+        //         name: vm.mapPositionObj.shouyunzuoye[x].operatePlate
+        //       }
+        //       var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shouyunzuoye[x].point);
+        //       if (position.length > 0) {
+        //         position = position[0];
+        //         console.log('过街天桥');
+        //         console.log(position);
+        //       }
+        //       vm.markers.push(new AMap.Marker({
+        //         position: position,
+        //         extData: infoObj,
+        //         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+        //         offset: new AMap.Pixel(-15, -15)
+        //       }).on('click', openInfo));
+        //     }
+        //   }
+        // }
+        // //初始化点聚合
+        // addCluster(0);
         if (vm.mapPositionObj) {
-          if (vm.mapPositionObj.gongche) {
-            for (var x in vm.mapPositionObj.gongche) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.gongche[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0]
-              }
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
           if (vm.mapPositionObj.daolu) {
             for (var x in vm.mapPositionObj.daolu) {
               var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.daolu[x].point);
@@ -99,68 +274,11 @@
               vm.polyline.setMap(vm.map);
             }
           }
-          if (vm.mapPositionObj.cheliang) {
-            for (var x in vm.mapPositionObj.cheliang) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.cheliang[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0]
-              }
-              console.log(position);
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
-          if (vm.mapPositionObj.lajitong) {
-            for (var x in vm.mapPositionObj.lajitong) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.lajitong[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0]
-              }
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
-          if (vm.mapPositionObj.shoujizhan) {
-            for (var x in vm.mapPositionObj.shoujizhan) {
-              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shoujizhan[x].point);
-              var infoObj = {
-                name: '',
-                info: ''
-              }
-              if (position.length > 0) {
-                position = position[0];
-                console.log('收集站');
-                console.log(position);
-              }
-              vm.markers.push(new AMap.Marker({
-                position: position,
-                extData: infoObj,
-                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
-            }
-          }
+
           if (vm.mapPositionObj.guojietianqiao) {
             for (var x in vm.mapPositionObj.guojietianqiao) {
               var infoObj = {
-                name: vm.mapPositionObj.guojietianqiao[x].RCPsname,
-                info: vm.mapPositionObj.guojietianqiao[x].site
+                name: vm.mapPositionObj.guojietianqiao[x].bridgeName
               }
               var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.guojietianqiao[x].point);
               if (position.length > 0) {
@@ -168,35 +286,51 @@
                 console.log('过街天桥');
                 console.log(position);
               }
-              vm.markers.push(new AMap.Marker({
+              new AMap.Marker({
                 position: position,
                 extData: infoObj,
                 content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                offset: new AMap.Pixel(-15, -15)
-              }).on('click', openInfo));
+                offset: new AMap.Pixel(-15, -15),
+                map: vm.map
+              }).on('click', openInfo);
+            }
+          }
+
+          if (vm.mapPositionObj.shoujizhan) {
+            for (var x in vm.mapPositionObj.shoujizhan) {
+              var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.shoujizhan[x].point);
+              var infoObj = {
+                name: vm.mapPositionObj.shoujizhan[x].RCPsname
+              }
+              if (position.length > 0) {
+                position = position[0];
+                console.log('收集站');
+                console.log(position);
+              }
+              new AMap.Marker({
+                position: position,
+                extData: infoObj,
+                content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+                offset: new AMap.Pixel(-15, -15),
+                map: vm.map
+              }).on('click', openInfo);
             }
           }
         }
-        //初始化点聚合
-        addCluster(0);
       })
-
     }
 
     function openInfo(e) {
       //构建信息窗体中显示的内容
       var info = [];
-      info.push("<div>" + e.target.getExtData().name);
-      info.push(e.target.getExtData().info + "</div>");
+      info.push("<div>" + e.target.getExtData().name + "</div>");
       var infoWindow = new AMap.InfoWindow({
         content: info.join("<br/>") //使用默认信息窗体框样式，显示信息内容
       });
       infoWindow.open(vm.map, e.target.getPosition());
-      console.log('已经执行了点击！！！');
     }
 
     function initMap() {
-
       vm.map = CommonMapService.initMap();
       vm.map.setZoom(17);
       vm.markerPerson = new AMap.Marker();
@@ -320,48 +454,70 @@
         vm.cluster = new AMap.MarkerClusterer(vm.map, vm.markers, {gridSize: 80});
         console.log('点聚合已经走完哈哈');
       }
+    }
+
+    //根据台帐获取对应的台帐定位信息
+    // function getAccountsPositionData() {
+    //
+    //   console.log(vm.accountList);
+    //
+    //   var selected = false;
+    //   var x;
+    //   for (x in vm.accountList) {
+    //     selected = selected || vm.accountList[x].selected;
+    //   }
+    //   if (!selected) {
+    //     $ionicPopup.alert({
+    //       title: '提示',
+    //       template: '请至少选择一项'
+    //     }).then(function (res) {
+    //       return;
+    //     });
+    //   } else {
+    //     var querySelected = true;
+    //     var x;
+    //     for (x in vm.accountList) {
+    //       querySelected = querySelected && vm.accountList[x].selected;
+    //     }
+    //
+    //     if (querySelected) {
+    //       vm.queryCriteria.type = '';
+    //     } else {
+    //       var x;
+    //       for (x in vm.accountList) {
+    //         vm.queryCriteria.type += vm.accountList[x].code + ',';
+    //       }
+    //       vm.queryCriteria.type = vm.queryCriteria.type.substring(0, vm.queryCriteria.type - 1);
+    //     }
+    //
+    //     MapService.getAccountList(vm.queryCriteria, function (resData) {
+    //       vm.mapPositionObj = resData;
+    //     })
+    //   }
+    //
 
 
-      //根据台帐获取对应的台帐定位信息
-      // function getAccountsPositionData() {
-      //
-      //   console.log(vm.accountList);
-      //
-      //   var selected = false;
-      //   var x;
-      //   for (x in vm.accountList) {
-      //     selected = selected || vm.accountList[x].selected;
-      //   }
-      //   if (!selected) {
-      //     $ionicPopup.alert({
-      //       title: '提示',
-      //       template: '请至少选择一项'
-      //     }).then(function (res) {
-      //       return;
-      //     });
-      //   } else {
-      //     var querySelected = true;
-      //     var x;
-      //     for (x in vm.accountList) {
-      //       querySelected = querySelected && vm.accountList[x].selected;
-      //     }
-      //
-      //     if (querySelected) {
-      //       vm.queryCriteria.type = '';
-      //     } else {
-      //       var x;
-      //       for (x in vm.accountList) {
-      //         vm.queryCriteria.type += vm.accountList[x].code + ',';
-      //       }
-      //       vm.queryCriteria.type = vm.queryCriteria.type.substring(0, vm.queryCriteria.type - 1);
-      //     }
-      //
-      //     MapService.getAccountList(vm.queryCriteria, function (resData) {
-      //       vm.mapPositionObj = resData;
-      //     })
-      //   }
-      // }
-
+    //根据台帐获取对应的台帐定位信息
+    function getAccountsPositionData() {
+      console.log(vm.accountList);
+      vm.queryCriteria.type = '';
+      for (var x in vm.accountList) {
+        if (vm.accountList[x].selected) {
+          vm.queryCriteria.type += vm.accountList[x].code + ',';
+          console.log(vm.queryCriteria);
+        }
+      }
+      if (vm.queryCriteria.type.split(',').length == 6) {
+        vm.queryCriteria.type = '';
+      } else {
+        vm.queryCriteria.type = vm.queryCriteria.type.substring(0, vm.queryCriteria.type.length - 1);
+        console.log(vm.queryCriteria.type);
+      }
+      console.log(vm.queryCriteria.type);
+      var query = vm.queryCriteria;
+      MapService.getAccountList(query, function (resData) {
+        vm.mapPositionObj = resData;
+      })
     }
 
   }

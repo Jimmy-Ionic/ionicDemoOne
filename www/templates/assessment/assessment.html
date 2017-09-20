@@ -1,49 +1,43 @@
- <ion-view class="padding" ng-controller="AssessmentController as vm">
+ <ion-view class="home-bg" ng-controller="AssessmentController as vm">
 
-  <div ng-include="'templates/common/common.title.html'"></div>
-
-  <ion-content class="has-header padding-top">
-    <div class="row padding-top has-header">
-      <div class="col-40 text-center">巡检计划</div>
-      <div class="col-20 text-center">开始时间</div>
-      <div class="col-20 text-center">结束时间</div>
-      <div class="col-20 text-center"></div>
-    </div>
-  </ion-content>
+   <div ng-include="'templates/common/common.title.html'"></div>
 
 
-  <ion-content class="has-footer common-margin common-border" scrollbar-y="false">
-    <div class="padding-top" scroll="true">
-      <div class="row">
-        <div class="col-40 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item " ng-repeat="item in vm.planList">
-              {{item.planName}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
-              {{item.sDate}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
-              {{item.eDate}}
-            </li>
-          </ul>
-        </div>
-        <div class="col-20 text-center">
-          <ul class="list">
-            <li class="wait-work-list-item" ng-repeat="item in vm.planList">
-              <span class="wait-work-list-item-btn" ng-click="vm.toPlanDetails(item)">查看</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </ion-content>
-</ion-view>
+   <div class="home-bottom-bg">
+
+
+     <div class="padding-left-right-20 save-data-row padding-top-30 common-font-4CB1AF-size-17">
+       <div class="col col-40 text-center">巡检计划</div>
+       <div class="col col-25 text-center">开始时间</div>
+       <div class="col col-25 text-center">结束时间</div>
+       <div class="col col-10 text-center"></div>
+     </div>
+
+     <div class="padding-left-right-20">
+
+       <div class="save-data-line"></div>
+
+       <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+
+         <div class="common-ion-content-child-div">
+           <div class="list">
+             <li class="common-item" ng-repeat="item in vm.planList">
+               <div class="row">
+                 <span class="col col-40 col-center text-center assessment-plan-div"> {{item.planName}}</span>
+                 <span class="col col-25 col-center text-center">{{item.sDate}}</span>
+                 <span class="col col-25 col-center text-center">{{item.eDate}}</span>
+                 <div class="col col-10 common-center">
+                   <div class="common-query-btn" ng-click="vm.toPlanDetails(item)"></div>
+                 </div>
+               </div>
+             </li>
+           </div>
+         </div>
+
+       </ion-content>
+
+       <div class="save-data-line"></div>
+     </div>
+
+   </div>
+ </ion-view>

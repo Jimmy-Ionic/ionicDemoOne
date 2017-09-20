@@ -16,12 +16,12 @@
 
     <div class="row">
       <div class="col col-20 text-center">
-        <select ng-init="vm.queryCriteria.selectedYeah = vm.thisYeah" ng-model="vm.selectedYeah">
+        <select ng-init="vm.queryCriteria.selectedYeah = vm.thisYeah" ng-model="vm.queryCriteria.selectedYeah">
           <option ng-repeat="x in vm.yeahArray">{{x}}</option>
         </select>
       </div>
       <div class="col col-20 text-center">
-        <select ng-init="vm.queryCriteria.selectedMonth = vm.thisMonth" ng-model="vm.selectedMonth">
+        <select ng-init="vm.queryCriteria.selectedMonth = vm.thisMonth" ng-model="vm.queryCriteria.selectedMonth">
           <option ng-repeat="x in vm.monthArray track by $index">{{x}}</option>
         </select>
       </div>
@@ -44,21 +44,21 @@
         <div class="col col-20 text-center">
           <ul class="list">
             <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
-              {{item.year}}
+              {{vm.queryCriteria.selectedYeah}}
             </li>
           </ul>
         </div>
         <div class="col col-20 text-center">
           <ul class="list">
             <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
-              {{item.month}}
+              {{vm.queryCriteria.selectedMonth}}
             </li>
           </ul>
         </div>
         <div class="col col-40 text-center">
           <ul class="list">
             <li class="wait-work-list-item" ng-repeat="item in vm.historyList">
-              {{item.workName}}
+              {{item.planName}}
             </li>
           </ul>
         </div>

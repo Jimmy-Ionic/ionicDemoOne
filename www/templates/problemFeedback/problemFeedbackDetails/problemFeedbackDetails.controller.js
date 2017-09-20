@@ -5,10 +5,12 @@
     .module('app.problemFeedbackDetails')
     .controller('ProblemFeedbackDetailsController', ProblemFeedbackDetailsController);
 
-  ProblemFeedbackDetailsController.$inject = ['$scope', '$rootScope', '$stateParams', 'ProblemFeedbackDetailsService', '$ionicPopup', '$ionicHistory'];
+  ProblemFeedbackDetailsController.$inject = ['$scope', '$rootScope', '$stateParams',
+    'ProblemFeedbackDetailsService', '$ionicPopup', '$ionicHistory','$cordovaCamera'];
 
   /** @ngInject */
-  function ProblemFeedbackDetailsController($scope, $rootScope, $stateParams, ProblemFeedbackDetailsService, $ionicPopup, $ionicHistory) {
+  function ProblemFeedbackDetailsController($scope, $rootScope, $stateParams,
+                                            ProblemFeedbackDetailsService, $ionicPopup, $ionicHistory,$cordovaCamera) {
     var vm = this;
     vm.title = '问题详情'
     vm.fromWhere = '';
