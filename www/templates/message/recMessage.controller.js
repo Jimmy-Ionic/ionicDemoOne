@@ -15,7 +15,8 @@
     vm.refreshMessageList = refreshMessageList;
     vm.openMsgContent = openMsgContent;
     vm.fun = {
-      refreshMessageList: refreshMessageList
+      refreshMessageList: refreshMessageList,
+      toMessageContent:toMessageContent
     }
 
     //http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg
@@ -43,10 +44,13 @@
       }
       MessageService.doRefresh(userId, function (resData) {
         vm.messages = resData;
-        $scope.$apply();
+        console.log(vm.messages);
       }, function () {
         $scope.$broadcast('scroll.refreshComplete');
       });
+    }
+
+    function toMessageContent(item) {
     }
 
   }

@@ -24,11 +24,11 @@
 
 
     //刷新
-    function doRefresh(userId, fun,hideRefreshFun) {
+    function doRefresh(userId,fun,hideRefreshFun) {
       var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
       $http.get(url)
         .success(function (response) {
-          fun(response);
+            fun(response.data);
         })
         .finally(function () {
           hideRefreshFun();

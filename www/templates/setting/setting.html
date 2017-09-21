@@ -1,25 +1,45 @@
-<ion-view title="个人信息" ng-controller="SettingController as vm">
-  <div ng-include="'templates/common/common.title.html'"></div>
+<ion-view class="home-bg" title="个人信息" ng-controller="SettingController as vm">
 
-  <div class="content has-header">
-    <div class="padding common-margin-top" ng-include="'templates/common/common.weather.html'"></div>
+  <div class="home-top">
+    <div class="home-top-bar">
+      <button class="home-top-button">&lt;返回</button>
+      <button id="unReadMsgBtn" class="home-top-button" ng-click="vm.homeWorkController.toMessage()">
+        消息({{unReadMsgCount}})
+      </button>
+    </div>
 
-    <div class="common-center padding-top-50">
+    <div class="common-margin-top-10" ng-include="'templates/common/common.weather.html'"></div>
 
-      <div class="content has-header ionic-pseudo">
+  </div>
 
-        <div class="list card">
-          <a class="item item-icon-left">
-            <i class="icon ion-person"></i>
-            姓名：{{vm.name}}
-          </a>
-          <a class="item item-icon-left">
-            <i class="icon ion-person-stalker"></i>
-            所属小组：{{vm.group}}
-          </a>
+  <div class="content home-bottom-bg">
+
+    <div class="common-horizontal-center">
+      <span class="home-bottom-title">个人信息</span>
+    </div>
+
+    <div class="padding-left-right-20">
+      <div class="save-data-line"></div>
+
+      <div class="common-ion-content">
+
+        <div>
+          <div class="list">
+            <li class="item">
+              <span>姓名：</span>
+              <span>{{$rootScope.userName}}</span>
+            </li>
+            <li class="item">
+              <span>所属公司：</span>
+              <span>{{$rootScope.userOrg}}</span>
+            </li>
+          </div>
         </div>
+      </div>
 
+      <div class="save-data-line-no-margin-top"></div>
     </div>
 
   </div>
+
 </ion-view>

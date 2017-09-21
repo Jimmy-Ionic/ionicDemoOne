@@ -253,25 +253,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.history', []);
-})();
-
-(function () {
-  'use strict';
-
   angular.module('app.home',[]);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.login', []);
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('app.map', []);
+  angular.module('app.history', []);
 })();
 
 (function () {
@@ -283,7 +271,25 @@
 (function () {
   'use strict';
 
+  angular.module('app.map', []);
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('app.login', []);
+})();
+
+(function () {
+  'use strict';
+
   angular.module('app.problemFeedback', []);
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('app.setNet', []);
 })();
 
 (function () {
@@ -301,13 +307,19 @@
 (function () {
   'use strict';
 
-  angular.module('app.setNet', []);
+  angular.module('app.accountDetails', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.accountDetails', []);
+  angular.module('app.commonMap', []);
+})();
+
+(function () {
+  'use strict';
+
+  angular.module('app.commonHttpService', []);
 })();
 
 (function () {
@@ -332,18 +344,6 @@
   'use strict';
 
   angular.module('app.planDetails', []);
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('app.commonHttpService', []);
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('app.commonMap', []);
 })();
 
 (function () {
@@ -798,126 +798,6 @@
   'use strict';
 
   angular
-    .module('app.history')
-    .controller('HistoryController', HistoryController);
-
-  HistoryController.$inject = ['$rootScope', '$scope', '$state', 'HistoryService'];
-
-  /** @ngInject */
-  function HistoryController($rootScope, $scope, $state, HistoryService) {
-    var vm = this;
-    vm.title = '历史考核记录';
-    vm.fun = {
-      toPlanDetails: toPlanDetails,
-      getHistoryDataByCondition: getHistoryDataByCondition
-    }
-
-    vm.toPlanDetails = toPlanDetails;
-
-    vm.historyList = [];
-    vm.yeahArray = [];
-    vm.monthArray = [];
-    vm.thisYeah = moment().format('YYYY');
-    vm.thisMonth = moment().format('M');
-    vm.queryCriteria = {
-      keyword: '',
-      selectedYeah: '',
-      selectedMonth: ''
-    }
-
-    activate();
-
-
-    function activate() {
-
-      for (var i = 0; i < 12; i++) {
-        vm.monthArray[i] = i + 1;
-      }
-
-      console.log(vm.monthArray);
-
-      for (var i = 0; i < 5; i++) {
-        vm.yeahArray[i] = vm.thisYeah - i;
-      }
-
-      var queryCriteria = {
-        keyword: '',
-        selectedYeah: vm.thisYeah,
-        selectedMonth: vm.thisMonth
-      }
-
-      HistoryService.getHistoryDataByCondition(queryCriteria, function (resData) {
-        vm.historyList = resData;
-      });
-    }
-
-    function toPlanDetails(item) {
-      $state.go('planDetails', {assessmentData: item, fromWhere: 'history'});
-    }
-
-    //根据查询条件来查询历史考核记录
-    function getHistoryDataByCondition() {
-      HistoryService.getHistoryDataByCondition(vm.queryCriteria, function (resData) {
-        vm.historyList = resData;
-      });
-    }
-
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.history')
-    .config(HistoryConfig);
-
-  HistoryConfig.$inject = ['$stateProvider'];
-
-  /** @ngInject */
-  function HistoryConfig($stateProvider) {
-    $stateProvider
-      .state('history', {
-        url: '/history',
-        // views: {
-        //   'main-content': {
-        //     templateUrl: 'templates/setting/setting.html'
-        //   }
-        templateUrl: 'templates/history/history.html'
-      });
-  }
-}());
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.history')
-    .service('HistoryService', HistoryService);
-
-  HistoryService.$inject = ['MyHttpService'];
-
-  /** @ngInject */
-  function HistoryService(MyHttpService) {
-    var service = {
-      getHistoryDataByCondition: getHistoryDataByCondition
-    };
-
-    return service;
-
-    function getHistoryDataByCondition(queryCriteria, fun) {
-      var url = '/hwweb/Comprehensive/viewHistory.action?name=' + queryCriteria.keyword +
-        '&year=' + queryCriteria.selectedYeah + '&month=' + queryCriteria.selectedMonth;
-      MyHttpService.getCommonData(url, fun);
-    }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
     .module('app.home')
     .controller('HomeController', HomeController);
 
@@ -1144,82 +1024,75 @@
 
 })();
 
-/* global hex_md5 */
 (function () {
   'use strict';
 
-  var loginModule = angular.module('app.login');
-  loginModule.controller('LoginController', LoginController);
+  angular
+    .module('app.history')
+    .controller('HistoryController', HistoryController);
 
-  LoginController.$inject = [
-    '$scope',
-    '$state',
-    'LoginService',
-    '$cordovaDevice',
-    '$ionicPopup'
-  ];
+  HistoryController.$inject = ['$rootScope', '$scope', '$state', 'HistoryService'];
 
-  function LoginController($scope,
-                           $state,
-                           LoginService,
-                           $cordovaDevice,
-                           $ionicPopup) {
+  /** @ngInject */
+  function HistoryController($rootScope, $scope, $state, HistoryService) {
+    var vm = this;
+    vm.title = '历史考核记录';
+    vm.fun = {
+      toPlanDetails: toPlanDetails,
+      getHistoryDataByCondition: getHistoryDataByCondition
+    }
 
-    $scope.doLogin = doLogin;
-    $scope.setNetAddress = setNetAddress;
+    vm.toPlanDetails = toPlanDetails;
 
-    $scope.isCommonAccount = false;
-    $scope.userInfo = LoginService.getUserInfo();
-    $scope.imei = '';
-
-    $scope.info = {
-      userName: $scope.userInfo.userName,
-      password: $scope.userInfo.password,
-      isRemAccountAndPwd: $scope.userInfo.isRemAccountAndPwd
-    };
+    vm.historyList = [];
+    vm.yeahArray = [];
+    vm.monthArray = [];
+    vm.thisYeah = moment().format('YYYY');
+    vm.thisMonth = moment().format('M');
+    vm.queryCriteria = {
+      keyword: '',
+      selectedYeah: '',
+      selectedMonth: ''
+    }
 
     activate();
 
 
     function activate() {
 
-    }
+      for (var i = 0; i < 12; i++) {
+        vm.monthArray[i] = i + 1;
+      }
 
+      console.log(vm.monthArray);
 
-    LoginService.setServerInfo();
+      for (var i = 0; i < 5; i++) {
+        vm.yeahArray[i] = vm.thisYeah - i;
+      }
 
+      var queryCriteria = {
+        keyword: '',
+        selectedYeah: vm.thisYeah,
+        selectedMonth: vm.thisMonth
+      }
 
-    function setNetAddress() {
-      // if (device) {
-      //   $scope.imei = device.imei;
-      // } else {
-      //   $scope.imei = '123456';
-      // }
-      $state.go('setNet', {imei: $scope.imei});
-    }
-
-
-    function doLogin() {
-      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
-    }
-
-
-  }
-})();
-
-(function () {
-  angular.module('app.login')
-    .config(loginRouteConfig);
-
-  loginRouteConfig.$inject = ['$stateProvider'];
-
-  function loginRouteConfig($stateProvider) {
-    $stateProvider
-      .state('login', {
-        url: '/login',
-        cache: false,
-        templateUrl: 'templates/login/login.html'
+      HistoryService.getHistoryDataByCondition(queryCriteria, function (resData) {
+        vm.historyList = resData;
       });
+    }
+
+    function toPlanDetails(item) {
+      $state.go('planDetails', {assessmentData: item, fromWhere: 'history'});
+    }
+
+    //根据查询条件来查询历史考核记录
+    function getHistoryDataByCondition() {
+      HistoryService.getHistoryDataByCondition(vm.queryCriteria, function (resData) {
+        vm.historyList = resData;
+      });
+    }
+
+
   }
 })();
 
@@ -1227,159 +1100,162 @@
   'use strict';
 
   angular
-    .module('app.login')
-    .service('LoginService', LoginService);
+    .module('app.history')
+    .config(HistoryConfig);
 
-  LoginService.$inject = ['$localStorage', '$http', 'SYS_INFO', '$timeout', '$ionicLoading', '$ionicPopup', '$rootScope', '$cordovaDevice','$state'];
+  HistoryConfig.$inject = ['$stateProvider'];
 
+  /** @ngInject */
+  function HistoryConfig($stateProvider) {
+    $stateProvider
+      .state('history', {
+        url: '/history',
+        // views: {
+        //   'main-content': {
+        //     templateUrl: 'templates/setting/setting.html'
+        //   }
+        templateUrl: 'templates/history/history.html'
+      });
+  }
+}());
 
-  function LoginService($localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice,$state) {
+(function () {
+  'use strict';
 
+  angular
+    .module('app.history')
+    .service('HistoryService', HistoryService);
+
+  HistoryService.$inject = ['MyHttpService'];
+
+  /** @ngInject */
+  function HistoryService(MyHttpService) {
     var service = {
-      login: login,
-      getUserInfo: getUserInfo,
-      setServerInfo: setServerInfo,
-      getImei: getImei
+      getHistoryDataByCondition: getHistoryDataByCondition
+    };
+
+    return service;
+
+    function getHistoryDataByCondition(queryCriteria, fun) {
+      var url = '/hwweb/Comprehensive/viewHistory.action?name=' + queryCriteria.keyword +
+        '&year=' + queryCriteria.selectedYeah + '&month=' + queryCriteria.selectedMonth;
+      MyHttpService.getCommonData(url, fun);
+    }
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.appReceivedMessage')
+    .controller('MessageController', MessageController);
+
+  MessageController.$inject = ['$scope', 'MessageService', '$rootScope'];
+
+  /** @ngInject */
+  function MessageController($scope, MessageService, $rootScope) {
+
+    var vm = this;
+    vm.title = '已收到消息';
+    vm.refreshMessageList = refreshMessageList;
+    vm.openMsgContent = openMsgContent;
+    vm.fun = {
+      refreshMessageList: refreshMessageList,
+      toMessageContent:toMessageContent
+    }
+
+    //http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg
+    vm.messages = [];
+
+    activate();
+
+    function activate() {
+      MessageService.getMessagesByUserId($rootScope.userId, function (resData) {
+        vm.messages = resData;
+      });
+    }
+
+
+    function openMsgContent(msg) {
+
+    }
+
+    //刷新数据
+    function refreshMessageList() {
+      vm.messages = [];
+      var userId = '';
+      if ($rootScope.userId) {
+        userId = $rootScope.userId;
+      }
+      MessageService.doRefresh(userId, function (resData) {
+        vm.messages = resData;
+        console.log(vm.messages);
+      }, function () {
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    }
+
+    function toMessageContent(item) {
+    }
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.appReceivedMessage')
+    .config(messageConfig);
+
+  messageConfig.$inject = ['$stateProvider'];
+
+  /** @ngInject */
+  function messageConfig($stateProvider) {
+    $stateProvider
+      .state('recMessage', {
+        url: '/recMessage',
+        templateUrl: 'templates/message/recMessage.html'
+      });
+  }
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.appReceivedMessage')
+    .service('MessageService', MessageService);
+
+  MessageService.$inject = ['MyHttpService', 'SYS_INFO', '$http'];
+
+  /** @ngInject */
+  function MessageService(MyHttpService, SYS_INFO, $http) {
+    var service = {
+      getMessagesByUserId: getMessagesByUserId,
+      doRefresh: doRefresh
     };
 
     return service;
 
 
-    function login(userName, pwd, imei, isCommonAccount, isRemAccountAndPwd,info) {
-      $ionicLoading.show({
-        template: '正在登录...'
-      });
-      $timeout(function () {
-        $ionicLoading.hide();
-      }, 30000);
-      pwd = hex_md5(pwd);
-      var path = '/hwweb/AppUser/userLogin.action?';
-      switch (isCommonAccount) {
-        case false:
-          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
-            .then(function (response) {
-              $rootScope.isCommonAccount = false;
-              success(response, isRemAccountAndPwd,info);
-            }, function (response) {
-              error(response)
-            });
-          break;
-        case  true:
-          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
-            .then(function (response) {
-              $rootScope.isCommonAccount = true;
-              success(response, isRemAccountAndPwd,info);
-            }, function (response) {
-              error(response)
-            });
-          break;
-        default:
-          break;
-      }
+    function getMessagesByUserId(userId, fun) {
+      var url = '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
+      MyHttpService.getCommonData(url, fun);
     }
 
-    function success(res, isRemAccountAndPwd,info) {
-      console.log(res);
-      if (res.data.success == '1') {
-        $timeout(function () {
-          if (isRemAccountAndPwd) {
-            createSession(info);
-          } else {
-            destroySession();
-          }
-          saveUserInfo(res.data.data[0]);
-        }, 100).then(function () {
-          $ionicLoading.hide();
-          $state.go('home');
+
+    //刷新
+    function doRefresh(userId,fun,hideRefreshFun) {
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
+      $http.get(url)
+        .success(function (response) {
+            fun(response.data);
+        })
+        .finally(function () {
+          hideRefreshFun();
         });
-      } else {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: res.data.msg
-        }).then(function (res) {
-        });
-      }
-    }
-
-    function error(res) {
-      $ionicLoading.hide();
-      $ionicPopup.alert({
-        title: '登陆失败',
-        template: res.data
-      }).then(function (res) {
-      });
-    }
-
-    function saveUserInfo(userInfo) {
-      if (userInfo) {
-        $rootScope.userId = userInfo.id;
-        $rootScope.userName = userInfo.name;
-        $rootScope.userOrg = userInfo.org;
-      } else {
-        $rootScope.userId = '';
-        $rootScope.userName = '';
-        $rootScope.userOrg= '';
-      }
-    }
-
-    function createSession(info) {
-      var userInfo = {
-        userName: '',
-        password: '',
-        isRemAccountAndPwd: false
-      };
-
-      if (info) {
-        userInfo.userName = info.userName;
-        userInfo.password = info.password;
-        userInfo.isRemAccountAndPwd = info.isRemAccountAndPwd;
-      }
-
-      $localStorage.userInfo = userInfo;
-    }
-
-    function getImei() {
-      document.addEventListener("deviceready", onDeviceReady, false);
-
-      function onDeviceReady() {
-        return $cordovaDevice.getUUID();
-      }
-    }
-
-    function getUserInfo() {
-      var userInfo = {
-        userName: '',
-        password: '',
-        isRemAccountAndPwd: false
-      };
-
-      if ($localStorage.userInfo) {
-        userInfo.userName = $localStorage.userInfo.userName;
-        userInfo.password = $localStorage.userInfo.password;
-        userInfo.isRemAccountAndPwd = $localStorage.userInfo.isRemAccountAndPwd;
-      }
-      return userInfo;
-    }
-
-    function destroySession() {
-      delete $localStorage.userInfo;
-    }
-
-    function setServerInfo() {
-
-      var serverInfo = {
-        SERVER_PATH: '',
-        SERVER_PORT: ''
-      }
-
-      if ($localStorage.serverInfo) {
-        SYS_INFO.SERVER_PATH = $localStorage.serverInfo.SERVER_PATH;
-        SYS_INFO.SERVER_PORT = $localStorage.serverInfo.SERVER_PORT;
-      } else {
-        serverInfo.SERVER_PATH = SYS_INFO.SERVER_PATH;
-        serverInfo.SERVER_PORT = SYS_INFO.SERVER_PORT;
-        $localStorage.serverInfo = serverInfo;
-      }
     }
 
   }
@@ -1959,57 +1835,82 @@
   }
 })();
 
+/* global hex_md5 */
 (function () {
   'use strict';
 
-  angular
-    .module('app.appReceivedMessage')
-    .controller('MessageController', MessageController);
+  var loginModule = angular.module('app.login');
+  loginModule.controller('LoginController', LoginController);
 
-  MessageController.$inject = ['$scope', 'MessageService', '$rootScope'];
+  LoginController.$inject = [
+    '$scope',
+    '$state',
+    'LoginService',
+    '$cordovaDevice',
+    '$ionicPopup'
+  ];
 
-  /** @ngInject */
-  function MessageController($scope, MessageService, $rootScope) {
+  function LoginController($scope,
+                           $state,
+                           LoginService,
+                           $cordovaDevice,
+                           $ionicPopup) {
 
-    var vm = this;
-    vm.title = '已收到消息';
-    vm.refreshMessageList = refreshMessageList;
-    vm.openMsgContent = openMsgContent;
-    vm.fun = {
-      refreshMessageList: refreshMessageList
-    }
+    $scope.doLogin = doLogin;
+    $scope.setNetAddress = setNetAddress;
 
-    //http://bpic.588ku.com/element_origin_min_pic/01/42/49/94573d7d67103c2.jpg
-    vm.messages = [];
+    $scope.isCommonAccount = false;
+    $scope.userInfo = LoginService.getUserInfo();
+    $scope.imei = '';
+
+    $scope.info = {
+      userName: $scope.userInfo.userName,
+      password: $scope.userInfo.password,
+      isRemAccountAndPwd: $scope.userInfo.isRemAccountAndPwd
+    };
 
     activate();
 
+
     function activate() {
-      MessageService.getMessagesByUserId($rootScope.userId, function (resData) {
-        vm.messages = resData;
+
+    }
+
+
+    LoginService.setServerInfo();
+
+
+    function setNetAddress() {
+      // if (device) {
+      //   $scope.imei = device.imei;
+      // } else {
+      //   $scope.imei = '123456';
+      // }
+      $state.go('setNet', {imei: $scope.imei});
+    }
+
+
+    function doLogin() {
+      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
+    }
+
+
+  }
+})();
+
+(function () {
+  angular.module('app.login')
+    .config(loginRouteConfig);
+
+  loginRouteConfig.$inject = ['$stateProvider'];
+
+  function loginRouteConfig($stateProvider) {
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        cache: false,
+        templateUrl: 'templates/login/login.html'
       });
-    }
-
-
-    function openMsgContent(msg) {
-
-    }
-
-    //刷新数据
-    function refreshMessageList() {
-      vm.messages = [];
-      var userId = '';
-      if ($rootScope.userId) {
-        userId = $rootScope.userId;
-      }
-      MessageService.doRefresh(userId, function (resData) {
-        vm.messages = resData;
-        $scope.$apply();
-      }, function () {
-        $scope.$broadcast('scroll.refreshComplete');
-      });
-    }
-
   }
 })();
 
@@ -2017,56 +1918,159 @@
   'use strict';
 
   angular
-    .module('app.appReceivedMessage')
-    .config(messageConfig);
+    .module('app.login')
+    .service('LoginService', LoginService);
 
-  messageConfig.$inject = ['$stateProvider'];
+  LoginService.$inject = ['$localStorage', '$http', 'SYS_INFO', '$timeout', '$ionicLoading', '$ionicPopup', '$rootScope', '$cordovaDevice','$state'];
 
-  /** @ngInject */
-  function messageConfig($stateProvider) {
-    $stateProvider
-      .state('recMessage', {
-        url: '/recMessage',
-        templateUrl: 'templates/message/recMessage.html'
-      });
-  }
-}());
 
-(function () {
-  'use strict';
+  function LoginService($localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice,$state) {
 
-  angular
-    .module('app.appReceivedMessage')
-    .service('MessageService', MessageService);
-
-  MessageService.$inject = ['MyHttpService', 'SYS_INFO', '$http'];
-
-  /** @ngInject */
-  function MessageService(MyHttpService, SYS_INFO, $http) {
     var service = {
-      getMessagesByUserId: getMessagesByUserId,
-      doRefresh: doRefresh
+      login: login,
+      getUserInfo: getUserInfo,
+      setServerInfo: setServerInfo,
+      getImei: getImei
     };
 
     return service;
 
 
-    function getMessagesByUserId(userId, fun) {
-      var url = '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
-      MyHttpService.getCommonData(url, fun);
+    function login(userName, pwd, imei, isCommonAccount, isRemAccountAndPwd,info) {
+      $ionicLoading.show({
+        template: '正在登录...'
+      });
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 30000);
+      pwd = hex_md5(pwd);
+      var path = '/hwweb/AppUser/userLogin.action?';
+      switch (isCommonAccount) {
+        case false:
+          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
+            .then(function (response) {
+              $rootScope.isCommonAccount = false;
+              success(response, isRemAccountAndPwd,info);
+            }, function (response) {
+              error(response)
+            });
+          break;
+        case  true:
+          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
+            .then(function (response) {
+              $rootScope.isCommonAccount = true;
+              success(response, isRemAccountAndPwd,info);
+            }, function (response) {
+              error(response)
+            });
+          break;
+        default:
+          break;
+      }
     }
 
-
-    //刷新
-    function doRefresh(userId, fun,hideRefreshFun) {
-      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
-      $http.get(url)
-        .success(function (response) {
-          fun(response);
-        })
-        .finally(function () {
-          hideRefreshFun();
+    function success(res, isRemAccountAndPwd,info) {
+      console.log(res);
+      if (res.data.success == '1') {
+        $timeout(function () {
+          if (isRemAccountAndPwd) {
+            createSession(info);
+          } else {
+            destroySession();
+          }
+          saveUserInfo(res.data.data[0]);
+        }, 100).then(function () {
+          $ionicLoading.hide();
+          $state.go('home');
         });
+      } else {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: res.data.msg
+        }).then(function (res) {
+        });
+      }
+    }
+
+    function error(res) {
+      $ionicLoading.hide();
+      $ionicPopup.alert({
+        title: '登陆失败',
+        template: res.data
+      }).then(function (res) {
+      });
+    }
+
+    function saveUserInfo(userInfo) {
+      if (userInfo) {
+        $rootScope.userId = userInfo.id;
+        $rootScope.userName = userInfo.name;
+        $rootScope.userOrg = userInfo.org;
+      } else {
+        $rootScope.userId = '';
+        $rootScope.userName = '';
+        $rootScope.userOrg= '';
+      }
+    }
+
+    function createSession(info) {
+      var userInfo = {
+        userName: '',
+        password: '',
+        isRemAccountAndPwd: false
+      };
+
+      if (info) {
+        userInfo.userName = info.userName;
+        userInfo.password = info.password;
+        userInfo.isRemAccountAndPwd = info.isRemAccountAndPwd;
+      }
+
+      $localStorage.userInfo = userInfo;
+    }
+
+    function getImei() {
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady() {
+        return $cordovaDevice.getUUID();
+      }
+    }
+
+    function getUserInfo() {
+      var userInfo = {
+        userName: '',
+        password: '',
+        isRemAccountAndPwd: false
+      };
+
+      if ($localStorage.userInfo) {
+        userInfo.userName = $localStorage.userInfo.userName;
+        userInfo.password = $localStorage.userInfo.password;
+        userInfo.isRemAccountAndPwd = $localStorage.userInfo.isRemAccountAndPwd;
+      }
+      return userInfo;
+    }
+
+    function destroySession() {
+      delete $localStorage.userInfo;
+    }
+
+    function setServerInfo() {
+
+      var serverInfo = {
+        SERVER_PATH: '',
+        SERVER_PORT: ''
+      }
+
+      if ($localStorage.serverInfo) {
+        SYS_INFO.SERVER_PATH = $localStorage.serverInfo.SERVER_PATH;
+        SYS_INFO.SERVER_PORT = $localStorage.serverInfo.SERVER_PORT;
+      } else {
+        serverInfo.SERVER_PATH = SYS_INFO.SERVER_PATH;
+        serverInfo.SERVER_PORT = SYS_INFO.SERVER_PORT;
+        $localStorage.serverInfo = serverInfo;
+      }
     }
 
   }
@@ -2175,6 +2179,86 @@
       MyHttpService.getCommonData(path, fun);
     }
 
+  }
+})();
+
+/* global hex_md5 */
+(function () {
+  'use strict';
+
+  angular.module('app.setNet')
+    .controller('SetNetController', SetNetController);
+
+  SetNetController.$inject = ['$scope', 'SetNetService', 'SYS_INFO', '$ionicHistory', '$stateParams'];
+
+  function SetNetController($scope, SetNetService, SYS_INFO, $ionicHistory, $stateParams) {
+    $scope.netSetList = [
+      {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
+      {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
+    ];
+    if ($stateParams.imei) {
+      $scope.IMEI = $stateParams.imei;
+    }
+
+
+    $scope.setNet = function () {
+      SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {
+        $ionicHistory.goBack();
+      });
+    }
+
+    $scope.backToLogin = function () {
+      $ionicHistory.goBack();
+    }
+
+  }
+})();
+
+(function () {
+  angular.module('app.setNet')
+    .config(NetRouteConfig);
+
+  NetRouteConfig.$inject = ['$stateProvider',];
+
+  function NetRouteConfig($stateProvider) {
+    $stateProvider
+      .state('setNet', {
+        url: '/setNet',
+        params: {imei: ''},
+        cache: false,
+        controller: 'SetNetController',
+        templateUrl: 'templates/setNet/net.html'
+      });
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.setNet')
+    .service('SetNetService', SetNetService)
+
+  SetNetService.$inject = ['$localStorage','SYS_INFO'];
+
+  function SetNetService($localStorage,SYS_INFO) {
+
+    var service = {
+      saveNetSettings: saveNetSettings
+    }
+
+
+    function saveNetSettings(address, port ,back) {
+      var serverInfo = {
+        SERVER_PATH:address,
+        SERVER_PORT:port
+      }
+      $localStorage.serverInfo= serverInfo;
+      SYS_INFO.SERVER_PATH = serverInfo.SERVER_PATH;
+      SYS_INFO.SERVER_PORT = serverInfo.SERVER_PORT;
+      back();
+    }
+    return service;
   }
 })();
 
@@ -2339,86 +2423,6 @@
 })
 ();
 
-/* global hex_md5 */
-(function () {
-  'use strict';
-
-  angular.module('app.setNet')
-    .controller('SetNetController', SetNetController);
-
-  SetNetController.$inject = ['$scope', 'SetNetService', 'SYS_INFO', '$ionicHistory', '$stateParams'];
-
-  function SetNetController($scope, SetNetService, SYS_INFO, $ionicHistory, $stateParams) {
-    $scope.netSetList = [
-      {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
-      {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
-    ];
-    if ($stateParams.imei) {
-      $scope.IMEI = $stateParams.imei;
-    }
-
-
-    $scope.setNet = function () {
-      SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {
-        $ionicHistory.goBack();
-      });
-    }
-
-    $scope.backToLogin = function () {
-      $ionicHistory.goBack();
-    }
-
-  }
-})();
-
-(function () {
-  angular.module('app.setNet')
-    .config(NetRouteConfig);
-
-  NetRouteConfig.$inject = ['$stateProvider',];
-
-  function NetRouteConfig($stateProvider) {
-    $stateProvider
-      .state('setNet', {
-        url: '/setNet',
-        params: {imei: ''},
-        cache: false,
-        controller: 'SetNetController',
-        templateUrl: 'templates/setNet/net.html'
-      });
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.setNet')
-    .service('SetNetService', SetNetService)
-
-  SetNetService.$inject = ['$localStorage','SYS_INFO'];
-
-  function SetNetService($localStorage,SYS_INFO) {
-
-    var service = {
-      saveNetSettings: saveNetSettings
-    }
-
-
-    function saveNetSettings(address, port ,back) {
-      var serverInfo = {
-        SERVER_PATH:address,
-        SERVER_PORT:port
-      }
-      $localStorage.serverInfo= serverInfo;
-      SYS_INFO.SERVER_PATH = serverInfo.SERVER_PATH;
-      SYS_INFO.SERVER_PORT = serverInfo.SERVER_PORT;
-      back();
-    }
-    return service;
-  }
-})();
-
 (function () {
   'use strict';
 
@@ -2488,6 +2492,645 @@
     var service = {
     };
     return service;
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.commonMap')
+    .controller('CommonMapController', CommonMapController);
+
+  CommonMapController.$inject = ['$rootScope', '$scope', '$stateParams', 'CommonMapService'];
+
+  /** @ngInject */
+  function CommonMapController($rootScope, $scope, $stateParams, CommonMapService) {
+
+    var vm = this;
+    vm.data = {};
+    vm.title = '地图详情';
+    vm.fun = {};
+    vm.data = $stateParams.data;
+    vm.fromWhere = $stateParams.from;
+    vm.map;
+    vm.marker;
+    vm.postion = [];
+    vm.fun = {
+      refreshMyPosition: refreshMyPosition,
+      sendPosition:sendPosition
+    }
+
+
+    activate();
+
+
+    function activate() {
+
+      switch (vm.fromWhere) {
+        case 'gridCheck':
+          if (vm.data == null || vm.data == undefined) {
+            CommonMapService.initMap();
+          } else {
+            vm.map = CommonMapService.initMap();
+            CommonMapService.getCoordinateInfo(function (data) {
+              vm.marker = CommonMapService.initMyPosition(vm.map, data);
+              vm.map.on('click', function (e) {
+                marker.setPosition(e.lnglat);
+                vm.postion = e.lnglat;
+                console.log(e.lnglat);
+              })
+            });
+          }
+          break;
+        case 'addAssessment':
+          break;
+        default:
+          break;
+      }
+    }
+
+    //刷新当前的位置，让标记回到当前位置
+    function refreshMyPosition() {
+      CommonMapService.getCoordinateInfo(function (data) {
+        vm.marker.setPosition(data);
+        vm.map.setZoom(12);
+        vm.map.setCenter(data);
+      });
+    }
+
+    function sendPosition() {
+      $state.go('gridCheck',{position:vm.postion});
+    }
+
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.commonMap')
+    .config(CommonMapConfig);
+
+  CommonMapConfig.$inject = ['$stateProvider'];
+
+  /** @ngInject */
+  function CommonMapConfig($stateProvider) {
+    $stateProvider
+      .state('commonMap', {
+        url: '/commonMap',
+        params: {data: null, from: ''},
+        templateUrl: 'templates/common/map/commonMap.html'
+      });
+  }
+}());
+
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.commonMap')
+    .service('CommonMapService', CommonMapService);
+
+  CommonMapService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO', '$cordovaGeolocation'];
+
+  /** @ngInject */
+  function CommonMapService($http, $ionicLoading, $ionicPopup, SYS_INFO, $cordovaGeolocation) {
+
+    var service = {
+      initMap: initMap,
+      initRoadMap: initRoadMap,
+      initInstallationMap: initInstallationMap,
+      initMyPosition: initMyPosition,
+      getCoordinateInfo: getCoordinateInfo,
+      getAddressByLatitudeAndLongitude: getAddressByLatitudeAndLongitude,
+      getAddressByGPS: getAddressByGPS,
+      getLocationByLatitudeAndLongitude: getLocationByLatitudeAndLongitude
+    };
+
+    return service;
+
+    function initMap() {
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>地图数据加载中...</span>' +
+          '</div>',
+          duration: 5 * 1000
+        });
+
+      var map = new AMap.Map('map', {
+        resizeEnable: true,
+        zoom: 12,
+        lang: 'zh_cn'
+      });
+
+      map.plugin(['AMap.ToolBar'], function () {
+        var toolBar = new AMap.ToolBar();
+        map.addControl(toolBar);
+      });
+
+      $ionicLoading.hide();
+
+      return map;
+    }
+
+
+    function initRoadMap(roadArray) {
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>地图数据加载中...</span>' +
+          '</div>',
+          duration: 5 * 1000
+        });
+
+      var mapObj = new AMap.Map('map');
+      map.setZoom(10);
+      map.setCenter([116.39, 39.9]);
+
+      $ionicLoading.hide();
+    }
+
+    function initInstallationMap(positionX, position) {
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>地图数据加载中...</span>' +
+          '</div>',
+          duration: 20 * 1000
+        });
+
+      var position = new AMap.LngLat(116.397428, 39.90923);
+
+      var mapObj = new AMap.Map('map', {
+
+        view: new AMap.View2D({
+
+          center: position,
+
+          zoom: 10,
+
+          rotation: 0
+
+        }),
+
+        lang: 'zh_cn'
+
+      });
+
+      $ionicLoading.hide();
+    }
+
+    //进入地图时获取自己当前的位置，并且标注在地图上
+    function initMyPosition(map, positionArray) {
+
+      map.setCenter(positionArray);
+
+      var marker = new AMap.Marker({
+        position: positionArray
+      });
+      marker.setMap(map);
+      marker.setTitle('我的位置');
+
+      // map.on('click', function (e) {
+      //   marker.setPosition(e.lnglat);
+      //   console.log(e.lnglat);
+      // })
+
+      return marker;
+    }
+
+
+    //使用Cordova使用GPS定位获取详细的GPS坐标
+    function getCoordinateInfoNoDialog(fun) {
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>定位中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        });
+      var positionArray = new Array();
+      $cordovaGeolocation
+        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+        .then(function (position) {
+          positionArray[0] = position.coords.longitude;
+          positionArray[1] = position.coords.latitude;
+          fun(positionArray);
+          $ionicLoading.hide();
+        }, function (err) {
+          //如果获取GPS失败，那么设置GPS地点为公司的经纬度
+          positionArray[0] = 120.41317;
+          positionArray[1] = 36.07705;
+          fun(positionArray);
+          $ionicLoading.hide();
+          console.log('获取坐标失败：' + 'code:' + err.code + '***' + 'msg:' + err.msg);
+        });
+    }
+
+    /**
+     * 使用Cordova使用GPS定位获取详细的GPS坐标
+     * @param fun
+     */
+    function getCoordinateInfo(fun) {
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>定位中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        });
+      var positionArray = new Array();
+      $cordovaGeolocation
+        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+        .then(function (position) {
+          positionArray[0] = position.coords.longitude;
+          positionArray[1] = position.coords.latitude;
+          fun(positionArray);
+          $ionicLoading.hide();
+          console.log('Cordova使用GPS定位成功：');
+          console.log(positionArray);
+        }, function (err) {
+          //如果获取GPS失败，那么设置GPS地点为垃管处的经纬度坐标(120.413762,36.084807)
+          // positionArray[0] = 120.41317;
+          // positionArray[1] = 36.07705;
+          positionArray[0] = 120.413762;
+          positionArray[1] = 36.084807;
+          fun(positionArray);
+          $ionicLoading.hide();
+          console.log('Cordova使用GPS定位失败，定位地点已经设为垃管处的地理位置：');
+          console.log('失败码：' + err.code);
+          console.log('失败信息' + err.msg);
+        });
+    }
+
+
+    /**
+     * 根据经纬度来获取定位地点的的各种信息
+     * @param dataArray
+     * @returns {{}}
+     */
+    function getAddressByLatitudeAndLongitude(dataArray) {
+      var locationObj = {};
+      AMap.plugin('AMap.Geocoder', function () {
+        var geocoder = new AMap.Geocoder({
+          city: "010"//城市，默认：“全国”
+        });
+        geocoder.getAddress(dataArray, function (status, result) {
+          if (status == 'complete') {
+            locationObj.address = result.regeocode.formattedAddress;//定位的详细的地点
+            locationObj.city = result.regeocode.addressComponent.city;//城市
+            locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;//城市+市区
+            locationObj.street = result.regeocode.addressComponent.street;//路
+            locationObj.township = result.regeocode.addressComponent.township;//街道
+            locationObj.streetNumber = result.regeocode.addressComponent.streetNumber;//楼号
+            console.log('根据经纬度来获取定位地点返回的数据：');
+            console.log(result);
+            console.log('根据经纬度来获取定位地点的的各种信息:');
+            console.log(locationObj);
+            return locationObj;
+          }else{
+            return locationObj;
+          }
+        })
+      });
+      return locationObj;
+    }
+
+
+    /**
+     * 根据经纬度来获取详细的地理位置
+     * @param dataArray
+     * @param fun
+     */
+    function getLocationByLatitudeAndLongitude(dataArray, fun) {
+      var location = '';
+      AMap.plugin('AMap.Geocoder', function () {
+        var geocoder = new AMap.Geocoder({
+          city: "010"//城市，默认：“全国”
+        });
+        geocoder.getAddress(dataArray, function (status, result) {
+          if (status == 'complete') {
+            location = result.regeocode.formattedAddress;
+            fun(location);
+          } else {
+            fun(location);
+          }
+          console.log('根据经纬度来获取详细的地理位置：');
+          console.log(result);
+        })
+      });
+    }
+
+
+    function getLatitudeAndLongitudeBySlide(dataArray, map) {
+      AMap.plugin('AMap.Geocoder', function () {
+        var geocoder = new AMap.Geocoder({
+          city: "010"//城市，默认：“全国”
+        });
+        var marker = new AMap.Marker({
+          map: map,
+          bubble: true
+        })
+
+        geocoder.getAddress(dataArray, function (status, result) {
+
+          if (status == 'complete') {
+            alert(status + result.regeocode.formattedAddress);
+          }
+          // map.on('click', function (e) {
+          //     marker.setPosition(e.lnglat);
+          //     geocoder.getAddress(e.lnglat, function (status, result) {
+          //         alert(status+result);
+          //         if (status == 'complete') {
+          //             alert(status + result.regeocode.formattedAddress);
+          //         }
+          //     })
+        })
+
+      });
+    }
+
+
+    /**
+     * 网格化巡检定位城市和街道(通过调用手机的GPS进行获取定位)
+     * @param fun
+     */
+    function getAddressByGPS(fun) {
+      //调用GPS定位
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>定位中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        });
+      var positionArray = [];
+      $cordovaGeolocation
+        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+        .then(function (position) {
+          positionArray[0] = position.coords.longitude;
+          positionArray[1] = position.coords.latitude;
+          $ionicLoading.hide();
+          console.log('定位成功，坐标数组：' + positionArray);
+          AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+              city: "010"//城市，默认：“全国”
+            });
+            geocoder.getAddress(positionArray, function (status, result) {
+              if (status == 'complete') {
+                var locationObj = {};
+                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
+                locationObj.street = result.regeocode.addressComponent.street;
+                fun(locationObj);
+                console.log('根据经纬度来获取定位地点返回的数据：');
+                console.log(result);
+                console.log('根据经纬度来获取定位地点的的各种信息:');
+                console.log(locationObj);
+              } else {
+                console.log('根据经纬度来获取定位地点失败！');
+              }
+            })
+          });
+        }, function (err) {
+          // //如果获取GPS失败，那么设置GPS地点为公司的经纬度
+          // var defaultPosition = [120.41317, 36.07705];
+          // $ionicLoading.hide();
+          // console.log('获取坐标失败：' + 'code:' + err.code + '***' + 'msg:' + err.msg);
+          // AMap.plugin('AMap.Geocoder', function () {
+          //   var geocoder = new AMap.Geocoder({
+          //     city: "010"//城市，默认：“全国”
+          //   });
+          //   geocoder.getAddress(defaultPosition, function (status, result) {
+          //     if (status == 'complete') {
+          //       var locationObj = {};
+          //       locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
+          //       locationObj.street = result.regeocode.addressComponent.street;
+          //       fun(locationObj);
+          //       console.log(result);
+          //     } else {
+          //       console.log('获取地理位置信息失败！' + status + result);
+          //     }
+          //   })
+          // });
+          //如果获取GPS失败那么返回空的字符串，并提示重新获取
+          $ionicLoading.hide();
+          var locationObj = {};
+          locationObj.district = '';
+          locationObj.street = '';
+          fun(locationObj);
+          $ionicPopup.alert({
+            title: '定位失败，请重试！'
+          });
+        });
+
+    }
+
+    //通过浏览器和Ip来实现定位获取详细的街道和市区信息
+    function getAddressByBrowserOrIp(fun) {
+
+      var geolocation;
+
+      AMap.plugin('AMap.Geolocation', function () {
+        geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,//是否使用高精度定位，默认:true
+          timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+          buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+          buttonPosition: 'RB'
+        });
+
+        geolocation.getCurrentPosition();
+
+        AMap.event.addListener(geolocation, 'complete', function (data) {
+          var position = [];
+          position[0] = data.position.getLng();
+          position[1] = data.position.getLat();
+          AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+              city: "010"//城市，默认：“全国”
+            });
+            geocoder.getAddress(position, function (status, result) {
+              if (status == 'complete') {
+                var locationObj = {};
+                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
+                locationObj.street = result.regeocode.addressComponent.street;
+                fun(locationObj);
+                console.log(result);
+              } else {
+                console.log('获取地理位置信息失败！' + status + result);
+              }
+            })
+          });
+          if (data.accuracy) {
+            console.log('精度：' + data.accuracy + ' 米');
+          }//如为IP精确定位结果则没有精度信息
+          console.log('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+        });//返回定位信息
+
+        AMap.event.addListener(geolocation, 'error', function (data) {
+          var defaultPosition = [120.41317, 36.07705];
+          console.log('定位失败');
+          AMap.plugin('AMap.Geocoder', function () {
+            var geocoder = new AMap.Geocoder({
+              city: "010"//城市，默认：“全国”
+            });
+            geocoder.getAddress(defaultPosition, function (status, result) {
+              if (status == 'complete') {
+                var locationObj = {};
+                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
+                locationObj.street = result.regeocode.addressComponent.street;
+                fun(locationObj);
+                console.log(result);
+              } else {
+                console.log('获取地理位置信息失败！' + status + result);
+              }
+            })
+          });
+        });      //返回定位出错信息
+      });
+    }
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.commonHttpService')
+    .service('MyHttpService', MyHttpService);
+
+  MyHttpService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO'];
+
+  /** @ngInject */
+  function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
+    var service = {
+      getCommonData: getCommonData,
+      uploadCommonData: uploadCommonData
+    };
+
+    return service;
+
+
+    function getCommonData(urlPath, fun) {
+
+      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
+
+      var data = [];
+
+      $ionicLoading.show(
+        {
+          templateUrl: 'templates/common/common.loadingData.html',
+          duration: 20 * 1000
+        });
+      $http({
+        method: 'GET',
+        url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
+        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      }).then(function (response) {
+        if (response.data.success == 1) {
+          $ionicLoading.hide();
+          data = response.data.data;
+          console.log('数据获取成功');
+          console.log(data);
+          fun(data);
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: '获取数据失败'
+          }).then(function (res) {
+            console.log('数据获取失败');
+            console.log(data);
+            fun(data);
+          });
+        }
+      }, function (response) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '提示',
+          template: '获取数据失败'
+        }).then(function (res) {
+          console.log('通信异常');
+          console.log(data);
+          fun(data);
+        });
+      });
+    }
+
+
+    //上传数据通用方法
+    function uploadCommonData(urlPath, jsonStr, fun) {
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        }
+      );
+
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
+      console.log(url);
+      console.log(jsonStr);
+      // $http({
+      //   method: 'post',
+      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
+      //   data: {data: jsonStr}
+      // }).then(function (res) {
+      $http({
+        method: 'post',
+        url: url,
+        data: {data: jsonStr},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          console.log(str.join("&"));
+          return str.join("&");
+
+        }
+      }).then(function (res) {
+        if (res.data.success = 1) {
+          var resData = res.data.data;
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: res.data.msg
+          }).then(function (res) {
+            fun(resData);
+          })
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '数据上传失败'
+          });
+        }
+      }, function (error) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '数据上传失败'
+        });
+      });
+    }
+
+
   }
 })();
 
@@ -3466,645 +4109,6 @@
   'use strict';
 
   angular
-    .module('app.commonHttpService')
-    .service('MyHttpService', MyHttpService);
-
-  MyHttpService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO'];
-
-  /** @ngInject */
-  function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
-    var service = {
-      getCommonData: getCommonData,
-      uploadCommonData: uploadCommonData
-    };
-
-    return service;
-
-
-    function getCommonData(urlPath, fun) {
-
-      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
-
-      var data = [];
-
-      $ionicLoading.show(
-        {
-          templateUrl: 'templates/common/common.loadingData.html',
-          duration: 20 * 1000
-        });
-      $http({
-        method: 'GET',
-        url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
-        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      }).then(function (response) {
-        if (response.data.success == 1) {
-          $ionicLoading.hide();
-          data = response.data.data;
-          console.log('数据获取成功');
-          console.log(data);
-          fun(data);
-        } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '提示',
-            template: '获取数据失败'
-          }).then(function (res) {
-            console.log('数据获取失败');
-            console.log(data);
-            fun(data);
-          });
-        }
-      }, function (response) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: '提示',
-          template: '获取数据失败'
-        }).then(function (res) {
-          console.log('通信异常');
-          console.log(data);
-          fun(data);
-        });
-      });
-    }
-
-
-    //上传数据通用方法
-    function uploadCommonData(urlPath, jsonStr, fun) {
-
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>数据上传中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        }
-      );
-
-      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
-      console.log(url);
-      console.log(jsonStr);
-      // $http({
-      //   method: 'post',
-      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
-      //   data: {data: jsonStr}
-      // }).then(function (res) {
-      $http({
-        method: 'post',
-        url: url,
-        data: {data: jsonStr},
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        transformRequest: function (obj) {
-          var str = [];
-          for (var p in obj) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          }
-          console.log(str.join("&"));
-          return str.join("&");
-
-        }
-      }).then(function (res) {
-        if (res.data.success = 1) {
-          var resData = res.data.data;
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '提示',
-            template: res.data.msg
-          }).then(function (res) {
-            fun(resData);
-          })
-        } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '数据上传失败'
-          });
-        }
-      }, function (error) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: '数据上传失败'
-        });
-      });
-    }
-
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.commonMap')
-    .controller('CommonMapController', CommonMapController);
-
-  CommonMapController.$inject = ['$rootScope', '$scope', '$stateParams', 'CommonMapService'];
-
-  /** @ngInject */
-  function CommonMapController($rootScope, $scope, $stateParams, CommonMapService) {
-
-    var vm = this;
-    vm.data = {};
-    vm.title = '地图详情';
-    vm.fun = {};
-    vm.data = $stateParams.data;
-    vm.fromWhere = $stateParams.from;
-    vm.map;
-    vm.marker;
-    vm.postion = [];
-    vm.fun = {
-      refreshMyPosition: refreshMyPosition,
-      sendPosition:sendPosition
-    }
-
-
-    activate();
-
-
-    function activate() {
-
-      switch (vm.fromWhere) {
-        case 'gridCheck':
-          if (vm.data == null || vm.data == undefined) {
-            CommonMapService.initMap();
-          } else {
-            vm.map = CommonMapService.initMap();
-            CommonMapService.getCoordinateInfo(function (data) {
-              vm.marker = CommonMapService.initMyPosition(vm.map, data);
-              vm.map.on('click', function (e) {
-                marker.setPosition(e.lnglat);
-                vm.postion = e.lnglat;
-                console.log(e.lnglat);
-              })
-            });
-          }
-          break;
-        case 'addAssessment':
-          break;
-        default:
-          break;
-      }
-    }
-
-    //刷新当前的位置，让标记回到当前位置
-    function refreshMyPosition() {
-      CommonMapService.getCoordinateInfo(function (data) {
-        vm.marker.setPosition(data);
-        vm.map.setZoom(12);
-        vm.map.setCenter(data);
-      });
-    }
-
-    function sendPosition() {
-      $state.go('gridCheck',{position:vm.postion});
-    }
-
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.commonMap')
-    .config(CommonMapConfig);
-
-  CommonMapConfig.$inject = ['$stateProvider'];
-
-  /** @ngInject */
-  function CommonMapConfig($stateProvider) {
-    $stateProvider
-      .state('commonMap', {
-        url: '/commonMap',
-        params: {data: null, from: ''},
-        templateUrl: 'templates/common/map/commonMap.html'
-      });
-  }
-}());
-
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.commonMap')
-    .service('CommonMapService', CommonMapService);
-
-  CommonMapService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO', '$cordovaGeolocation'];
-
-  /** @ngInject */
-  function CommonMapService($http, $ionicLoading, $ionicPopup, SYS_INFO, $cordovaGeolocation) {
-
-    var service = {
-      initMap: initMap,
-      initRoadMap: initRoadMap,
-      initInstallationMap: initInstallationMap,
-      initMyPosition: initMyPosition,
-      getCoordinateInfo: getCoordinateInfo,
-      getAddressByLatitudeAndLongitude: getAddressByLatitudeAndLongitude,
-      getAddressByGPS: getAddressByGPS,
-      getLocationByLatitudeAndLongitude: getLocationByLatitudeAndLongitude
-    };
-
-    return service;
-
-    function initMap() {
-
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>地图数据加载中...</span>' +
-          '</div>',
-          duration: 5 * 1000
-        });
-
-      var map = new AMap.Map('map', {
-        resizeEnable: true,
-        zoom: 12,
-        lang: 'zh_cn'
-      });
-
-      map.plugin(['AMap.ToolBar'], function () {
-        var toolBar = new AMap.ToolBar();
-        map.addControl(toolBar);
-      });
-
-      $ionicLoading.hide();
-
-      return map;
-    }
-
-
-    function initRoadMap(roadArray) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>地图数据加载中...</span>' +
-          '</div>',
-          duration: 5 * 1000
-        });
-
-      var mapObj = new AMap.Map('map');
-      map.setZoom(10);
-      map.setCenter([116.39, 39.9]);
-
-      $ionicLoading.hide();
-    }
-
-    function initInstallationMap(positionX, position) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>地图数据加载中...</span>' +
-          '</div>',
-          duration: 20 * 1000
-        });
-
-      var position = new AMap.LngLat(116.397428, 39.90923);
-
-      var mapObj = new AMap.Map('map', {
-
-        view: new AMap.View2D({
-
-          center: position,
-
-          zoom: 10,
-
-          rotation: 0
-
-        }),
-
-        lang: 'zh_cn'
-
-      });
-
-      $ionicLoading.hide();
-    }
-
-    //进入地图时获取自己当前的位置，并且标注在地图上
-    function initMyPosition(map, positionArray) {
-
-      map.setCenter(positionArray);
-
-      var marker = new AMap.Marker({
-        position: positionArray
-      });
-      marker.setMap(map);
-      marker.setTitle('我的位置');
-
-      // map.on('click', function (e) {
-      //   marker.setPosition(e.lnglat);
-      //   console.log(e.lnglat);
-      // })
-
-      return marker;
-    }
-
-
-    //使用Cordova使用GPS定位获取详细的GPS坐标
-    function getCoordinateInfoNoDialog(fun) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>定位中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        });
-      var positionArray = new Array();
-      $cordovaGeolocation
-        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
-        .then(function (position) {
-          positionArray[0] = position.coords.longitude;
-          positionArray[1] = position.coords.latitude;
-          fun(positionArray);
-          $ionicLoading.hide();
-        }, function (err) {
-          //如果获取GPS失败，那么设置GPS地点为公司的经纬度
-          positionArray[0] = 120.41317;
-          positionArray[1] = 36.07705;
-          fun(positionArray);
-          $ionicLoading.hide();
-          console.log('获取坐标失败：' + 'code:' + err.code + '***' + 'msg:' + err.msg);
-        });
-    }
-
-    /**
-     * 使用Cordova使用GPS定位获取详细的GPS坐标
-     * @param fun
-     */
-    function getCoordinateInfo(fun) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>定位中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        });
-      var positionArray = new Array();
-      $cordovaGeolocation
-        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
-        .then(function (position) {
-          positionArray[0] = position.coords.longitude;
-          positionArray[1] = position.coords.latitude;
-          fun(positionArray);
-          $ionicLoading.hide();
-          console.log('Cordova使用GPS定位成功：');
-          console.log(positionArray);
-        }, function (err) {
-          //如果获取GPS失败，那么设置GPS地点为垃管处的经纬度坐标(120.413762,36.084807)
-          // positionArray[0] = 120.41317;
-          // positionArray[1] = 36.07705;
-          positionArray[0] = 120.413762;
-          positionArray[1] = 36.084807;
-          fun(positionArray);
-          $ionicLoading.hide();
-          console.log('Cordova使用GPS定位失败，定位地点已经设为垃管处的地理位置：');
-          console.log('失败码：' + err.code);
-          console.log('失败信息' + err.msg);
-        });
-    }
-
-
-    /**
-     * 根据经纬度来获取定位地点的的各种信息
-     * @param dataArray
-     * @returns {{}}
-     */
-    function getAddressByLatitudeAndLongitude(dataArray) {
-      var locationObj = {};
-      AMap.plugin('AMap.Geocoder', function () {
-        var geocoder = new AMap.Geocoder({
-          city: "010"//城市，默认：“全国”
-        });
-        geocoder.getAddress(dataArray, function (status, result) {
-          if (status == 'complete') {
-            locationObj.address = result.regeocode.formattedAddress;//定位的详细的地点
-            locationObj.city = result.regeocode.addressComponent.city;//城市
-            locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;//城市+市区
-            locationObj.street = result.regeocode.addressComponent.street;//路
-            locationObj.township = result.regeocode.addressComponent.township;//街道
-            locationObj.streetNumber = result.regeocode.addressComponent.streetNumber;//楼号
-            console.log('根据经纬度来获取定位地点返回的数据：');
-            console.log(result);
-            console.log('根据经纬度来获取定位地点的的各种信息:');
-            console.log(locationObj);
-            return locationObj;
-          }else{
-            return locationObj;
-          }
-        })
-      });
-      return locationObj;
-    }
-
-
-    /**
-     * 根据经纬度来获取详细的地理位置
-     * @param dataArray
-     * @param fun
-     */
-    function getLocationByLatitudeAndLongitude(dataArray, fun) {
-      var location = '';
-      AMap.plugin('AMap.Geocoder', function () {
-        var geocoder = new AMap.Geocoder({
-          city: "010"//城市，默认：“全国”
-        });
-        geocoder.getAddress(dataArray, function (status, result) {
-          if (status == 'complete') {
-            location = result.regeocode.formattedAddress;
-            fun(location);
-          } else {
-            fun(location);
-          }
-          console.log('根据经纬度来获取详细的地理位置：');
-          console.log(result);
-        })
-      });
-    }
-
-
-    function getLatitudeAndLongitudeBySlide(dataArray, map) {
-      AMap.plugin('AMap.Geocoder', function () {
-        var geocoder = new AMap.Geocoder({
-          city: "010"//城市，默认：“全国”
-        });
-        var marker = new AMap.Marker({
-          map: map,
-          bubble: true
-        })
-
-        geocoder.getAddress(dataArray, function (status, result) {
-
-          if (status == 'complete') {
-            alert(status + result.regeocode.formattedAddress);
-          }
-          // map.on('click', function (e) {
-          //     marker.setPosition(e.lnglat);
-          //     geocoder.getAddress(e.lnglat, function (status, result) {
-          //         alert(status+result);
-          //         if (status == 'complete') {
-          //             alert(status + result.regeocode.formattedAddress);
-          //         }
-          //     })
-        })
-
-      });
-    }
-
-
-    /**
-     * 网格化巡检定位城市和街道(通过调用手机的GPS进行获取定位)
-     * @param fun
-     */
-    function getAddressByGPS(fun) {
-      //调用GPS定位
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>定位中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        });
-      var positionArray = [];
-      $cordovaGeolocation
-        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
-        .then(function (position) {
-          positionArray[0] = position.coords.longitude;
-          positionArray[1] = position.coords.latitude;
-          $ionicLoading.hide();
-          console.log('定位成功，坐标数组：' + positionArray);
-          AMap.plugin('AMap.Geocoder', function () {
-            var geocoder = new AMap.Geocoder({
-              city: "010"//城市，默认：“全国”
-            });
-            geocoder.getAddress(positionArray, function (status, result) {
-              if (status == 'complete') {
-                var locationObj = {};
-                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
-                locationObj.street = result.regeocode.addressComponent.street;
-                fun(locationObj);
-                console.log('根据经纬度来获取定位地点返回的数据：');
-                console.log(result);
-                console.log('根据经纬度来获取定位地点的的各种信息:');
-                console.log(locationObj);
-              } else {
-                console.log('根据经纬度来获取定位地点失败！');
-              }
-            })
-          });
-        }, function (err) {
-          // //如果获取GPS失败，那么设置GPS地点为公司的经纬度
-          // var defaultPosition = [120.41317, 36.07705];
-          // $ionicLoading.hide();
-          // console.log('获取坐标失败：' + 'code:' + err.code + '***' + 'msg:' + err.msg);
-          // AMap.plugin('AMap.Geocoder', function () {
-          //   var geocoder = new AMap.Geocoder({
-          //     city: "010"//城市，默认：“全国”
-          //   });
-          //   geocoder.getAddress(defaultPosition, function (status, result) {
-          //     if (status == 'complete') {
-          //       var locationObj = {};
-          //       locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
-          //       locationObj.street = result.regeocode.addressComponent.street;
-          //       fun(locationObj);
-          //       console.log(result);
-          //     } else {
-          //       console.log('获取地理位置信息失败！' + status + result);
-          //     }
-          //   })
-          // });
-          //如果获取GPS失败那么返回空的字符串，并提示重新获取
-          $ionicLoading.hide();
-          var locationObj = {};
-          locationObj.district = '';
-          locationObj.street = '';
-          fun(locationObj);
-          $ionicPopup.alert({
-            title: '定位失败，请重试！'
-          });
-        });
-
-    }
-
-    //通过浏览器和Ip来实现定位获取详细的街道和市区信息
-    function getAddressByBrowserOrIp(fun) {
-
-      var geolocation;
-
-      AMap.plugin('AMap.Geolocation', function () {
-        geolocation = new AMap.Geolocation({
-          enableHighAccuracy: true,//是否使用高精度定位，默认:true
-          timeout: 10000,          //超过10秒后停止定位，默认：无穷大
-          buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-          buttonPosition: 'RB'
-        });
-
-        geolocation.getCurrentPosition();
-
-        AMap.event.addListener(geolocation, 'complete', function (data) {
-          var position = [];
-          position[0] = data.position.getLng();
-          position[1] = data.position.getLat();
-          AMap.plugin('AMap.Geocoder', function () {
-            var geocoder = new AMap.Geocoder({
-              city: "010"//城市，默认：“全国”
-            });
-            geocoder.getAddress(position, function (status, result) {
-              if (status == 'complete') {
-                var locationObj = {};
-                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
-                locationObj.street = result.regeocode.addressComponent.street;
-                fun(locationObj);
-                console.log(result);
-              } else {
-                console.log('获取地理位置信息失败！' + status + result);
-              }
-            })
-          });
-          if (data.accuracy) {
-            console.log('精度：' + data.accuracy + ' 米');
-          }//如为IP精确定位结果则没有精度信息
-          console.log('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-        });//返回定位信息
-
-        AMap.event.addListener(geolocation, 'error', function (data) {
-          var defaultPosition = [120.41317, 36.07705];
-          console.log('定位失败');
-          AMap.plugin('AMap.Geocoder', function () {
-            var geocoder = new AMap.Geocoder({
-              city: "010"//城市，默认：“全国”
-            });
-            geocoder.getAddress(defaultPosition, function (status, result) {
-              if (status == 'complete') {
-                var locationObj = {};
-                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
-                locationObj.street = result.regeocode.addressComponent.street;
-                fun(locationObj);
-                console.log(result);
-              } else {
-                console.log('获取地理位置信息失败！' + status + result);
-              }
-            })
-          });
-        });      //返回定位出错信息
-      });
-    }
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
     .module('app.gridCheckMap')
     .controller('GridCheckMapController', GridCheckMapController);
 
@@ -4399,7 +4403,9 @@
   function messageContentConfig($stateProvider) {
     $stateProvider
       .state('messageContent', {
-        url: '/messageContent/:msgId',
+        // url: '/messageContent/:msgId',
+        url: '/messageContent',
+        params: {msgId: ''},
         templateUrl: 'templates/message/messageContent/messageContent.html'
       });
   }

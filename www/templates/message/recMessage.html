@@ -1,27 +1,41 @@
-<ion-view class="padding" ng-controller="MessageController as vm" title="{{vm.title}}">
+<ion-view title="已收到的消息" class="home-bg" ng-controller="MessageController as vm" title="{{vm.title}}">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class="content has-header">
-    <ion-refresher
-      pulling-text="下拉刷新..."
-      on-refresh="vm.refreshMessageList()">
-    </ion-refresher>
-    <div class="list">
-      <a class="item item-icon-left item-icon-right" ng-repeat="msg in vm.messages" href="#/messageContent/{{msg.id}}">
-        <span class="icon" ng-switch="msg.state">
-          <span class="icon ion-email-unread" ng-switch-when="0"></span>
-          <span class="icon ion-email" ng-switch-when="1"></span>
-        </span>
-        <span>{{msg.title}}</span>
-        <span ng-switch="msg.state">
-          <span ng-switch-when="0">(未读)</span>
-           <span ng-switch-when="1">(已读)</span>
-        </span>
-        <span class="item-note">{{msg.sendDate}}</span>
 
-      </a>
+  <div class="message-bottom-bg">
+
+    <div class="message-content-div">
+
+      <div class="padding-left-right-20">
+
+        <ion-scroll direction="y" scrollbar-y="false">
+
+          <ion-refresher
+            pulling-text="下拉刷新..."
+            on-refresh="vm.refreshMessageList()">
+          </ion-refresher>
+
+          <div class="message-ion-content-child-div">
+            <div class="list">
+              <li class="common-item" ng-repeat="msg in vm.messages" ui-sref="messageContent({msgId:msg.id})">
+                <div class="row">
+                  <span class="col col-25 col-center text-center">{{msg.title}}</span>
+                  <div class="col col-20 col-center text-center" ng-switch="msg.state">
+                    <span ng-switch-when="0">(未读)</span>
+                    <span ng-switch-when="1">(已读)</span>
+                  </div>
+                  <span class="col col-50 col-center text-center message-item-date">{{msg.sendDate}}</span>
+                </div>
+              </li>
+            </div>
+          </div>
+
+        </ion-scroll>
+
+      </div>
     </div>
-  </ion-content>
+
+  </div>
 
 </ion-view>
