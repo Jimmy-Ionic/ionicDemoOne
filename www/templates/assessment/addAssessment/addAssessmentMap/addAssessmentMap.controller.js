@@ -85,7 +85,7 @@
         var icon = new AMap.Icon({
           //icon可缺省，缺省时为默认的蓝色水滴图标，
           size: new AMap.Size(20, 25),  //图标大小
-          image: '../assets/global/map/marker.png',//24px*24px
+          image: 'assets/global/map/marker.png',//24px*24px
           // content: '<img src="/www/assets/global/img/location.png" />',
           imageOffset: new AMap.Pixel(0, 0)
         })

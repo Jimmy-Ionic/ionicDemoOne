@@ -1,34 +1,44 @@
-<ion-view class="padding " ng-controller="GridCheckMapController as vm">
+<ion-view class="home-bg" ng-controller="GridCheckMapController as vm">
 
-  <div class="bar bar-header bar-positive">
-    <div></div>
-    <div class="h1 title">{{vm.title}}</div>
-    <button id="unReadMsgBtn" class="button" ng-click="vm.fun.sendPosition()">确定</button>
+  <div class="save-data-top-bar">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col common-center save-data-title">{{vm.title}}</div>
+      <div class="col text-right">
+        <button id="unReadMsgBtn" class="home-top-button " ng-click="vm.fun.sendPosition()">确定</button>
+      </div>
+    </div>
   </div>
 
-  <ion-content class=" padding has-header common-center" scroll="false">
+  <div class="home-bottom-bg">
 
-    <div>
-      <div id="map" class="add-assessment-map card">
+    <div class="common-center" scroll="false">
 
-      </div>
+      <div>
+        <div id="map" class="add-assessment-map card">
 
-      <div class="common-margin-top-5 common-center">
-        <!--<div class="common-center">-->
-        <!--<span ng-switch-when="assessment">{{vm.position}}</span>-->
-        <!--</div>-->
-        <!--<div class="common-center">-->
-        <!--<span ng-switch-when="gridCheck">{{vm.address}}</span>-->
-        <!--</div>-->
-        <div class="common-center common-width-250 text-center">{{vm.address}}
+        </div>
+
+        <div class="common-margin-top-5 common-center">
+          <!--<div class="common-center">-->
+          <!--<span ng-switch-when="assessment">{{vm.position}}</span>-->
+          <!--</div>-->
+          <!--<div class="common-center">-->
+          <!--<span ng-switch-when="gridCheck">{{vm.address}}</span>-->
+          <!--</div>-->
+          <div class="common-center common-width-250 text-center">{{vm.address}}
+          </div>
+
+        </div>
+
+        <div class="common-center common-margin-top-5">
+          <div class="assessment-map-btn" ng-click="vm.fun.refreshMyPosition()">刷新当前位置</div>
         </div>
 
       </div>
-
-      <div class="common-center common-margin-top-5">
-        <button ng-click="vm.fun.refreshMyPosition()">刷新当前位置</button>
-      </div>
-
     </div>
-  </ion-content>
+
+  </div>
+
 </ion-view>

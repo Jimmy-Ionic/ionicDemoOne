@@ -11,7 +11,7 @@
   function ProblemFeedbackController($rootScope, $state, $ionicPopup, $scope, ProblemFeedbackService) {
 
     var vm = this;
-    vm.title = '已收到的检查问题';
+    vm.title = '问题反馈';
 
     vm.fun = {
       checkProblemDetails: checkProblemDetails,

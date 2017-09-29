@@ -1,47 +1,70 @@
-<ion-view class="padding " ng-controller="MapController as vm">
+<ion-view class="home-bg" ng-controller="MapController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class=" padding has-header" scroll="false">
+  <div class="home-bottom-bg">
 
-    <div class="common-center common-margin-top-10">
-      <div>
-        <label class="checkbox checkbox-square common-center">
-          <input type="checkbox" ng-checked="vm.allCheck.selected" ng-model="vm.allCheck.selected">
-          <span>{{vm.allCheck.account}}</span>
-        </label>
-      </div>
-      <div ng-repeat="item in vm.accountList">
-        <label class="checkbox checkbox-square common-center">
-          <input type="checkbox" ng-model="vm.accountList[$index].selected" ng-checked="vm.allCheck.selected" >
-          <span>{{item.account}}</span>
-        </label>
-      </div>
-    </div>
+    <ion-content class="common-ion-content" scroll="false">
 
-    <div class="common-center common-margin-top-10">
-      <span>设施地址：</span>
-      <div style="height: 30px;">
-        <input id="search-form" class="add-assessment-select" ng-model="vm.queryCriteria.keyword"/>
-        <button ng-click="vm.fun.getAccountsPositionData()">搜索</button>
-      </div>
-    </div>
-
-    <div class="common-center">
-      <div>
-        <div id="map" class="query-map card">
-
+      <div class="common-center padding-top-20">
+        <div>
+          <input id="all" type="checkbox" class="mapCheckBox" ng-checked="vm.accountList[5].selected"
+                 ng-model="vm.accountList[5].selected" ng-change="vm.fun.updateCheckBoxStatus()">
+          <label for="all" class="mapCheckBox">全部</label>
         </div>
-
-        <div class="common-margin-top-20 common-center">
-          <span>所在位置：</span>
-          <span>{{}}</span>
+        <div>
+          <input id="guojietianqiao" type="checkbox" class="mapCheckBox" ng-model="vm.accountList[4].selected"
+                 ng-checked="vm.accountList[5].selected">
+          <label style="text-align: center" for="guojietianqiao" class="mapCheckBox">过街天桥</label>
+        </div>
+        <div>
+          <input id="shoujizhan" type="checkbox" class="mapCheckBox" ng-model="vm.accountList[3].selected"
+                 ng-checked="vm.accountList[5].selected">
+          <label style="text-align:right" for="shoujizhan" class="mapCheckBox">收集站</label>
         </div>
       </div>
-    </div>
+
+      <div class="common-center common-margin-top-10">
+        <div>
+          <input id="gongce" type="checkbox" class="mapCheckBox" ng-model="vm.accountList[0].selected"
+                 ng-checked="vm.accountList[5].selected">
+          <label style="text-align: left" for="gongce" class="mapCheckBox">公厕</label>
+        </div>
+        <div>
+          <input id="daolu" type="checkbox" class="mapCheckBox" ng-model="vm.accountList[1].selected"
+                 ng-checked="vm.accountList[5].selected">
+          <label style="text-align: center;padding-right: 27px;" for="daolu" class="mapCheckBox">道路</label>
+        </div>
+        <div>
+          <input id="cheliang" type="checkbox" class="mapCheckBox" ng-model="vm.accountList[2].selected"
+                 ng-checked="vm.accountList[5].selected">
+          <label style="text-align:right;padding-right: 14px;" for="cheliang" class="mapCheckBox">车辆</label>
+        </div>
+      </div>
+
+      <div class="common-margin-top-20">
+        <div class="common-center">
+          <input id="search-form" class="map-long-input" placeholder="请输入关键字搜索" ng-model="vm.queryCriteria.keyword"/>
+          <div class="map-query-btn" ng-click="vm.fun.getAccountsPositionData()"></div>
+        </div>
+      </div>
+
+      <div class="common-center">
+
+          <div id="map" class="query-map card">
+          </div>
+
+          <div class="common-center">
+            <span>所在位置：</span>
+            <span>{{vm.district}}</span>
+          </div>
+      </div>
 
 
-  </ion-content>
+    </ion-content>
+
+  </div>
+
 </ion-view>
 
 

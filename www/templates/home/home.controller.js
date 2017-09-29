@@ -58,6 +58,14 @@
 
     function activate() {
 
+      HomeService.createSqlDB(function () {
+        $scope.$on('$ionicView.enter', function (event) {
+          HomeService.getContentDataNum(function (res) {
+            vm.saveDataNum = res;
+          })
+        });
+      });
+
       GetWeatherService.getWeather(function (resData) {
         vm.weather = resData;
       });
@@ -70,18 +78,35 @@
         // vm.savedData = false;
       }
 
+      var timer = $interval(function () {
+        HomeService.getUnReadMsgCount($rootScope.userId);
+      }, 1000 * 60 * 5);
+
+      timer.then(success, error, defaults);
+
+      function success() {
+        console.log("轮询获取消息success");
+      }
+
+      function error() {
+        console.log("循环获取获取消息error");
+      }
+
+      function defaults() {
+
+      }
     }
 
 
     function toWaitForWork() {
-      if(vm.isCommonAccount){
+      if (vm.isCommonAccount) {
         $ionicPopup.alert(
           {
-            title:'提示',
-            template:'公共账户无法查看代办工作'
+            title: '提示',
+            template: '公共账户无法查看代办工作'
           }
         );
-      }else{
+      } else {
         $state.go('waitForWork');
       }
     }

@@ -17,7 +17,12 @@
 
        <div class="save-data-line"></div>
 
-       <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+       <ion-scroll direction="y" scrollbar-y="false">
+
+         <ion-refresher
+           pulling-text="下拉刷新..."
+           on-refresh="vm.fun.pullToRefreshAssessmentData()">
+         </ion-refresher>
 
          <div class="common-ion-content-child-div">
            <div class="list">
@@ -34,7 +39,7 @@
            </div>
          </div>
 
-       </ion-content>
+       </ion-scroll>
 
        <div class="save-data-line"></div>
      </div>

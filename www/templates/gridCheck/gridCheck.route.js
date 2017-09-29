@@ -16,7 +16,7 @@
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
-        cache: false,
+        cache: true,
         templateUrl: 'templates/gridCheck/gridCheck.html'
       });
   }

@@ -14,6 +14,9 @@
     vm.titleController = {};
     vm.workList = [];
     vm.toJobDetails = toJobDetails;
+    vm.fun ={
+      pullToRefreshWaitForWorkDetails:pullToRefreshWaitForWorkDetails
+    }
 
 
 
@@ -25,6 +28,14 @@
       WaitForWorkService.getWaitForWorkInfo($rootScope.userId,function (data) {
         vm.workList = data;
         console.log(vm.workList);
+      });
+    }
+
+    function pullToRefreshWaitForWorkDetails() {
+      WaitForWorkService.getWaitForWorkInfo($rootScope.userId,function (data) {
+        vm.workList = data;
+        console.log(vm.workList);
+        $scope.$broadcast('scroll.refreshComplete');
       });
     }
 

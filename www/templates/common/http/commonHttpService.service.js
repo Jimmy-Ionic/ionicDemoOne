@@ -101,25 +101,28 @@
         }
       }).then(function (res) {
         if (res.data.success = 1) {
-          var resData = res.data.data;
           $ionicLoading.hide();
           $ionicPopup.alert({
             title: '提示',
             template: res.data.msg
           }).then(function (res) {
-            fun(resData);
+            fun('success');
           })
         } else {
           $ionicLoading.hide();
           $ionicPopup.alert({
             title: '数据上传失败'
-          });
+          }).then(function (res) {
+            fun('failed');
+          })
         }
       }, function (error) {
         $ionicLoading.hide();
         $ionicPopup.alert({
           title: '数据上传失败'
-        });
+        }).then(function (res) {
+          fun('failed');
+        })
       });
     }
 

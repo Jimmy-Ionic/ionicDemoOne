@@ -6,31 +6,27 @@
     .service('SavedDataService', SavedDataService)
 
 
-  SavedDataService.$inject = ['$stateParams'];
+  SavedDataService.$inject = ['MyHttpService'];
 
-  function SavedDataService($stateParams) {
+  function SavedDataService(MyHttpService) {
 
     var service = {
-      getSavedUploadedData: getSavedUploadedData,
-      uploadData: uploadData,
-      deleteSavedData: deleteSavedData
+      uploadData: uploadData
     }
-
-
     return service;
 
-    function getSavedUploadedData() {
-      if ($stateParams.savedData) {
-        return $stateParams.savedData;
+
+    function uploadData(item,fun) {
+      switch (item.type){
+        case 'gridCheck':
+          var url = '/hwweb/GridInspection/saveRegionPro.action';
+          MyHttpService.uploadCommonData(url,item.data,function (res) {
+            fun(res);
+          });
+          break;
+        default:
+          break;
       }
-    }
-
-    function uploadData(data) {
-
-    }
-
-    function deleteSavedData() {
-
     }
 
   }

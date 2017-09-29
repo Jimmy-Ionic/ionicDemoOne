@@ -15,6 +15,7 @@
         params: {
           addAssessmentData: null
         },
+        cache:true,
         templateUrl: 'templates/assessment/addAssessment/addAssessment.html'
       });
   }

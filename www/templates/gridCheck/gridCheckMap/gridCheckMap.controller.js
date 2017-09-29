@@ -36,14 +36,14 @@
         vm.map.setZoom(15);
         vm.marker = CommonMapService.initMyPosition(vm.map, data);
         CommonMapService.getLocationByLatitudeAndLongitude(data, function (res) {
-          vm.address = res;
+          vm.address = res.address;
         });
         vm.map.on('click', function (e) {
           vm.marker.setPosition(e.lnglat);
           vm.position = e.lnglat;
           //获取详细的地点
           CommonMapService.getLocationByLatitudeAndLongitude(e.lnglat, function (res) {
-            vm.address = res;
+            vm.address = res.address;
             $scope.$apply();
           });
           console.log('通过在地图上选点获取到的坐标：');
@@ -64,7 +64,8 @@
         vm.map.setZoom(15);
         vm.map.setCenter(data);
         CommonMapService.getLocationByLatitudeAndLongitude(data, function (res) {
-          vm.address = res;
+          vm.address = res.address;
+          $scope.$apply();
         });
       });
     }

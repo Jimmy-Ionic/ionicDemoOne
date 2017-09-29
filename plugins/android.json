@@ -10,9 +10,6 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
         },
-        "cordova-plugin-code-push": {
-            "PACKAGE_NAME": "com.xinhai.appdemo"
-        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
         },
@@ -33,13 +30,8 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
-        }
-    },
-    "dependent_plugins": {
-        "code-push": {
-            "PACKAGE_NAME": "com.xinhai.appdemo"
         },
-        "cordova-plugin-compat": {
+        "cordova-plugin-file-opener2": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
         },
         "cordova-plugin-file": {
@@ -48,10 +40,12 @@
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
         },
-        "cordova-plugin-zip": {
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
-        },
-        "cordova-plugin-dialogs": {
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.xinhai.appdemo"
         }
     }

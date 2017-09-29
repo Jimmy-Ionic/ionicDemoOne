@@ -15,7 +15,7 @@
         params: {
           planDetailsData: null
         },
-        cache: false,
+        cache: true,
         templateUrl: 'templates/assessment/planDetails/planDetails.html'
       });
   }

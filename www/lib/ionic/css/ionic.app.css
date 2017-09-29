@@ -10051,21 +10051,52 @@ a.button {
   width: 320px; }
 
 .add-assessment-select {
-  width: 150px;
-  height: 30px;
+  width: 100px;
+  height: 25px;
   line-height: 30px;
-  margin-left: 10px; }
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  margin-left: 5px; }
+
+.add-assessment-query-input {
+  width: 150px;
+  height: 25px;
+  line-height: 30px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  margin-left: 5px; }
+
+.add-assessment-photo-div {
+  width: 100%;
+  height: auto;
+  min-height: 160px; }
 
 .common-margin-top-10 {
   margin-top: 10px; }
 
 .add-assessment-input {
-  width: 70px;
-  height: 30px; }
+  width: 60px;
+  height: 25px;
+  line-height: 30px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  margin-left: 5px; }
 
 .add-assessment-textArea {
   width: 150px;
-  height: 50px; }
+  height: 25px;
+  line-height: 30px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  margin-left: 5px; }
 
 .assessment-img {
   height: 160px;
@@ -10149,8 +10180,22 @@ a.button {
   padding-bottom: 50px; }
 
 .add-assessment-img {
-  height: 80px;
-  width: 120px; }
+  height: 85px;
+  width: 130px;
+  padding: 5px; }
+
+.add-assessment-img-no-padding {
+  height: 100px;
+  width: 140px; }
+
+.add-assessment-div {
+  height: 100px;
+  width: 140px;
+  padding: 10px;
+  border: solid;
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: #83e4d1; }
 
 .common-z-index {
   position: absolute;
@@ -10223,11 +10268,13 @@ a.button {
   left: 0px; }
 
 .proposal-list {
-  width: 100px;
+  width: 150px;
   height: auto;
   max-height: 300px;
-  position: relative;
-  background: white;
+  position: absolute;
+  top: 160px;
+  left: 105px;
+  background: #fff;
   overflow-y: scroll;
   list-style: none;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.44);
@@ -10236,7 +10283,7 @@ a.button {
   -webkit-margin-start: 0;
   -webkit-margin-end: 0;
   -webkit-padding-start: 0;
-  z-index: 9999; }
+  z-index: 9999999; }
 
 .proposal-list li {
   text-align: left;
@@ -10402,6 +10449,16 @@ h3 {
   width: 50px;
   max-width: 60px; }
 
+.account-select {
+  width: auto;
+  max-width: 70px;
+  height: 25px;
+  line-height: 30px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px; }
+
 .login-bg {
   background: url("/www/assets/global/img/login/login_bg.jpg"); }
 
@@ -10412,6 +10469,12 @@ h3 {
   color: #fff;
   font-size: 60px; }
 
+input {
+  color: #666666; }
+
+textarea {
+  color: #666666; }
+
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #fff;
   font-size: 15px; }
@@ -10420,41 +10483,9 @@ input:-moz-placeholder, textarea:-moz-placeholder {
   color: #fff;
   font-size: 15px; }
 
-/*自定义checkbox的样式，发现目前ionic的默认样式不影响*/
-input[type="checkbox"] {
-  /* width: 40px; */
-  /* height: 40px; */
-  /* -webkit-border-radius: 50%; */
-  display: none; }
-
-input[type="checkbox"] + label {
-  display: inline-block;
-  width: 100px;
-  color: #28642b;
-  margin-top: 10px;
-  margin-left: 5px;
-  text-align: left;
-  -webkit-box-sizing: border-box; }
-
-label::before {
-  content: "";
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  background: #EEE;
-  vertical-align: middle;
-  -webkit-border-radius: 50%;
-  margin-right: 5px;
-  -webkit-box-sizing: border-box;
-  -webkit-transition: background ease-in .5s; }
-
-input[type="checkbox"]:checked + label::before {
-  background-color: #35b76f;
-  border: 5px #EEEEEE solid; }
-
 /*****************主页的样式*********************/
 .login-bg {
-  background: url(/www/assets/global/img/login/login_bg.jpg); }
+  background: url(../../../assets/global/img/login/login_bg.jpg); }
 
 .login-title {
   margin-top: 100px;
@@ -10470,34 +10501,6 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 input:-moz-placeholder, textarea:-moz-placeholder {
   color: #fff;
   font-size: 15px; }
-
-input[type=checkbox] {
-  display: none; }
-
-input[type=checkbox] + label {
-  display: inline-block;
-  width: 100px;
-  color: #28642b;
-  margin-top: 10px;
-  margin-left: 5px;
-  text-align: left;
-  -webkit-box-sizing: border-box; }
-
-label::before {
-  content: "";
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  background: #EEE;
-  vertical-align: middle;
-  -webkit-border-radius: 50%;
-  margin-right: 5px;
-  -webkit-box-sizing: border-box;
-  -webkit-transition: background ease-in .5s; }
-
-input[type=checkbox]:checked + label::before {
-  background-color: #35b76f;
-  border: 5px solid #EEE; }
 
 .home-bg {
   background: #86d2c6; }
@@ -10602,47 +10605,47 @@ input[type=checkbox]:checked + label::before {
   padding: 5px; }
 
 .home-waitforwork {
-  background-image: url(/assets/global/img/home/icon_waitforwork_default.png);
+  background-image: url(../../../assets/global/img/home/icon_waitforwork_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-assessment {
-  background-image: url(/assets/global/img/home/icon_assessment_default.png);
+  background-image: url(../../../assets/global/img/home/icon_assessment_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-gridcheck {
-  background-image: url(/assets/global/img/home/icon_gridcheck_default.png);
+  background-image: url(../../../assets/global/img/home/icon_gridcheck_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-problemfeedback {
-  background-image: url(/assets/global/img/home/icon_problemfeedback_default.png);
+  background-image: url(../../../assets/global/img/home/icon_problemfeedback_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-account {
-  background-image: url(/assets/global/img/home/icon_account_default.png);
+  background-image: url(../../../assets/global/img/home/icon_account_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-history {
-  background-image: url(/assets/global/img/home/icon_history_default.png);
+  background-image: url(../../../assets/global/img/home/icon_history_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-map {
-  background-image: url(/assets/global/img/home/icon_map_default.png);
+  background-image: url(../../../assets/global/img/home/icon_map_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-message {
-  background-image: url(/assets/global/img/home/icon_message_default.png);
+  background-image: url(../../../assets/global/img/home/icon_message_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-setting {
-  background-image: url(/assets/global/img/home/icon_setting_default.png);
+  background-image: url(../../../assets/global/img/home/icon_setting_default.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
@@ -10650,62 +10653,62 @@ input[type=checkbox]:checked + label::before {
   background: #86d2c6; }
 
 .home-work-div:active .home-waitforwork {
-  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_waitforwork_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-assessment {
-  background-image: url(/assets/global/img/home/icon_assessment_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_assessment_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-gridcheck {
-  background-image: url(/assets/global/img/home/icon_gridcheck_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_gridcheck_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-problemfeedback {
-  background-image: url(/assets/global/img/home/icon_problemfeedback_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_problemfeedback_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-account {
-  background-image: url(/assets/global/img/home/icon_account_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_account_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-history {
-  background-image: url(/assets/global/img/home/icon_history_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_history_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-map {
-  background-image: url(/assets/global/img/home/icon_map_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_map_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-message {
-  background-image: url(/assets/global/img/home/icon_message_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_message_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-setting {
-  background-image: url(/assets/global/img/home/icon_setting_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_setting_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-waitforwork {
-  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_waitforwork_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-waitforwork {
-  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_waitforwork_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
 .home-work-div:active .home-waitforwork {
-  background-image: url(/assets/global/img/home/icon_waitforwork_selected.png);
+  background-image: url(../../../assets/global/img/home/icon_waitforwork_selected.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
@@ -10716,7 +10719,6 @@ input[type=checkbox]:checked + label::before {
 .save-data-top-bar {
   width: 100%;
   height: 80px;
-  padding: 0 10px;
   -webkit-display: flex;
   -moz-display: flex;
   -ms-display: flex;
@@ -10809,7 +10811,9 @@ input[type=checkbox]:checked + label::before {
   z-index: 2;
   display: block;
   margin: -1px;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /**padding: 10px;**/
   border-bottom: solid;
   border-bottom-width: 1px;
   border-color: #ddd;
@@ -10818,11 +10822,11 @@ input[type=checkbox]:checked + label::before {
 .common-query-btn {
   width: 20px;
   height: 20px;
-  background: url("/assets/global/img/waitForWork/icon_query.png") no-repeat;
+  background: url("../../../assets/global/img/waitForWork/icon_query.png") no-repeat;
   background-size: 100% 100%; }
 
-.common-query-btn :active {
-  background: url("/assets/global/img/waitForWork/icon_query.png") no-repeat;
+.common-query-btn :focus {
+  background: url("../../../assets/global/img/waitForWork/icon_query.png") no-repeat;
   background-size: 100% 100%; }
 
 /******************综合考核********************/
@@ -10837,7 +10841,7 @@ input[type=checkbox]:checked + label::before {
 .common-check-btn {
   width: 20px;
   height: 20px;
-  background: url(/assets/global/img/planDetails/icon_check.png) no-repeat;
+  background: url(../../../assets/global/img/planDetails/icon_check.png) no-repeat;
   background-size: 100% 100%; }
 
 .plan-details-bottom-bar {
@@ -10849,11 +10853,13 @@ input[type=checkbox]:checked + label::before {
   margin: 0 auto;
   border: none;
   border-radius: 4px;
-  background-color: #FFC954; }
+  background-color: #FFC954;
+  color: white;
+  font-size: 100%; }
 
 /*******************设施列表**********************/
 .assessment-bottom-bar {
-  height: 45px;
+  height: 50px;
   background-color: #86D2C6; }
 
 .common-font-white-size-16 {
@@ -10910,3 +10916,297 @@ input[type=checkbox]:checked + label::before {
 
 .message-item-right {
   float: right; }
+
+.common-font-666 {
+  color: #666666; }
+
+.common-font-666-size-default {
+  color: #666666;
+  font-size: 100%; }
+
+.common-font-666-size-15 {
+  color: #666666;
+  font-size: 15px; }
+
+.common-font-666-size-16 {
+  color: #666666;
+  font-size: 16px; }
+
+.common-font-666-size-17 {
+  color: #666666;
+  font-size: 17px; }
+
+.common-font-666-size-18 {
+  color: #666666;
+  font-size: 18px; }
+
+.common-white-background {
+  background-color: #FFFFFF; }
+
+.common-line-86D2C6 {
+  height: 1px;
+  width: 100%;
+  background-color: #86D2C6; }
+
+/************设施详情*************/
+.common-min-height-60 {
+  height: auto;
+  min-height: 60px; }
+
+.padding-top-10 {
+  padding-top: 10px; }
+
+.common-font-4CB1AF-size-default {
+  font-size: 100%;
+  color: #4CB1AF; }
+
+.common-font-4CB1AF {
+  color: #4CB1AF; }
+
+.assessment-long-input {
+  width: 310px;
+  height: 25px;
+  line-height: 30px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  margin-left: 5px; }
+
+.assessment-photo-div {
+  width: 100%;
+  height: auto;
+  min-height: 200px; }
+
+.assessment-img {
+  width: 100px;
+  height: 50px;
+  background: #4CB1AF; }
+
+.assessment-map-btn {
+  width: 120px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #27cfff;
+  color: white; }
+
+.assessment-map-btn:focus {
+  background-color: #1ebfed; }
+
+.assessment-map-btn:active {
+  background-color: #1ebfed; }
+
+.assessment-ion-content-child-div {
+  height: 370px;
+  width: auto;
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.assessment-confirm-img {
+  height: 25px;
+  width: 20px; }
+
+.common-flex-around {
+  isplay: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto; }
+
+input[type=checkbox].mapCheckBox {
+  display: none; }
+
+input.mapCheckBox + label {
+  display: inline-block;
+  width: 100px;
+  color: #666666;
+  text-align: left;
+  -webkit-box-sizing: border-box; }
+
+label.mapCheckBox::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  background: url(../../../assets/global/img/map/icon_checkbox_square_default.png);
+  background-size: 100% 100%; }
+
+input[type=checkbox].mapCheckBox:checked + label::before {
+  background: url(../../../assets/global/img/map/icon_checkbox_square_selected.png);
+  background-size: 100% 100%; }
+
+input[type=checkbox].loginCheckbox {
+  display: none; }
+
+input[type=checkbox].loginCheckbox + label {
+  display: inline-block;
+  width: 100px;
+  color: #28642b;
+  color: #28642b;
+  margin-top: 10px;
+  margin-left: 5px;
+  text-align: left;
+  -webkit-box-sizing: border-box; }
+
+label.loginLabel::before {
+  content: "";
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: #EEE;
+  vertical-align: middle;
+  -webkit-border-radius: 50%;
+  margin-right: 5px;
+  -webkit-box-sizing: border-box;
+  -webkit-transition: background ease-in .5s; }
+
+input[type=checkbox].loginCheckbox:checked + label::before {
+  background-color: #35b76f;
+  border: 5px solid #EEE; }
+
+.map-long-input {
+  width: 220px;
+  height: 26px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px; }
+
+.map-query-btn {
+  width: 65px;
+  height: 23px;
+  margin-left: 5px;
+  background-image: url("../../../assets/global/img/map/icon_query_default.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
+
+.map-query-btn:focus {
+  background-image: url("../../../assets/global/img/map/icon_query_selected.png"); }
+
+.map-query-btn:active {
+  background-image: url("../../../assets/global/img/map/icon_query_selected.png"); }
+
+.map-bottom-bar {
+  width: 100%;
+  height: 25px;
+  background-color: #ffae22;
+  opacity: 0.7;
+  filter: Alpha(opacity=70);
+  /* IE8 以及更早的浏览器 */ }
+
+/*自定义checkbox的样式，发现目前ionic的默认样式不影响*/
+.gridCheck-location-btn {
+  width: 80px;
+  height: 22px;
+  background: url("../../../assets/global/img/gridCheck/icon_location_default.png") no-repeat;
+  background-size: 100% 100%; }
+
+.gridCheck-location-btn:active {
+  background: url("../../../assets/global/img/gridCheck/icon_location_selected.png");
+  background-size: 100% 100%; }
+
+.gridCheck-location-btn:focus {
+  background: url("../../../assets/global/img/gridCheck/icon_location_selected.png");
+  background-size: 100% 100%; }
+
+.gridCheck-photo-btn {
+  width: 80px;
+  height: 22px;
+  background: url("../../../assets/global/img/gridCheck/icon_photo_default.png") no-repeat;
+  background-size: 100% 100%; }
+
+.gridCheck-photo-btn:active {
+  background: url("../../../assets/global/img/gridCheck/icon_photo_selected.png");
+  background-size: 100% 100%; }
+
+.gridCheck-photo-btn:focus {
+  background: url("../../../assets/global/img/gridCheck/icon_photo_selected.png");
+  background-size: 100% 100%; }
+
+.gridCheck-upload-btn {
+  width: 80px;
+  height: 22px;
+  background: url("../../../assets/global/img/gridCheck/icon_upload_default.png") no-repeat;
+  background-size: 100% 100%; }
+
+.gridCheck-upload-btn:active {
+  background: url("../../../assets/global/img/gridCheck/icon_upload_selected.png");
+  background-size: 100% 100%; }
+
+.gridCheck-upload-btn:focus {
+  background: url("../../../assets/global/img/gridCheck/icon_upload_selected.png");
+  background-size: 100% 100%; }
+
+.gridCheck-textArea {
+  color: #666666;
+  width: 220px;
+  height: 40px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  display: inline-flex; }
+
+.gridCheck-bottom-div {
+  height: 280px;
+  width: auto;
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.gridCheck-img {
+  width: 260px;
+  height: 160px; }
+
+.feedback-span {
+  width: 180px; }
+
+.feedback-textArea {
+  color: #666;
+  width: 180px;
+  height: 40px;
+  border: solid;
+  border-width: 1px;
+  border-color: #86d2c6;
+  border-radius: 4px;
+  display: inline-flex; }
+
+.feedback-photo-btn {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #27cfff;
+  color: white; }
+
+.feedback-photo-btn:active {
+  background-color: #1ebfed; }
+
+.feedback-map-btn {
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #FFC954;
+  color: white; }
+
+.feedback-map-btn:active {
+  background-color: #edb948; }
+
+.saveData-upload-btn {
+  width: 20px;
+  height: 20px;
+  background: url(../../../assets/global/img/saveData/icon_upload.png) no-repeat;
+  background-size: 100% 100%; }
+
+.saveData-delete-btn {
+  width: 20px;
+  height: 20px;
+  background: url(../../../assets/global/img/saveData/icon_delete.png) no-repeat;
+  background-size: 100% 100%; }

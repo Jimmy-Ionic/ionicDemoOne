@@ -5,10 +5,12 @@
     .module('app.assessmentStatusDetails')
     .controller('AssessmentStatusDetailsController', AssessmentStatusDetailsController);
 
-  AssessmentStatusDetailsController.$inject = ['$rootScope', 'SYS_INFO', '$scope', '$state', '$stateParams', 'AssessmentStatusDetailsService', '$ionicLoading', '$ionicPopup', '$cordovaCamera', '$ionicHistory'];
+  AssessmentStatusDetailsController.$inject = ['$rootScope', 'SYS_INFO', '$scope', '$state', '$stateParams',
+    'AssessmentStatusDetailsService', '$ionicLoading', '$ionicPopup', '$cordovaCamera', '$ionicHistory', 'HomeService'];
 
   /** @ngInject */
-  function AssessmentStatusDetailsController($rootScope, SYS_INFO, $scope, $state, $stateParams, AssessmentStatusDetailsService, $ionicLoading, $ionicPopup, $cordovaCamera, $ionicHistory) {
+  function AssessmentStatusDetailsController($rootScope, SYS_INFO, $scope, $state, $stateParams,
+                                             AssessmentStatusDetailsService, $ionicLoading, $ionicPopup, $cordovaCamera, $ionicHistory, HomeService) {
 
     var vm = this;
     vm.data = {};
@@ -17,6 +19,7 @@
     vm.isEdit = false;//判断界面是编辑还是查看
     vm.assessmentStatusDetails = {};
     vm.reasonAccount = [];
+    vm.picNameArray = [];
     vm.picBase64DataArray = [];
     vm.serverUrl = '';
     vm.uploadPicBase64DataArray = [];
@@ -24,6 +27,11 @@
       points: '',
       reason: '',
       remarks: ''
+    };
+    vm.uploadPicDataObj = {
+      img1: '',
+      img2: '',
+      img3: ''
     };
 
     vm.fun = {
@@ -38,6 +46,11 @@
 
 
     function activate() {
+
+      if (!vm.db) {
+        vm.db = HomeService.openSqlDB();
+      }
+
       vm.isEdit = $stateParams.isEdit;
       vm.serverUrl = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb';
       if ($stateParams.assessmentStatusData) {
@@ -62,6 +75,16 @@
               vm.uploadData.reason = vm.assessmentStatusDetails.dItem;
               vm.uploadData.remarks = vm.assessmentStatusDetails.remarks;
               vm.picBase64DataArray = vm.assessmentStatusDetails.imgs;
+              //在这儿初始化显示图片
+              if (vm.picBase64DataArray.length == 0) {
+
+              } else {
+                for (var x in vm.picBase64DataArray) {
+                  var imageId = 'img' + x + 4;
+                  var image = document.getElementById(imageId);
+                  image.src = vm.serverUrl + vm.picBase64DataArray[x];
+                }
+              }
             }
           });
         }
@@ -79,7 +102,7 @@
         $ionicPopup.alert({
           title: '扣分原因不能为空'
         });
-      } else if (vm.uploadData.remark == '') {
+      } else if (vm.uploadData.remarks == '') {
         $ionicPopup.alert({
           title: '备注不能为空'
         });
@@ -100,10 +123,26 @@
         jsonObj.dItemName = vm.uploadData.reason;
         jsonObj.score = vm.uploadData.points;
         jsonObj.userName = $rootScope.userName;
-        jsonObj.remark = vm.uploadData.remark;
-        jsonObj.imgJson = vm.uploadPicBase64DataArray;
+        jsonObj.remark = vm.uploadData.remarks;
+        for (var i = 0; i < 3; i++) {
+          jsonObj.imgJson.push(vm.uploadPicDataObj('img' + i + 1));
+        }
+        console.log(jsonObj);
         AssessmentStatusDetailsService.uploadAssessmentStatusDetailsData(jsonObj, function (res) {
-          $ionicHistory.goBack();
+          if (res == 'success') {
+            $ionicHistory.goBack();
+          } else if (res == 'failed') {
+            try {
+              var json = {};
+              json.date = moment().format('YYYY/MM/DD/HH:mm:ss');
+              json.address = vm.title;
+              json.type = 'assessmentStatusDetails';
+              json.data = JSON.stringify(jsonObj);
+              HomeService.insertDataToSqlDB(vm.db, json);
+            } catch (error) {
+
+            }
+          }
         });
       }
     }
@@ -111,7 +150,7 @@
     //启动摄像头拍照
     function takePicture() {
 
-      if (vm.picBase64DataArray.length >= 3) {
+      if (vm.uploadPicDataObj.img1 != '' && vm.uploadPicDataObj.img2 != '' && vm.uploadPicDataObj.img3 != '') {
         $ionicPopup.alert({
           title: '最多支持上传三张图片'
         }).then(function () {
@@ -134,6 +173,21 @@
         $cordovaCamera.getPicture(options).then(function (imageData) {
           // var image = document.getElementById('pic' + vm.picIsShow);
           // image.src = "data:image/jpeg;base64," + imageData;
+          if (vm.uploadPicDataObj.img1 == '') {
+            var image = document.getElementById('assessmentImg1');
+            image.src = "data:image/jpeg;base64," + imageData;
+            vm.uploadPicDataObj.img1 = imageData;
+          } else if (vm.uploadPicDataObj.img2 == '') {
+            var image = document.getElementById('assessmentImg2');
+            image.src = "data:image/jpeg;base64," + imageData;
+            vm.uploadPicDataObj.img2 = imageData;
+          } else if (vm.uploadPicDataObj.img3 == '') {
+            var image = document.getElementById('assessmentImg3');
+            image.src = "data:image/jpeg;base64," + imageData;
+            vm.uploadPicDataObj.img3 = imageData;
+          } else {
+
+          }
           var picName = moment().format('YYYY-MM-DD HH:mm:ss') + '.jpg';
           vm.picNameArray.push(picName);
           vm.picBase64DataArray.push("data:image/jpeg;base64," + imageData);
@@ -166,27 +220,6 @@
     }
 
 
-    //启动SqlLite来保存未上传的数据
-    function startSqlLite() {
-
-      var db = $cordovaSQLite.openDB({name: "savedData.db"});
-
-      // for opening a background db:
-      var db = $cordovaSQLite.openDB({name: "my.db", bgType: 1});
-
-      $scope.execute = function () {
-        var query = "INSERT INTO test_table (data, data_num) VALUES (?,?)";
-        $cordovaSQLite.execute(db, query, ["test", 100]).then(function (res) {
-          console.log("insertId: " + res.insertId);
-        }, function (err) {
-          console.error(err);
-        });
-      };
-
-
-    }
-
-
     function toCommonMap() {
       $state.go('addAssessmentMap', {mapPositionObj: vm.assessmentStatusDetails, from: 'assessmentStatusDetails'});
     }
@@ -202,9 +235,67 @@
 
     //长按删除某张图片
     function deletePic(index) {
-      vm.picBase64DataArray.splice(index, 1);
-      vm.uploadPicBase64DataArray.push(index, 1);
-      vm.picNameArray.push(index, 1);
+
+      switch (index) {
+        case '1':
+          if (vm.uploadPicDataObj.img1 == '') {
+            return;
+          }
+          break;
+        case '2':
+          if (vm.uploadPicDataObj.img2 == '') {
+            return;
+          }
+          break;
+        case '3':
+          if (vm.uploadPicDataObj.img3 == '') {
+            return;
+          }
+          break;
+        default:
+          break;
+      }
+      $ionicPopup.confirm({
+        title: '提示',
+        template: '确认删除此照片么？',
+        cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+        cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+        okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+        okType: 'button-positive'
+      }).then(function (res) {
+        console.log(res);
+        if (res) {
+          switch (index) {
+            case '1':
+              console.log(index);
+              var image1 = document.getElementById('assessmentImg1');
+              image1.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img1 = '';
+              break;
+            case '2':
+              console.log(index);
+              var image2 = document.getElementById('assessmentImg2');
+              image2.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img2 = '';
+              break;
+            case '3':
+              console.log(index);
+              var image3 = document.getElementById('assessmentImg3');
+              image3.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img3 = '';
+              break;
+            default:
+              console.log(index);
+              break;
+          }
+        } else {
+          return;
+        }
+      })
+
+      // vm.picBase64DataArray.splice(index, 1);
+      // vm.uploadPicBase64DataArray.push(index, 1);
+      // vm.picNameArray.push(index, 1);
     }
 
 

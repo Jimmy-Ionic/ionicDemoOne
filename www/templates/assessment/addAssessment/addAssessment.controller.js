@@ -16,7 +16,7 @@
     vm.data = {};
     vm.title = '录入计划';
     vm.spinnerShow = false;
-    vm.picBase64DataArray = [];
+    // vm.picBase64DataArray = [];
     vm.infraId = '';
     //需要上传的数据
     vm.uploadData = {
@@ -26,8 +26,14 @@
       points: '',
       width: '',
       reason: '',
-      remark: '',
+      remarks: '',
       img: []
+    };
+
+    vm.uploadPicDataObj = {
+      img1: '',
+      img2: '',
+      img3: ''
     };
 
     //从上一个页面传递回来的数据
@@ -93,31 +99,54 @@
 
     //启动摄像头拍照
     function takePicture() {
-      var options = {
-        quality: 100,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA,
-        allowEdit: true,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 100,
-        popoverOptions: CameraPopoverOptions,
-        saveToPhotoAlbum: true,
-        correctOrientation: true
-      };
 
-      $cordovaCamera.getPicture(options).then(function (imageData) {
-        // var image = document.getElementById('pic' + vm.picIsShow);
-        // image.src = "data:image/jpeg;base64," + imageData;
-        vm.picBase64DataArray.splice(0, vm.picBase64DataArray.length);//清空图片数组
-        vm.uploadData.img.splice(0, vm.uploadData.img.length)
-        vm.picBase64DataArray.push("data:image/jpeg;base64," + imageData);
-        vm.uploadData.img.push(imageData);
-      }, function (err) {
+      if (vm.uploadPicDataObj.img1 != '' && vm.uploadPicDataObj.img2 != '' && vm.uploadPicDataObj.img3 != '') {
         $ionicPopup.alert({
-          title: '拍照失败，请重试！'
+          title: '最多支持上传三张图片'
+        }).then(function () {
+
         });
-      });
+      } else {
+        var options = {
+          quality: 100,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: true,
+          encodingType: Camera.EncodingType.JPEG,
+          targetWidth: 100,
+          targetHeight: 100,
+          popoverOptions: CameraPopoverOptions,
+          saveToPhotoAlbum: true,
+          correctOrientation: true
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+
+          if (vm.uploadPicDataObj.img1 == '') {
+            var image = document.getElementById('addAssessmentImg1');
+            image.src = "data:image/jpeg;base64," + imageData;
+            vm.uploadPicDataObj.img1 = imageData;
+          } else if (vm.uploadPicDataObj.img2 == '') {
+            var image = document.getElementById('addAssessmentImg2');
+            image.src = "data:image/jpeg;base64," + imageData;
+            vm.uploadPicDataObj.img2 = imageData;
+          } else if (vm.uploadPicDataObj.img3 == '') {
+            var image = document.getElementById('addAssessmentImg3');
+            image.src = "data:image/jpeg;base64," + imageData;
+            vm.uploadPicDataObj.img3 = imageData;
+          } else {
+
+          }
+          // vm.picBase64DataArray.splice(0, vm.picBase64DataArray.length);//清空图片数组
+          // vm.uploadData.img.splice(0, vm.uploadData.img.length)
+          // vm.picBase64DataArray.push("data:image/jpeg;base64," + imageData);
+          // vm.uploadData.img.push(imageData);
+        }, function (err) {
+          $ionicPopup.alert({
+            title: '拍照失败，请重试！'
+          });
+        });
+      }
     }
 
 
@@ -168,17 +197,59 @@
     }
 
     function deletePic(index) {
+
+      switch (index) {
+        case '1':
+          if(vm.uploadPicDataObj.img1 == ''){
+            return;
+          }
+          break;
+        case '2':
+          if(vm.uploadPicDataObj.img2 == ''){
+            return;
+          }
+          break;
+        case '3':
+          if(vm.uploadPicDataObj.img3 == ''){
+            return;
+          }
+          break;
+        default:
+          break;
+      }
+
       $ionicPopup.confirm({
         title: '提示',
-        template: '您确定要删除此照片么？'
+        template: '确认删除此照片么？',
+        cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+        cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+        okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+        okType: 'button-positive'
       }).then(function (res) {
         if (res) {
-          vm.picBase64DataArray.splice(index, 1);
-          vm.uploadData.img.splice(index, 1);
+          switch (index) {
+            case '1':
+              var image1 = document.getElementById('addAssessmentImg1');
+              image1.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img1 = '';
+              break;
+            case '2':
+              var image2 = document.getElementById('addAssessmentImg2');
+              image2.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img2 = '';
+              break;
+            case '3':
+              var image3 = document.getElementById('addAssessmentImg3');
+              image3.src = '';
+              vm.uploadPicDataObj.img3 = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              break;
+            default:
+              break;
+          }
         } else {
-
+          return;
         }
-      });
+      })
     }
 
     //提交数据
@@ -201,7 +272,7 @@
         $ionicPopup.alert({
           title: '扣分原因不能为空'
         });
-      } else if (vm.uploadData.remark == '') {
+      } else if (vm.uploadData.remarks == '') {
         $ionicPopup.alert({
           title: '备注不能为空'
         });
@@ -233,12 +304,25 @@
             jsonObj.score = vm.uploadData.points;
             jsonObj.userName = $rootScope.userName;
             jsonObj.remark = vm.uploadData.remark;
-            jsonObj.imgJson = vm.uploadData.img;
+            for (var i = 0; i < 3; i++) {
+              switch (i) {
+                case 0:
+                  jsonObj.imgJson.push(vm.uploadPicDataObj.img1);
+                  break;
+                case 1:
+                  jsonObj.imgJson.push(vm.uploadPicDataObj.img2);
+                  break;
+                case 2:
+                  jsonObj.imgJson.push(vm.uploadPicDataObj.img3);
+                  break;
+                default:
+                  break;
+
+              }
+            }
             var jsonStr = JSON.stringify(jsonObj);
             AddAssessmentService.uploadPointAndPicData(jsonStr, function (resData) {
-              // if(resData){
-              //   $ionicHistory.goBack();
-              // }
+
             });
           }
         });

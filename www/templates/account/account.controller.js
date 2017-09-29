@@ -53,9 +53,33 @@
           vm.queryCriteria.accountType = JSON.parse(vm.accountType).code;
         }
       }
-      AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
-        vm.accountList = resData[0];
-      });
+
+      if(vm.queryCriteria.level == ''&&vm.queryCriteria.cityPlace == ''
+        &&vm.queryCriteria.accountType == ''&&vm.queryCriteria.keyword==''){
+        $ionicPopup.confirm({
+          title: '提示',
+          template: '查询全部台帐可能会导致等待时间很长，要继续么？',
+          buttons: [{
+            text: '取消',
+            type: 'button-positive'
+          }, {
+            text: '确认',
+            type: 'button-calm'
+          }]
+        }).then(function (res) {
+          if (res) {
+            AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
+              vm.accountList = resData[0];
+            });
+          } else {
+            return;
+          }
+        });
+      }else{
+        AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
+          vm.accountList = resData[0];
+        });
+      }
     }
 
 

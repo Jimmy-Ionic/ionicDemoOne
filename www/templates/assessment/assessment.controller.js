@@ -17,6 +17,9 @@
     vm.toPlanDetails = toPlanDetails;
 
     vm.planList = [];
+    vm.fun = {
+      pullToRefreshAssessmentData:pullToRefreshAssessmentData
+    };
 
 
     activate();
@@ -25,6 +28,13 @@
     function activate() {
       AssessmentService.getPlanList($rootScope.userId, function (data) {
         vm.planList = data;
+      });
+    }
+
+    function pullToRefreshAssessmentData() {
+      AssessmentService.getPlanList($rootScope.userId, function (data) {
+        vm.planList = data;
+        $scope.$broadcast('scroll.refreshComplete');
       });
     }
 

@@ -16,6 +16,7 @@
         //   'main-content': {
         //     templateUrl: 'templates/setting/setting.html'
         //   }
+        cache:true,
         templateUrl: 'templates/setting/setting.html'
       });
   }

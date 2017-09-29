@@ -2,103 +2,154 @@
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class=" padding has-header has-footer padding-top scroll-bar-fade-out calm-border" scroll="false">
 
-    <div ng-switch="vm.type">
-      <div class="row wait-work-menu common-margin-top" ng-switch-when="05">
-        <div class="col  text-center">保洁等级</div>
-        <div class="col  text-center">主次干道</div>
-        <div class="col  text-center">长度</div>
-        <div class="col  text-center">宽度</div>
+  <div class="home-bottom-bg">
+
+    <div class="common-min-height-60 padding-top-10" ng-switch="vm.type">
+
+      <div ng-switch-when="05">
+        <div class="row">
+          <div class="col  text-center">
+            <span class="common-font-4CB1AF-size-17">保洁等级</span>
+            <span class="common-font-666-size-17">{{vm.assessmentStatusDetails.cleanLevel}}</span>
+          </div>
+          <div class="col  text-center">
+            <span class="common-font-4CB1AF-size-17">主次干道</span>
+            <span class="common-font-666-size-17">{{vm.assessmentStatusDetails.primaryOrSecondary}}</span>
+          </div>
+        </div>
+        <div class="row common-margin-top">
+          <div class="col  text-center">
+            <span class="common-font-4CB1AF-size-17">长度</span>
+            <span class="common-font-666-size-17">{{vm.assessmentStatusDetails.length}}</span>
+          </div>
+          <div class="col  text-center">
+            <span class="common-font-4CB1AF-size-17">宽度</span>
+            <span class="common-font-666-size-17">{{vm.assessmentStatusDetails.width}}</span>
+          </div>
+        </div>
       </div>
 
-      <div class="row wait-work-menu common-margin-top" ng-switch-when="01">
-        <div class="col text-center">公厕类型：</div>
+      <div ng-switch-when="01">
+        <div class="row">
+          <div class="col text-center">
+            <span class="common-font-4CB1AF-size-17">公厕类型</span>
+            <span class="common-font-666-size-17">{{vm.assessmentStatusDetails.condition}}</span>
+          </div>
+        </div>
       </div>
 
-      <div class="row wait-work-menu common-margin-top" ng-switch-when="06">
-        <div class="col text-center">车辆类型：</div>
+      <div ng-switch-when="06">
+        <div class="row">
+          <div class="col text-center">
+            <span class="common-font-4CB1AF-size-17">车辆类型</span>
+            <span class="common-font-666-size-17">{{vm.assessmentStatusDetails.condition}}</span>
+          </div>
+        </div>
       </div>
+
     </div>
 
-    <div ng-switch="vm.type">
-      <div class="row" ng-switch-when="05">
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.cleanLevel"
-                 disabled/>
-        </div>
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.primaryOrSecondary"
-                 disabled/>
-        </div>
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.length" disabled/>
-        </div>
-        <div class="col  text-center">
-          <input class="add-assessment-input text-center" ng-model="vm.assessmentStatusDetails.width" disabled/>
-        </div>
-      </div>
 
-      <div class="row" ng-switch-when="01">
-        <div class="col text-center">{{vm.assessmentStatusDetails.condition}}</div>
-      </div>
+    <div class="padding-left-right-20">
 
-      <div class="row" ng-switch-when="06">
-        <div class="text-center">{{vm.assessmentStatusDetails.condition}}</div>
-      </div>
+      <div class="common-line-86D2C6"></div>
+
+      <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+
+
+        <div class="assessment-ion-content-child-div common-white-background">
+
+
+          <!--扣分情况部分-->
+          <div class="common-center common-margin-top-10">
+            <div class="row">
+              <div class="col">
+                <div class="common-center">
+                  <span class="common-font-4CB1AF-size-default">扣分情况</span>
+                  <input class="add-assessment-input common-font-666" ng-model="vm.uploadData.points"
+                         ng-disabled="!vm.isEdit"/>
+                </div>
+              </div>
+
+              <div class="col">
+                <span class="common-font-4CB1AF-size-default">扣分原因</span>
+                <input class="add-assessment-input common-font-666" ng-model="vm.uploadData.reason"
+                       ng-disabled="!vm.isEdit" ng-if="!vm.isEdit"/>
+                <select class="add-assessment-input common-font-666" ng-model="vm.uploadData.reason" ng-if="vm.isEdit">
+                  <option ng-repeat="item in vm.reasonAccount">{{item.name}}</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="row common-margin-top-5">
+              <div class="col">
+                <div class="common-center">
+                  <span class="common-font-4CB1AF-size-default">备&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp注</span>
+                  <input class="add-assessment-input"
+                         ng-model="vm.uploadData.remarks"
+                         ng-disabled="!vm.isEdit">
+                </div>
+              </div>
+              <div class="col">
+              </div>
+            </div>
+          </div>
+
+          <!--拍照上传部分-->
+          <div class="assessment-photo-div common-center">
+            <div class="common-flex-around" ng-if="vm.isEdit">
+              <img id="assessmentImg1" class="add-assessment-img"
+                   ng-src="assets/global/img/gridCheck/icon_streetscape.jpg"
+                   on-hold="vm.fun.deletePic('1')">
+              <img id="assessmentImg2" class="add-assessment-img"
+                   ng-src="assets/global/img/gridCheck/icon_streetscape.jpg"
+                   on-hold="vm.fun.deletePic('2')">
+              <img id="assessmentImg3" class="add-assessment-img"
+                   ng-src="assets/global/img/gridCheck/icon_streetscape.jpg"
+                   on-hold="vm.fun.deletePic('3')">
+              <img class="add-assessment-img" ng-src="assets/global/img/assessment/icon_takePhoto.png"
+                   ng-click="vm.fun.takePicture()">
+            </div>
+
+            <div class="common-flex-around" ng-hide="vm.isEdit">
+              <!--<img class="add-assessment-img"-->
+              <!--ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.serverUrl+item}}">-->
+              <img id="img4" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
+              <img id="img5" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
+              <img id="img6" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
+              <img class="add-assessment-img" ng-src="assets/global/img/assessment/icon_takePhoto.png">
+            </div>
+          </div>
+
+          <!--查看地图部分-->
+          <div class="common-center">
+            <div class="common-margin-top assessment-map-btn" ng-click="vm.fun.toCommonMap()">查看地图</div>
+          </div>
+
+        </div>
+
+
     </div>
 
-
-    <div class="row">
-      <div class="col text-center">
-
-        <div class="common-center common-margin-top-10">
-          <span>扣分情况：</span>
-          <input class="add-assessment-select"  ng-model="vm.uploadData.points" ng-disabled="!vm.isEdit"/>
-        </div>
-
-        <div class="common-center common-margin-top-10">
-          <span>扣分原因：</span>
-          <select class="add-assessment-select" ng-model="vm.uploadData.reason" ng-disabled="!vm.isEdit">
-            <option ng-repeat="item in vm.reasonAccount">{{item.name}}</option>
-          </select>
-        </div>
-
-        <div class="common-center common-margin-top-10">
-          <span>备注：</span>
-          <textarea class="common-border add-assessment-textArea" ng-model="vm.uploadData.remarks"
-                    ng-disabled="!vm.isEdit"></textarea>
-        </div>
+    <div class="common-line-86D2C6"></div>
 
 
-        <div class="common-margin-top common-center common-height-80" ng-hide="vm.isEdit">
-          <img class="add-assessment-img"
-               ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.serverUrl+item}}"
-               on-hold="vm.fun.deletePic($index)">
-        </div>
-
-        <div class="common-margin-top common-center common-height-80" ng-show="vm.isEdit">
-          <img class="add-assessment-img"
-               ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.picBase64DataArray[$index]}}"
-               on-hold="vm.fun.deletePic($index)">
-        </div>
-
-        <button class="common-margin-top" ng-disabled="!vm.isEdit" ng-click="vm.fun.takePicture()">拍照上传</button>
-
-        <div>
-          <button class="common-margin-top" ng-click="vm.fun.toCommonMap()">查看地图</button>
-        </div>
+    <div class="bar bar-footer assessment-bottom-bar common-center" ng-if="vm.isEdit"
+         ng-click="vm.fun.uploadAssessmentStatusDetailsData()">
+      <div class="common-center">
+        <img class="assessment-confirm-img" src="assets/global/img/assessment/icon_ok.png">
+        <span class="common-font-white-size-18 common-margin-left-10">确&nbsp&nbsp&nbsp&nbsp定</span>
       </div>
     </div>
-  </ion-content>
-
-
-  <div class="bar bar-footer">
-    <button class="button common-center button-positive" ng-disabled="!vm.isEdit"
-            ng-click="vm.fun.uploadAssessmentStatusDetailsData()">确定
-    </button>
+    <div class="bar bar-footer assessment-bottom-bar common-center" ng-if="!vm.isEdit">
+      <div class="common-center">
+        <img class="assessment-confirm-img" src="assets/global/img/assessment/icon_ok.png">
+        <span class="common-font-white-size-18 common-margin-left-10">确&nbsp&nbsp&nbsp&nbsp定</span>
+      </div>
+    </div>
   </div>
-
 
 </ion-view>
 

@@ -27,6 +27,7 @@
     'app.gridCheckMap',
     'app.problemFeedback',
     'app.problemFeedbackDetails',
+    'app.problemFeedbackDetailsMap',
     'app.account',
     'app.accountDetails',
     'app.history',
@@ -58,34 +59,7 @@
     $rootScope.goBack = goBack;
     $rootScope.toMessagePage = toMessagePage;
 
-    var messageApi = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + '/hwweb/AppMessage/findMsgByUserId.action?userId=' + 123;
-
     LoginService.setServerInfo();
-
-    var timer = $interval(function () {
-      $http.get(messageApi).then(function (response) {
-        if (response.data.success == 1) {
-          $rootScope.unReadMsgCount = response.data.data.count;
-        } else {
-        }
-      }, function (response) {
-      })
-    }, 1000 * 60 * 5);
-
-    timer.then(success, error, defaults);
-
-    function success() {
-      console.log("done");
-      console.log($rootScope.unReadMsgCount);
-    }
-
-    function error() {
-      console.log("循环获取获取消息error");
-    }
-
-    function defaults() {
-
-    }
 
     function goBack() {
       $ionicHistory.goBack();
@@ -198,13 +172,44 @@
       e.preventDefault();
       // Is there a page to go back to?
       var path = $location.path();
-      if (path === '/homePageNew' || path === '/login') {
-        ionic.Platform.exitApp();
+      if (path === '/home' || path === '/login') {
+        showConfirm();
       } else if ($ionicHistory.backView) {
         // Go back in history
         $ionicHistory.goBack();
       } else {
-        ionic.Platform.exitApp();
+        showConfirm();
+      }
+
+
+      function showConfirm() {
+        var servicePopup = $ionicPopup.show({
+          title: '提示',
+          subTitle: '你确定要退出应用吗？',
+          scope: $rootScope,
+          buttons: [
+            {
+              text: '取消',
+              type: 'button-clear button-assertive',
+              onTap: function () {
+                return 'cancel';
+              }
+            },
+            {
+              text: '确认',
+              type: 'button-clear button-positive border-left',
+              onTap: function (e) {
+                return 'active';
+              }
+            },
+          ]
+        });
+        servicePopup.then(function (res) {
+          if (res == 'active') {
+            // 退出app
+            ionic.Platform.exitApp();
+          }
+        });
       }
 
       return false;

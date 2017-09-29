@@ -6,12 +6,14 @@
     .controller('ProblemFeedbackDetailsController', ProblemFeedbackDetailsController);
 
   ProblemFeedbackDetailsController.$inject = ['$scope', '$rootScope', '$stateParams',
-    'ProblemFeedbackDetailsService', '$ionicPopup', '$ionicHistory','$cordovaCamera'];
+    'ProblemFeedbackDetailsService', '$ionicPopup', '$ionicHistory', '$cordovaCamera', '$state','HomeService'];
 
   /** @ngInject */
   function ProblemFeedbackDetailsController($scope, $rootScope, $stateParams,
-                                            ProblemFeedbackDetailsService, $ionicPopup, $ionicHistory,$cordovaCamera) {
+                                            ProblemFeedbackDetailsService, $ionicPopup,
+                                            $ionicHistory, $cordovaCamera, $state,HomeService) {
     var vm = this;
+    vm.db;
     vm.title = '问题详情'
     vm.fromWhere = '';
     vm.data = {};//从上一页面传递过来的数据要存储到这个data中
@@ -23,7 +25,8 @@
     vm.fun = {
       initCamera: initCamera,
       uploadProblemFeedbackData: uploadProblemFeedbackData,
-      deletePic: deletePic
+      deletePic: deletePic,
+      toProblemFeedbackDetailsMap: toProblemFeedbackDetailsMap
     }
     vm.uploadData = {
       id: '',
@@ -37,6 +40,10 @@
     activate();
 
     function activate() {
+
+      if (!vm.db) {
+        vm.db = HomeService.openSqlDB();
+      }
 
       if ($stateParams.problemItem) {
         vm.data = $stateParams.problemItem;
@@ -52,15 +59,12 @@
             } else {
               vm.problemDetails = resData[0];
             }
-            ProblemFeedbackDetailsService.getProblemFeedbackDetailsMap(vm.problemDetails);
           });
           break;
         case 'problemFeedback':
           vm.problemDetails = $stateParams.problemItem;
-          ProblemFeedbackDetailsService.getProblemFeedbackDetailsMap(vm.problemDetails);
-          break
+          break;
         default:
-          ProblemFeedbackDetailsService.getProblemFeedbackDetailsMap(vm.problemDetails);
           break;
       }
     }
@@ -106,11 +110,28 @@
       } else if (vm.uploadData.feedbackDescription == '' || vm.uploadData.img == '') {
         $ionicPopup.confirm({
           title: '提示信息',
-          template: '整改情况未填或者没有拍照，确认要上传么？'
+          template: '整改情况未填或者没有拍照，确认要上传么？',
+          cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+          cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+          okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+          okType: 'button-positive'
         }).then(function (res) {
           if (res) {
             ProblemFeedbackDetailsService.uploadProblemFeedbackData(vm.uploadData, function (res) {
-              $ionicHistory.goBack();
+              if (res == 'success') {
+                $ionicHistory.goBack();
+              } else if (res == 'failed') {
+                try {
+                  var json = {};
+                  json.date = moment().format('YYYY/MM/DD/HH:mm:ss');
+                  json.address = vm.problemDetails.name;
+                  json.type = 'problemFeedbackDetails';
+                  json.data = JSON.stringify(vm.uploadData);
+                  HomeService.insertDataToSqlDB(vm.db, json);
+                } catch (error) {
+
+                }
+              }
             });
           } else {
             return;
@@ -121,21 +142,30 @@
 
     //长按删除某张图片
     function deletePic() {
+      if (vm.uploadData.img == '') {
+        return;
+      } else {
+        $ionicPopup.confirm({
+          title: '提示',
+          template: '确认删除此照片么？',
+          cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+          cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+          okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+          okType: 'button-positive'
+        }).then(function (res) {
+          if (res) {
+            vm.uploadData.img = '';
+            var image = document.getElementById('problemFeedbackDetailsImg');
+            image.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+          } else {
+            return;
+          }
+        });
+      }
+    }
 
-      $ionicPopup.confirm({
-        title: '提示信息',
-        template: '确认要删除这张照片么？'
-      }).then(function (res) {
-        if (res) {
-          vm.uploadData.img = '';
-          var image = document.getElementById('problemFeedbackDetailsImg');
-          image.src = '';
-        } else {
-          return;
-        }
-      });
-
-
+    function toProblemFeedbackDetailsMap() {
+      $state.go('problemFeedbackDetailsMap');
     }
   }
 })();

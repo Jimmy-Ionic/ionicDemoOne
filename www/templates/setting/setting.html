@@ -2,8 +2,9 @@
 
   <div class="home-top">
     <div class="home-top-bar">
-      <button class="home-top-button">&lt;返回</button>
-      <button id="unReadMsgBtn" class="home-top-button" ng-click="vm.homeWorkController.toMessage()">
+      <button class="home-top-button" ng-click="goBack()">&lt;返回</button>
+      <div class="col common-center save-data-title">{{vm.title}}</div>
+      <button id="unReadMsgBtn" class="home-top-button" ng-click="toMessagePage()">
         消息({{unReadMsgCount}})
       </button>
     </div>
@@ -27,11 +28,11 @@
           <div class="list">
             <li class="item">
               <span>姓名：</span>
-              <span>{{$rootScope.userName}}</span>
+              <span>{{vm.name}}</span>
             </li>
             <li class="item">
               <span>所属公司：</span>
-              <span>{{$rootScope.userOrg}}</span>
+              <span>{{vm.group}}</span>
             </li>
           </div>
         </div>

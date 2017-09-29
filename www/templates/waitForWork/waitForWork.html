@@ -16,27 +16,35 @@
 
       <div class="save-data-line"></div>
 
-      <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+      <div>
+        <ion-scroll direction="y" scrollbar-y="false">
 
-        <div class="common-ion-content-child-div">
-          <div class="list">
-            <li class="common-item" ng-repeat="item in vm.workList">
-              <div class="row">
-                <span class="col col-40 col-center text-center">{{item.planName}}</span>
-                <span class="col col-25 col-center text-center">{{item.sDate}}</span>
-                <span class="col col-25 col-center text-center">{{item.eDate}}</span>
-                <div class="col col-10 common-center">
-                  <div class="common-query-btn" ng-click="vm.toJobDetails(item)"></div>
+          <ion-refresher
+            pulling-text="下拉刷新..."
+            on-refresh="vm.fun.pullToRefreshWaitForWorkDetails()">
+          </ion-refresher>
+
+          <div class="common-ion-content-child-div">
+            <div class="list">
+              <li class="common-item" ng-repeat="item in vm.workList">
+                <div class="row">
+                  <span class="col col-40 col-center text-center">{{item.planName}}</span>
+                  <span class="col col-25 col-center text-center">{{item.sDate}}</span>
+                  <span class="col col-25 col-center text-center">{{item.eDate}}</span>
+                  <div class="col col-10 common-center">
+                    <div class="common-query-btn" ng-click="vm.toJobDetails(item)"></div>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            </div>
           </div>
-        </div>
 
-      </ion-content>
+        </ion-scroll>
+      </div>
 
       <div class="save-data-line"></div>
     </div>
+
 
   </div>
 </ion-view>

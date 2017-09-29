@@ -1,50 +1,70 @@
 <ion-view class="home-bg" ng-controller="ProblemFeedbackDetailsController as vm">
 
-  <div class="bar bar-header bar-positive">
-    <button class="button" ng-click="goBack()">返回</button>
-    <div class="h1 title">{{vm.title}}</div>
-    <button class="button" ng-click="vm.fun.uploadProblemFeedbackData()">确定</button>
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <div class="home-bottom-bg">
+
+    <div class="padding-left-right-20">
+
+      <div class="padding">
+
+
+        <div class="common-center common-margin-top-10 padding-top-10">
+          <span class="common-font-4CB1AF">考核设施：</span>
+          <div class="feedback-span common-font-666">{{vm.problemDetails.name}}</div>
+        </div>
+
+        <div class="common-center common-margin-top-10 padding-top-10">
+          <span class="common-font-4CB1AF">考核地址：</span>
+          <div class="feedback-span common-font-666">{{vm.problemDetails.location}}</div>
+        </div>
+
+        <div class="common-center common-margin-top-10 padding-top-10">
+          <span class="common-font-4CB1AF">问题原因：</span>
+          <div class="feedback-span common-font-666">{{vm.problemDetails.describe}}</div>
+        </div>
+
+        <div class="common-center padding-top-10">
+          <span class="common-font-4CB1AF">整改情况：</span>
+          <textarea class="feedback-textArea"
+                    ng-modele="vm.uploadData.feedbackDescription"></textarea>
+        </div>
+
+
+        <div>
+          <div class="save-data-line"></div>
+
+          <div class="gridCheck-bottom-div">
+
+            <div class="common-margin-top common-center">
+              <img id="problemFeedbackDetailsImg" class="gridCheck-img" src="assets/global/img/gridCheck/icon_streetscape.jpg" on-hold="vm.fun.deletePic()">
+            </div>
+
+            <div class="common-margin-top-10 common-center common-font-4CB1AF">已上传图片</div>
+
+            <div class="common-center common-margin-top-20">
+              <div class="feedback-photo-btn" ng-click="vm.fun.toProblemFeedbackDetailsMap()">查看地图</div>
+              &nbsp&nbsp
+              <div class="feedback-map-btn" ng-click="vm.fun.initCamera()">拍照上传</div>
+            </div>
+          </div>
+
+          <div class="save-data-line"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <ion-content class="padding has-header" scroll="false">
-
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">考核设施：</span>
-      <div class="add-assessment-select ">{{vm.problemDetails.name}}</div>
-    </div>
-
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">考核地址：</span>
-      <div class="add-assessment-select">{{vm.problemDetails.location}}</div>
-    </div>
-
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">问题原因：</span>
-      <div class="add-assessment-select ">{{vm.problemDetails.describe}}</div>
-    </div>
-
+  <div class="bar bar-footer assessment-bottom-bar common-center" ng-click="vm.fun.uploadProblemFeedbackData()">
     <div class="common-center">
-      <span class="common-span-width">整改情况：</span>
-      <textarea class="common-border add-assessment-textArea"
-                ng-modele="vm.uploadData.feedbackDescription"></textarea>
+      <img class="assessment-confirm-img" src="assets/global/img/assessment/icon_ok.png">
+      <span class="common-font-white-size-18 common-margin-left-10">确&nbsp&nbsp&nbsp&nbsp定</span>
     </div>
-
-
-    <div class="common-center">
-      <div id="problemFeedbackDetailsMap" class="feedback-map-div common-margin-top-10">
-      </div>
-    </div>
-
-    <div class="common-margin-top-5 common-center">目标定位地点</div>
-
-    <div class="common-center common-margin-top-10">
-      <img id="problemFeedbackDetailsImg" class="feedback-img" on-hold="vm.deletePic()" >
-      <button class="button button-small button-positive common-margin-left-10" ng-click="vm.fun.initCamera()">拍照上传
-      </button>
-    </div>
-
-
-  </ion-content>
+  </div>
 
 </ion-view>
 

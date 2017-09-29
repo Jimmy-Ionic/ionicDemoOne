@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-code-push",
-  "version": "1.9.7-beta",
+  "version": "1.9.8-beta",
   "description": "CodePush Plugin for Apache Cordova",
   "cordova": {
     "id": "cordova-plugin-code-push",
@@ -43,12 +43,12 @@
     "tslint": "latest",
     "typescript": "latest"
   },
-  "gitHead": "00abc79b4f0469947bd7a1855bbd4931256deb2a",
+  "gitHead": "c2651a82cc8944bd2caabb5e9937df5fe53bcced",
   "bugs": {
     "url": "https://github.com/Microsoft/cordova-plugin-code-push/issues"
   },
   "homepage": "https://github.com/Microsoft/cordova-plugin-code-push#readme",
-  "_id": "cordova-plugin-code-push@1.9.7-beta",
+  "_id": "cordova-plugin-code-push@1.9.8-beta",
   "_npmVersion": "5.0.4",
   "_nodeVersion": "6.6.0",
   "_npmUser": {
@@ -56,9 +56,9 @@
     "email": "v-maximi@microsoft.com"
   },
   "dist": {
-    "integrity": "sha512-M2feDeQujcfKqSpZAH5Z14mAJR9D/rxtWqTv2LcISKiCdF47kIOzTQqhVGxuUBCk6W8kYdiVsGTqq55Qtjjn7Q==",
-    "shasum": "0c5b8dbd3827b776429221a503599c5af3371f79",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-code-push/-/cordova-plugin-code-push-1.9.7-beta.tgz"
+    "integrity": "sha512-IG+Ab5fyvGFB5kuEOjLT+0T2cAaT+PYLotkQaUItlgbT6EvvIB3O3rV5iZBtUqZGSveYRVppIdieEbufIFK2Hw==",
+    "shasum": "e77ed0c347dbad40c06203281df425f2be793d59",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-code-push/-/cordova-plugin-code-push-1.9.8-beta.tgz"
   },
   "maintainers": [
     {
@@ -100,11 +100,10 @@
   ],
   "_npmOperationalInternal": {
     "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-code-push-1.9.7-beta.tgz_1503645585099_0.632844282547012"
+    "tmp": "tmp/cordova-plugin-code-push-1.9.8-beta.tgz_1505386686737_0.8608516692183912"
   },
   "directories": {},
-  "_shasum": "0c5b8dbd3827b776429221a503599c5af3371f79",
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-code-push/-/cordova-plugin-code-push-1.9.7-beta.tgz",
-  "_from": "cordova-plugin-code-push@latest",
-  "readme": "ERROR: No README data found!"
+  "_shasum": "e77ed0c347dbad40c06203281df425f2be793d59",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-code-push/-/cordova-plugin-code-push-1.9.8-beta.tgz",
+  "_from": "cordova-plugin-code-push@latest"
 }

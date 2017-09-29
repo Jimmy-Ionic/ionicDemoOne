@@ -6,13 +6,14 @@
     .controller('GridCheckController', GridCheckController);
 
   GridCheckController.$inject = ['$rootScope', '$cacheFactory', '$scope', '$state', 'GridCheckService',
-    'CommonMapService', '$ionicPopup','$cordovaCamera'];
+    'CommonMapService', '$ionicPopup', '$cordovaCamera', 'HomeService'];
 
   /** @ngInject */
   function GridCheckController($rootScope, $cacheFactory, $scope, $state, GridCheckService, CommonMapService,
-                               $ionicPopup,$cordovaCamera) {
+                               $ionicPopup, $cordovaCamera, HomeService) {
 
     var vm = this;
+    vm.db;
     vm.title = '网格化巡检';
     vm.questionCode = [];
     vm.questionCodeObj = {};
@@ -34,7 +35,8 @@
       toGridCheckMap: toGridCheckMap,
       takeGridCheckPicture: takeGridCheckPicture,
       getGridCheckLocation: getGridCheckLocation,
-      uploadGridCheckData: uploadGridCheckData
+      uploadGridCheckData: uploadGridCheckData,
+      deletePic: deletePic
     }
 
 
@@ -42,12 +44,17 @@
 
     function activate() {
 
-      GridCheckService.getGridCheckQuestionCodeArray(function (resData) {
-        vm.questionCode = resData;
-        vm.questionCodeObj = vm.questionCode[0];
-        console.log(vm.questionCode);
-      });
+      if (!vm.db) {
+        vm.db = HomeService.openSqlDB();
+      }
 
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        GridCheckService.getGridCheckQuestionCodeArray(function (resData) {
+          vm.questionCode = resData;
+          vm.questionCodeObj = vm.questionCode[0];
+          console.log(vm.questionCode);
+        });
+      });
 
     }
 
@@ -87,7 +94,7 @@
 
     //获取街道和区域
     function getGridCheckLocation() {
-      CommonMapService.getAddressByGPS(function (res) {
+      CommonMapService.getLocationInfoByGPS(function (res) {
         vm.uploadData.areaName = res.district;
         vm.uploadData.streetName = res.street;
         $scope.$apply();
@@ -124,15 +131,51 @@
         });
       } else if (vm.uploadData.point == '' || vm.uploadData.address == '') {
         $ionicPopup.alert({
-          title: '详细检查地点不能为空'
+          title: '请从地图选择详细的检查地点'
         }).then();
       } else {
         var jsonStr = JSON.stringify(vm.uploadData);
         GridCheckService.uploadGridCheckData(jsonStr, function (resData) {
+          if (resData == 'failed') {
+            try {
+              var jsonObj = {};
+              jsonObj.date = moment().format('YYYY/MM/DD/HH:mm:ss');
+              jsonObj.address = vm.uploadData.address;
+              jsonObj.type = 'gridCheck';
+              jsonObj.data = jsonStr;
+              HomeService.insertDataToSqlDB(vm.db, jsonObj);
+            } catch (error) {
 
+            }
+          }
         });
       }
-
     }
+
+    //长按删除某张图片
+    function deletePic() {
+      if (vm.uploadData.img == '') {
+        return;
+      } else {
+        $ionicPopup.confirm({
+          title: '提示',
+          template: '确认删除此照片么？',
+          cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+          cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+          okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+          okType: 'button-positive'
+        }).then(function (res) {
+          if (res) {
+            vm.uploadData.img = '';
+            var image = document.getElementById('gridCheckImg');
+            image.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+          } else {
+            return;
+          }
+        });
+      }
+    }
+
+
   }
 })();

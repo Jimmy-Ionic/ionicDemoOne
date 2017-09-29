@@ -1,61 +1,71 @@
-<ion-view class="padding " ng-controller="GridCheckController as vm">
+<ion-view class="home-bg" ng-controller="GridCheckController as vm">
 
   <div ng-include="'templates/common/common.title.html'"></div>
 
-  <ion-content class=" padding has-header has-footer padding-top" scroll="false">
 
-    <div class="padding-top common-center">
-      <button class=" button button-small button-positive gride-check-top-btn-margin"
-              ng-click="vm.fun.getGridCheckLocation()">定位
-      </button>
-      <button class=" button button-small button-positive gride-check-top-btn-margin"
-              ng-click="vm.fun.uploadGridCheckData()">上传
-      </button>
-      <button class=" button button-small button-positive gride-check-top-btn-margin"
-              ng-click="vm.fun.takeGridCheckPicture()">拍照
-      </button>
-    </div>
+  <div class="home-bottom-bg">
 
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">区市：</span>
-      <span>
-        <input class="add-assessment-select" ng-model="vm.uploadData.areaName" disabled/>
+    <div class="padding-left-right-20">
+
+      <div class="padding-top-20 common-flex-around">
+        <div class="gridCheck-location-btn" ng-click="vm.fun.getGridCheckLocation()"></div>
+        <div class="gridCheck-upload-btn" ng-click="vm.fun.uploadGridCheckData()"></div>
+        <div class="gridCheck-photo-btn" ng-click="vm.fun.takeGridCheckPicture()"></div>
+      </div>
+
+      <div class="common-margin-top-20 common-font-4CB1AF common-margin-left-10">
+        <span class="common-span-width">区&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp市：</span>
+        <span>
+        <input class="map-long-input" ng-model="vm.uploadData.areaName" disabled/>
       </span>
-    </div>
+      </div>
 
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">街道：</span>
-      <span>
-        <input class="add-assessment-select" ng-model="vm.uploadData.streetName" disabled/>
+      <div class="common-margin-top-10 common-font-4CB1AF common-margin-left-10">
+        <span class="common-span-width">街&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp道：</span>
+        <span>
+        <input class="map-long-input" ng-model="vm.uploadData.streetName" disabled/>
       </span>
-    </div>
+      </div>
 
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">问题代码：</span>
-      <span>
-        <select class="add-assessment-select" ng-model="vm.questionCodeObj"
+      <div class="common-margin-top-10 common-font-4CB1AF common-margin-left-10">
+        <span class="common-span-width">问题代码：</span>
+        <span>
+        <select class="map-long-input common-font-666" ng-model="vm.questionCodeObj"
                 ng-options="item.name for item in vm.questionCode">
           <!--<option ng-repeat="item in vm.questionCode" value="{{item}}">{{item.name}}</option>-->
         </select>
       </span>
+      </div>
+
+      <div class="common-margin-top-10 common-font-4CB1AF common-margin-left-10">
+        <span class="common-span-width">问题描述：</span>
+        <textarea class="gridCheck-textArea common-font-666" placeholder="问题描述"
+                  ng-modele="vm.uploadData.description"></textarea>
+      </div>
+
+      <div>
+        <div class="save-data-line"></div>
+
+        <div class="gridCheck-bottom-div">
+
+          <div class="common-margin-top common-center">
+            <img id="gridCheckImg" class="gridCheck-img" src="assets/global/img/gridCheck/icon_streetscape.jpg" on-hold="vm.fun.deletePic()">
+          </div>
+
+          <div class="common-margin-top common-center common-font-4CB1AF">已上传图片</div>
+
+          <div class="common-center">
+            <div class="common-margin-top assessment-map-btn" ng-click="vm.fun.toGridCheckMap()">查看地图</div>
+          </div>
+        </div>
+
+        <div class="save-data-line"></div>
+
+      </div>
+
     </div>
 
-    <div class="common-center common-margin-top-10">
-      <span class="common-span-width">问题描述：</span>
-      <textarea class="common-border add-assessment-textArea" ng-modele="vm.uploadData.description"></textarea>
-    </div>
+  </div>
 
-
-    <div class="row common-margin-top assessment-img common-center">
-      <img id="gridCheckImg" class="col assessment-img text-center">
-    </div>
-
-    <div class="common-margin-top common-center">已上传图片</div>
-
-    <div class="common-center">
-      <button class="common-margin-top" ng-click="vm.fun.toGridCheckMap()">查看地图</button>
-    </div>
-
-  </ion-content>
 </ion-view>
 

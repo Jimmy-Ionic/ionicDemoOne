@@ -16,6 +16,7 @@
         params: {
           assessmentStatusData: null, isEdit: false
         },
+        cache:true,
         templateUrl: 'templates/assessment/assessmentStatusDetails/assessmentStatusDetails.html'
       });
   }

@@ -5,20 +5,18 @@
     .module('app.commonMap')
     .service('CommonMapService', CommonMapService);
 
-  CommonMapService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO', '$cordovaGeolocation'];
+  CommonMapService.$inject = ['$ionicLoading', '$ionicPopup', '$cordovaGeolocation'];
 
   /** @ngInject */
-  function CommonMapService($http, $ionicLoading, $ionicPopup, SYS_INFO, $cordovaGeolocation) {
+  function CommonMapService($ionicLoading, $ionicPopup, $cordovaGeolocation) {
 
     var service = {
       initMap: initMap,
-      initRoadMap: initRoadMap,
-      initInstallationMap: initInstallationMap,
       initMyPosition: initMyPosition,
       getCoordinateInfo: getCoordinateInfo,
-      getAddressByLatitudeAndLongitude: getAddressByLatitudeAndLongitude,
-      getAddressByGPS: getAddressByGPS,
-      getLocationByLatitudeAndLongitude: getLocationByLatitudeAndLongitude
+      getLocationInfoByGPS: getLocationInfoByGPS,
+      getLocationByLatitudeAndLongitude: getLocationByLatitudeAndLongitude,
+      getAddressByBrowserOrIp: getAddressByBrowserOrIp
     };
 
     return service;
@@ -50,55 +48,6 @@
       return map;
     }
 
-
-    function initRoadMap(roadArray) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>地图数据加载中...</span>' +
-          '</div>',
-          duration: 5 * 1000
-        });
-
-      var mapObj = new AMap.Map('map');
-      map.setZoom(10);
-      map.setCenter([116.39, 39.9]);
-
-      $ionicLoading.hide();
-    }
-
-    function initInstallationMap(positionX, position) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>地图数据加载中...</span>' +
-          '</div>',
-          duration: 20 * 1000
-        });
-
-      var position = new AMap.LngLat(116.397428, 39.90923);
-
-      var mapObj = new AMap.Map('map', {
-
-        view: new AMap.View2D({
-
-          center: position,
-
-          zoom: 10,
-
-          rotation: 0
-
-        }),
-
-        lang: 'zh_cn'
-
-      });
-
-      $ionicLoading.hide();
-    }
-
     //进入地图时获取自己当前的位置，并且标注在地图上
     function initMyPosition(map, positionArray) {
 
@@ -116,35 +65,6 @@
       // })
 
       return marker;
-    }
-
-
-    //使用Cordova使用GPS定位获取详细的GPS坐标
-    function getCoordinateInfoNoDialog(fun) {
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>定位中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        });
-      var positionArray = new Array();
-      $cordovaGeolocation
-        .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
-        .then(function (position) {
-          positionArray[0] = position.coords.longitude;
-          positionArray[1] = position.coords.latitude;
-          fun(positionArray);
-          $ionicLoading.hide();
-        }, function (err) {
-          //如果获取GPS失败，那么设置GPS地点为公司的经纬度
-          positionArray[0] = 120.41317;
-          positionArray[1] = 36.07705;
-          fun(positionArray);
-          $ionicLoading.hide();
-          console.log('获取坐标失败：' + 'code:' + err.code + '***' + 'msg:' + err.msg);
-        });
     }
 
     /**
@@ -190,8 +110,15 @@
      * @param dataArray
      * @returns {{}}
      */
-    function getAddressByLatitudeAndLongitude(dataArray) {
-      var locationObj = {};
+    function getLocationByLatitudeAndLongitude(dataArray, fun) {
+      var locationObj = {
+        address: '',
+        city: '',
+        district: '',
+        street: '',
+        township: '',
+        streetNumber: ''
+      };
       AMap.plugin('AMap.Geocoder', function () {
         var geocoder = new AMap.Geocoder({
           city: "010"//城市，默认：“全国”
@@ -200,7 +127,7 @@
           if (status == 'complete') {
             locationObj.address = result.regeocode.formattedAddress;//定位的详细的地点
             locationObj.city = result.regeocode.addressComponent.city;//城市
-            locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;//城市+市区
+            locationObj.district = result.regeocode.addressComponent.district;//市区
             locationObj.street = result.regeocode.addressComponent.street;//路
             locationObj.township = result.regeocode.addressComponent.township;//街道
             locationObj.streetNumber = result.regeocode.addressComponent.streetNumber;//楼号
@@ -208,75 +135,28 @@
             console.log(result);
             console.log('根据经纬度来获取定位地点的的各种信息:');
             console.log(locationObj);
-            return locationObj;
-          }else{
-            return locationObj;
-          }
-        })
-      });
-      return locationObj;
-    }
-
-
-    /**
-     * 根据经纬度来获取详细的地理位置
-     * @param dataArray
-     * @param fun
-     */
-    function getLocationByLatitudeAndLongitude(dataArray, fun) {
-      var location = '';
-      AMap.plugin('AMap.Geocoder', function () {
-        var geocoder = new AMap.Geocoder({
-          city: "010"//城市，默认：“全国”
-        });
-        geocoder.getAddress(dataArray, function (status, result) {
-          if (status == 'complete') {
-            location = result.regeocode.formattedAddress;
-            fun(location);
+            fun(locationObj)
           } else {
-            fun(location);
+            fun(locationObj);
           }
-          console.log('根据经纬度来获取详细的地理位置：');
-          console.log(result);
         })
-      });
-    }
-
-
-    function getLatitudeAndLongitudeBySlide(dataArray, map) {
-      AMap.plugin('AMap.Geocoder', function () {
-        var geocoder = new AMap.Geocoder({
-          city: "010"//城市，默认：“全国”
-        });
-        var marker = new AMap.Marker({
-          map: map,
-          bubble: true
-        })
-
-        geocoder.getAddress(dataArray, function (status, result) {
-
-          if (status == 'complete') {
-            alert(status + result.regeocode.formattedAddress);
-          }
-          // map.on('click', function (e) {
-          //     marker.setPosition(e.lnglat);
-          //     geocoder.getAddress(e.lnglat, function (status, result) {
-          //         alert(status+result);
-          //         if (status == 'complete') {
-          //             alert(status + result.regeocode.formattedAddress);
-          //         }
-          //     })
-        })
-
       });
     }
 
 
     /**
-     * 网格化巡检定位城市和街道(通过调用手机的GPS进行获取定位)
+     * 网格化巡检定位，获取地理位置的各种详细信息(通过调用手机的GPS进行获取定位)
      * @param fun
      */
-    function getAddressByGPS(fun) {
+    function getLocationInfoByGPS(fun) {
+      var locationObj = {
+        address: '',
+        city: '',
+        district: '',
+        street: '',
+        township: '',
+        streetNumber: ''
+      };
       //调用GPS定位
       $ionicLoading.show(
         {
@@ -300,9 +180,12 @@
             });
             geocoder.getAddress(positionArray, function (status, result) {
               if (status == 'complete') {
-                var locationObj = {};
-                locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
-                locationObj.street = result.regeocode.addressComponent.street;
+                locationObj.address = result.regeocode.formattedAddress;//定位的详细的地点
+                locationObj.city = result.regeocode.addressComponent.city;//城市
+                locationObj.district = result.regeocode.addressComponent.district;//市区
+                locationObj.street = result.regeocode.addressComponent.street;//路
+                locationObj.township = result.regeocode.addressComponent.township;//街道
+                locationObj.streetNumber = result.regeocode.addressComponent.streetNumber;//楼号
                 fun(locationObj);
                 console.log('根据经纬度来获取定位地点返回的数据：');
                 console.log(result);
@@ -314,31 +197,7 @@
             })
           });
         }, function (err) {
-          // //如果获取GPS失败，那么设置GPS地点为公司的经纬度
-          // var defaultPosition = [120.41317, 36.07705];
-          // $ionicLoading.hide();
-          // console.log('获取坐标失败：' + 'code:' + err.code + '***' + 'msg:' + err.msg);
-          // AMap.plugin('AMap.Geocoder', function () {
-          //   var geocoder = new AMap.Geocoder({
-          //     city: "010"//城市，默认：“全国”
-          //   });
-          //   geocoder.getAddress(defaultPosition, function (status, result) {
-          //     if (status == 'complete') {
-          //       var locationObj = {};
-          //       locationObj.district = result.regeocode.addressComponent.city + result.regeocode.addressComponent.district;
-          //       locationObj.street = result.regeocode.addressComponent.street;
-          //       fun(locationObj);
-          //       console.log(result);
-          //     } else {
-          //       console.log('获取地理位置信息失败！' + status + result);
-          //     }
-          //   })
-          // });
-          //如果获取GPS失败那么返回空的字符串，并提示重新获取
           $ionicLoading.hide();
-          var locationObj = {};
-          locationObj.district = '';
-          locationObj.street = '';
           fun(locationObj);
           $ionicPopup.alert({
             title: '定位失败，请重试！'
@@ -408,7 +267,7 @@
               }
             })
           });
-        });      //返回定位出错信息
+        });
       });
     }
 
