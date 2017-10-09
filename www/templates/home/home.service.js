@@ -144,31 +144,23 @@
      * 从数据库读取数据
      */
     function selectDataFromSqlDB(db, fun) {
-      $ionicLoading.show(
-        {
-          templateUrl: 'templates/common/common.loadingData.html'
-        });
       var querySql = "SELECT * FROM ContentSave";
       try {
         db.transaction(function (tx) {
           tx.executeSql(querySql, [], function (tx, resultSet) {
-            $ionicLoading.hide();
             fun(resultSet);
           }, function (error) {
-            $ionicLoading.hide();
             $ionicPopup.alert({
               title: '错误提示',
               template: '从数据库查询数据出现错误' + error
             });
           });
         }, function (error) {
-          $ionicLoading.hide();
           alert('查询事务Failed' + error.message);
         }, function () {
           console.log('查询事务Success');
         });
       } catch (error) {
-        $ionicLoading.hide();
         $ionicPopup.alert({
           title: '提示',
           template: 'JavaScript错误捕获，查询数据事务出现问题'

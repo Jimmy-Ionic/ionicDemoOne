@@ -10,14 +10,14 @@
   /** @ngInject */
   function MapService(MyHttpService) {
     var service = {
-      getAccountList: getAccountList
+      getMapInfoList: getMapInfoList
     }
 
     return service;
 
 
     //获取街道，车辆等相关的台帐信息
-    function getAccountList(queryCriteria, fun) {
+    function getMapInfoList(queryCriteria, fun) {
       var url = '/hwweb/Ledger/findMap.action?code=' + queryCriteria.type + '&name=' + queryCriteria.keyword;
       MyHttpService.getCommonData(url, fun);
     }

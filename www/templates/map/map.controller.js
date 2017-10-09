@@ -5,10 +5,10 @@
     .module('app.map')
     .controller('MapController', MapController);
 
-  MapController.$inject = ['CommonMapService', 'MapService', '$ionicPopup', 'AddAssessmentMapService', '$state', '$scope'];
+  MapController.$inject = ['CommonMapService', 'MapService', '$ionicPopup', 'AddAssessmentMapService', '$state', '$scope', '$interval'];
 
   /** @ngInject */
-  function MapController(CommonMapService, MapService, $ionicPopup, AddAssessmentMapService, $state, $scope) {
+  function MapController(CommonMapService, MapService, $ionicPopup, AddAssessmentMapService, $state, $scope, $interval) {
 
     var vm = this;
     vm.title = '地图查询';
@@ -37,7 +37,10 @@
     vm.cluster;
     vm.markerPerson;
     vm.circle;
+    vm.timer;
+    vm.carSelected = false;
     vm.markers = [];
+    vm.carMarkers = [];
 
     vm.centerPositionNum = 0;
 
@@ -53,13 +56,75 @@
 
 
     function activate() {
+
       initMap();
+
+      $scope.$on('$ionicView.leave', function (event) {
+        if (vm.timer) {
+          $interval.cancel(vm.timer);
+        }
+      });
+
     }
 
 
+    //从服务器调用最新的车辆的数据并刷新最新的地理位置
+    function getCarData() {
+      var queryCriteria = {
+        type: 'cheliang',
+        keyword: ''
+      };
+      MapService.getMapInfoList(queryCriteria, function (resData) {
+        vm.mapPositionObj = resData[0];
+        vm.map.remove(vm.carMarkers);
+        if (vm.carMarkers.length > 0) {
+          vm.carMarkers = [];
+        }
+        if (vm.mapPositionObj.cheliang) {
+          for (var x in vm.mapPositionObj.cheliang) {
+            var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.cheliang[x].point);
+            var infoObj = {
+              type: 'cheliang',
+              name: vm.mapPositionObj.cheliang[x].plateNo,
+              vehicleType: vm.mapPositionObj.cheliang[x].vehicleType,
+              VehicleModelType: vm.mapPositionObj.cheliang[x].VehicleModelType,
+              vehicleFirstType: vm.mapPositionObj.cheliang[x].vehicleFirstType,
+              obj: vm.mapPositionObj.cheliang[x]
+            }
+            if (position.length > 0) {
+              position = position[0]
+            }
+            var marker = new AMap.Marker({
+              position: position,
+              extData: infoObj,
+              content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+              offset: new AMap.Pixel(-15, -15),
+              map: vm.map
+            }).on('touchend', openInfo);
+
+            vm.carMarkers.push(marker);
+          }
+        }
+      });
+    }
+
+    function success() {
+      console.log("轮询获取车辆的信息");
+    }
+
+    function error() {
+      console.log("循环获取车辆的信息失败");
+    }
+
+    function defaults() {
+
+    }
+
     //初始化地图
     function initMap() {
-      vm.map = CommonMapService.initMap();
+      if (!vm.map) {
+        vm.map = CommonMapService.initMap();
+      }
       vm.map.setZoom(17);
       vm.markerPerson = new AMap.Marker();
       CommonMapService.getCoordinateInfo(function (data) {
@@ -86,55 +151,14 @@
       });
     }
 
-
-    //
-    //   if (vm.mapPositionObj.roadPositionArray.length <= 0) {
-    //     //当roadPositionArray.length数量小于等于0的时候，说明道路的坐标没有，
-    //     // 代表着这是一个具体的设施（比如山东路某个公厕，具体到了地址），不是道路
-    //     // var icon = new AMap.Icon({
-    //     //   image: '../assets/global/map/position.png',//24px*24px
-    //     //   //icon可缺省，缺省时为默认的蓝色水滴图标，
-    //     //   size: new AMap.Size(32, 32)
-    //     // });
-    //
-    //     vm.marker = new AMap.Marker({
-    //       position: vm.mapPositionObj.position,
-    //       // icon: new AMap.Icon({
-    //       //   // size: new AMap.Size(32, 32),  //图标大小
-    //       //   // content: '<img src="/www/assets/global/img/location.png" />',
-    //       //   icon: "/www/assets/global/map/100.png",
-    //       //   imageOffset: new AMap.Pixel(0,0)
-    //       // })
-    //       // icon: icon,
-    //       offset: new AMap.Pixel(0, 0)
-    //     });
-    //
-    //     vm.marker.setMap(vm.map);
-    //     vm.map.setCenter(vm.mapPositionObj.position);
-    //   } else {
-    //     vm.polyline = new AMap.Polyline({
-    //       path: vm.mapPositionObj.roadPositionArray,
-    //       strokeColor: "#1C8B08",
-    //       strokeWeight: 5
-    //     });
-    //     // 添加到地图中
-    //     vm.polyline.setMap(vm.map);
-    //     vm.map.setZoom(17);
-    //     vm.centerPositionNum = parseInt(vm.mapPositionObj.roadPositionArray.length / 2);
-    //     vm.map.setCenter(vm.mapPositionObj.roadPositionArray[centerPositionNum]);
-    //   }
-    //
-    //   // CommonMapService.getCoordinateInfo(function (data) {
-    //   //   vm.markerPerson.setPosition(data);
-    //   //   vm.markerPerson.setMap(vm.map);
-    //   // });
-    // }
-
-
     //根据查询条件查询数据
     function getMapData(queryCriteria) {
-      initMap();
-      MapService.getAccountList(queryCriteria, function (resData) {
+
+      vm.map.clearMap();
+      vm.markers = [];
+      vm.carMarkers = [];
+
+      MapService.getMapInfoList(queryCriteria, function (resData) {
           vm.mapPositionObj = resData[0];
           if (vm.mapPositionObj) {
 
@@ -164,7 +188,6 @@
                 });
 
                 AMap.event.addListener(footbridgeMarker, 'touchend', function (e) {
-                  alert('marker的点击事件可以实现！');
                   openInfo(e);
                 })
 
@@ -199,6 +222,7 @@
             }
 
             if (vm.mapPositionObj.gongche) {
+
               for (var x in vm.mapPositionObj.gongche) {
                 var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.gongche[x].point);
                 var infoObj = {
@@ -249,6 +273,7 @@
             }
 
             if (vm.mapPositionObj.cheliang) {
+
               for (var x in vm.mapPositionObj.cheliang) {
                 var position = AddAssessmentMapService.getPositionArray(vm.mapPositionObj.cheliang[x].point);
                 var infoObj = {
@@ -262,13 +287,31 @@
                 if (position.length > 0) {
                   position = position[0]
                 }
-                vm.markers.push(new AMap.Marker({
+                var marker = new AMap.Marker({
                   position: position,
                   extData: infoObj,
                   content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
                   offset: new AMap.Pixel(-15, -15),
                   map: vm.map
-                }).on('touchend', openInfo));
+                }).on('touchend', openInfo);
+
+                // vm.markers.push(marker);
+                vm.carMarkers.push(marker);
+              }
+
+              if (vm.timer) {
+                $interval.cancel(vm.timer);
+              }
+
+              vm.timer = $interval(function () {
+                getCarData();
+              }, 1000 * 30);
+
+              vm.timer.then(success, error, defaults);
+
+            } else {
+              if (vm.timer) {
+                $interval.cancel(vm.timer);
               }
             }
 
@@ -402,7 +445,6 @@
         });
       } else {//默认样式
         vm.cluster = new AMap.MarkerClusterer(vm.map, vm.markers, {gridSize: 80});
-        console.log('点聚合已经走完哈哈');
       }
     }
 
