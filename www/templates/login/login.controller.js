@@ -44,11 +44,11 @@
 
 
     function setNetAddress() {
-      if (device) {
-        $scope.imei = device.imei;
-      } else {
-        $scope.imei = '123456';
-      }
+      // if (device) {
+      //   $scope.imei = device.imei;
+      // } else {
+      //   $scope.imei = '123456';
+      // }
       $state.go('setNet', {imei: $scope.imei});
     }
 

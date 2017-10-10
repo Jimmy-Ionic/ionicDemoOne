@@ -37,10 +37,11 @@
         vm.marker = CommonMapService.initMyPosition(vm.map, data);
         CommonMapService.getLocationByLatitudeAndLongitude(data, function (res) {
           vm.address = res.address;
+          $scope.$apply();
         });
         vm.map.on('click', function (e) {
           vm.marker.setPosition(e.lnglat);
-          vm.position = e.lnglat;
+          vm.position = e.lnglat.toString();
           //获取详细的地点
           CommonMapService.getLocationByLatitudeAndLongitude(e.lnglat, function (res) {
             vm.address = res.address;
@@ -76,14 +77,13 @@
         console.log('$cacheFactory:cacheGridCheckMapData');
         console.log($cacheFactory.get('cacheGridCheckMapData'));
         $cacheFactory.get('cacheGridCheckMapData').destroy();
-      } else {
-        var cacheMapData = $cacheFactory('cacheGridCheckMapData');
-        cacheMapData.put('position', vm.position);
-        cacheMapData.put('address', vm.address);
-        console.log('存储在本地的定位的相关数据：');
-        console.log(cacheMapData);
-        $ionicHistory.goBack();
       }
+      var cacheMapData = $cacheFactory('cacheGridCheckMapData');
+      cacheMapData.put('position', vm.position);
+      cacheMapData.put('address', vm.address);
+      console.log('存储在本地的定位的相关数据：');
+      console.log(cacheMapData);
+      $ionicHistory.goBack();
     }
 
 

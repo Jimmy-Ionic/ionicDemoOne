@@ -240,8 +240,8 @@
               break;
             case '3':
               var image3 = document.getElementById('addAssessmentImg3');
-              image3.src = '';
-              vm.uploadPicDataObj.img3 = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              image3.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img3 = '' ;
               break;
             default:
               break;
@@ -294,7 +294,7 @@
               "dItemName": "",
               "score": "",
               "userName": "",
-              "remark": "",
+              "remarks": "",
               "imgJson": []
             }
             jsonObj.infoId = resData[0];
@@ -303,7 +303,7 @@
             jsonObj.dItemName = vm.uploadData.reason;
             jsonObj.score = vm.uploadData.points;
             jsonObj.userName = $rootScope.userName;
-            jsonObj.remark = vm.uploadData.remark;
+            jsonObj.remarks = vm.uploadData.remarks;
             for (var i = 0; i < 3; i++) {
               switch (i) {
                 case 0:

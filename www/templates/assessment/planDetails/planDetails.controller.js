@@ -29,9 +29,12 @@
         vm.data = $stateParams.planDetailsData;
         vm.title = $stateParams.planDetailsData.planName;
       }
-      PlanDetailsService.getPlanDetailsList(vm.data.id, function (responseData) {
-        vm.planDetailsList = responseData;
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        PlanDetailsService.getPlanDetailsList(vm.data.id, function (responseData) {
+          vm.planDetailsList = responseData;
+        });
       });
+
     }
 
 

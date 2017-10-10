@@ -137,6 +137,23 @@
             return;
           }
         });
+      }else{
+        ProblemFeedbackDetailsService.uploadProblemFeedbackData(vm.uploadData, function (res) {
+          if (res == 'success') {
+            $ionicHistory.goBack();
+          } else if (res == 'failed') {
+            try {
+              var json = {};
+              json.date = moment().format('YYYY/MM/DD/HH:mm:ss');
+              json.address = vm.problemDetails.name;
+              json.type = 'problemFeedbackDetails';
+              json.data = JSON.stringify(vm.uploadData);
+              HomeService.insertDataToSqlDB(vm.db, json);
+            } catch (error) {
+
+            }
+          }
+        });
       }
     }
 

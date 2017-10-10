@@ -99,20 +99,20 @@
 
 
     function toWaitForWork() {
+      $state.go('waitForWork');
+    }
+
+    function toComprehensiveAssessment() {
       if (vm.isCommonAccount) {
         $ionicPopup.alert(
           {
             title: '提示',
-            template: '公共账户无法查看代办工作'
+            template: '公共账户无法查看综合考核'
           }
         );
       } else {
-        $state.go('waitForWork');
+        $state.go('assessment');
       }
-    }
-
-    function toComprehensiveAssessment() {
-      $state.go('assessment');
     }
 
     function toGridCheck() {

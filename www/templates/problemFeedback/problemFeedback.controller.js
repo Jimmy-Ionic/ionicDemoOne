@@ -24,8 +24,10 @@
 
 
     function activate() {
-      ProblemFeedbackService.getProblemList($rootScope.userId, function (resData) {
-        vm.problemList = resData;
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        ProblemFeedbackService.getProblemList($rootScope.userId, function (resData) {
+          vm.problemList = resData;
+        });
       });
     }
 

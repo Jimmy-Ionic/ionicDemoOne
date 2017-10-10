@@ -28,11 +28,10 @@
       if ($stateParams.planDetailsData) {
         vm.data = $stateParams.planDetailsData;
         console.log(vm.data);
-        AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
-          vm.assessmentStatusList = resData;
-        });
+        // AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
+        //   vm.assessmentStatusList = resData;
+        // });
       }
-
       $scope.$on('$ionicView.beforeEnter', function (event) {
         AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
           vm.assessmentStatusList = resData;

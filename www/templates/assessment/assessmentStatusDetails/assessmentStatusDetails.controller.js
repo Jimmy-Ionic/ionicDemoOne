@@ -80,7 +80,7 @@
 
               } else {
                 for (var x in vm.picBase64DataArray) {
-                  var imageId = 'img' + x + 4;
+                  var imageId = 'img' + x;
                   var image = document.getElementById(imageId);
                   image.src = vm.serverUrl + vm.picBase64DataArray[x];
                 }
@@ -114,7 +114,7 @@
           "dItemName": "",
           "score": "",
           "userName": "",
-          "remark": "",
+          "remarks": "",
           "imgJson": []
         }
         jsonObj.infoId = vm.data.id;
@@ -123,9 +123,21 @@
         jsonObj.dItemName = vm.uploadData.reason;
         jsonObj.score = vm.uploadData.points;
         jsonObj.userName = $rootScope.userName;
-        jsonObj.remark = vm.uploadData.remarks;
+        jsonObj.remarks = vm.uploadData.remarks;
         for (var i = 0; i < 3; i++) {
-          jsonObj.imgJson.push(vm.uploadPicDataObj('img' + i + 1));
+          switch (i) {
+            case 0:
+              jsonObj.imgJson.push(vm.uploadPicDataObj.img1);
+              break;
+            case 1:
+              jsonObj.imgJson.push(vm.uploadPicDataObj.img2);
+              break;
+            case 2:
+              jsonObj.imgJson.push(vm.uploadPicDataObj.img3);
+              break;
+            default:
+              break;
+          }
         }
         console.log(jsonObj);
         AssessmentStatusDetailsService.uploadAssessmentStatusDetailsData(jsonObj, function (res) {

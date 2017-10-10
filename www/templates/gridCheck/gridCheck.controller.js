@@ -25,9 +25,9 @@
       streetName: '',//道路名称
       problemCode: '',//扣分项的Id
       problemName: '',//扣分项名称
-      description: '',//整改情况
+      description: '',//问题描述
       location: '',//详细地址
-      point: [],//坐标
+      point: '',//坐标
       img: '',//图片的Base64编码字符串数据
     }
 
@@ -52,7 +52,6 @@
         GridCheckService.getGridCheckQuestionCodeArray(function (resData) {
           vm.questionCode = resData;
           vm.questionCodeObj = vm.questionCode[0];
-          console.log(vm.questionCode);
         });
       });
 
@@ -96,7 +95,7 @@
     function getGridCheckLocation() {
       CommonMapService.getLocationInfoByGPS(function (res) {
         vm.uploadData.areaName = res.district;
-        vm.uploadData.streetName = res.street;
+        vm.uploadData.streetName = res.township;
         $scope.$apply();
       });
     }
@@ -107,6 +106,7 @@
       vm.uploadData.examiner = $rootScope.userName;
       if ($cacheFactory.get("cacheGridCheckMapData")) {
         vm.uploadData.point = $cacheFactory.get("cacheGridCheckMapData").get('position');
+        console.log(vm.uploadData.point);
         vm.uploadData.address = $cacheFactory.get("cacheGridCheckMapData").get('address');
       }
       vm.uploadData.problemCode = vm.questionCodeObj.id;

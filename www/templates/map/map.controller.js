@@ -23,12 +23,12 @@
     vm.district = '';
 
     vm.accountList = [
-      {id: '0', account: '公厕', selected: true, code: 'gongche'},
-      {id: '1', account: '道路', selected: true, code: 'daolu'},
-      {id: '2', account: '车辆', selected: true, code: 'cheliang'},
-      {id: '3', account: '收集站', selected: true, code: 'shoujizhan'},
-      {id: '4', account: '过街天桥', selected: true, code: 'guojietianqiao'},
-      {id: '5', account: '全部', selected: true, code: 'all'}
+      {id: '0', account: '公厕', selected: false, code: 'gongche'},
+      {id: '1', account: '道路', selected: false, code: 'daolu'},
+      {id: '2', account: '车辆', selected: false, code: 'cheliang'},
+      {id: '3', account: '收集站', selected: false, code: 'shoujizhan'},
+      {id: '4', account: '过街天桥', selected: false, code: 'guojietianqiao'},
+      {id: '5', account: '全部', selected: false, code: 'all'}
     ];
 
 

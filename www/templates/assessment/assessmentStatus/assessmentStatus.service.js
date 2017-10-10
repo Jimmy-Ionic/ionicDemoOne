@@ -32,7 +32,7 @@
           duration: 10 * 1000
         }
       );
-      var path = '/hwweb/AssignmentAssessment/complete.action?' + 'planId=' + planDetails.planId + '%infraId=' + planDetails.infraId;
+      var path = '/hwweb/AssignmentAssessment/complete.action?' + 'planId=' + planDetails.planId + '&infraId=' + planDetails.infraId;
       $http({
         method: 'GET',
         url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path

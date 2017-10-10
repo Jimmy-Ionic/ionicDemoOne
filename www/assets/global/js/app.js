@@ -264,13 +264,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.home',[]);
+  angular.module('app.login', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.login', []);
+  angular.module('app.home',[]);
 })();
 
 (function () {
@@ -288,13 +288,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.setNet', []);
+  angular.module('app.problemFeedback', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.problemFeedback', []);
+  angular.module('app.setNet', []);
 })();
 
 (function () {
@@ -342,13 +342,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.commonHttpService', []);
+  angular.module('app.commonMap', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.commonMap', []);
+  angular.module('app.commonHttpService', []);
 })();
 
 (function () {
@@ -670,9 +670,9 @@
       streetName: '',//道路名称
       problemCode: '',//扣分项的Id
       problemName: '',//扣分项名称
-      description: '',//整改情况
+      description: '',//问题描述
       location: '',//详细地址
-      point: [],//坐标
+      point: '',//坐标
       img: '',//图片的Base64编码字符串数据
     }
 
@@ -697,7 +697,6 @@
         GridCheckService.getGridCheckQuestionCodeArray(function (resData) {
           vm.questionCode = resData;
           vm.questionCodeObj = vm.questionCode[0];
-          console.log(vm.questionCode);
         });
       });
 
@@ -741,7 +740,7 @@
     function getGridCheckLocation() {
       CommonMapService.getLocationInfoByGPS(function (res) {
         vm.uploadData.areaName = res.district;
-        vm.uploadData.streetName = res.street;
+        vm.uploadData.streetName = res.township;
         $scope.$apply();
       });
     }
@@ -752,6 +751,7 @@
       vm.uploadData.examiner = $rootScope.userName;
       if ($cacheFactory.get("cacheGridCheckMapData")) {
         vm.uploadData.point = $cacheFactory.get("cacheGridCheckMapData").get('position');
+        console.log(vm.uploadData.point);
         vm.uploadData.address = $cacheFactory.get("cacheGridCheckMapData").get('address');
       }
       vm.uploadData.problemCode = vm.questionCodeObj.id;
@@ -1003,6 +1003,247 @@
   }
 })();
 
+/* global hex_md5 */
+(function () {
+  'use strict';
+
+  var loginModule = angular.module('app.login');
+  loginModule.controller('LoginController', LoginController);
+
+  LoginController.$inject = [
+    '$scope',
+    '$state',
+    'LoginService',
+    '$cordovaDevice',
+    '$ionicPopup'
+  ];
+
+  function LoginController($scope,
+                           $state,
+                           LoginService,
+                           $cordovaDevice,
+                           $ionicPopup) {
+
+    $scope.doLogin = doLogin;
+    $scope.setNetAddress = setNetAddress;
+
+    $scope.isCommonAccount = false;
+    $scope.userInfo = LoginService.getUserInfo();
+    $scope.imei = '';
+
+    $scope.info = {
+      userName: $scope.userInfo.userName,
+      password: $scope.userInfo.password,
+      isRemAccountAndPwd: $scope.userInfo.isRemAccountAndPwd
+    };
+
+    activate();
+
+
+    function activate() {
+
+    }
+
+
+    LoginService.setServerInfo();
+
+
+    function setNetAddress() {
+      // if (device) {
+      //   $scope.imei = device.imei;
+      // } else {
+      //   $scope.imei = '123456';
+      // }
+      $state.go('setNet', {imei: $scope.imei});
+    }
+
+
+    function doLogin() {
+      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
+    }
+
+
+  }
+})();
+
+(function () {
+  angular.module('app.login')
+    .config(loginRouteConfig);
+
+  loginRouteConfig.$inject = ['$stateProvider'];
+
+  function loginRouteConfig($stateProvider) {
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        cache: false,
+        templateUrl: 'templates/login/login.html'
+      });
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.login')
+    .service('LoginService', LoginService);
+
+  LoginService.$inject = ['$localStorage', '$http', 'SYS_INFO', '$timeout', '$ionicLoading', '$ionicPopup', '$rootScope', '$cordovaDevice','$state'];
+
+
+  function LoginService($localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice,$state) {
+
+    var service = {
+      login: login,
+      getUserInfo: getUserInfo,
+      setServerInfo: setServerInfo,
+      getImei: getImei
+    };
+
+    return service;
+
+
+    function login(userName, pwd, imei, isCommonAccount, isRemAccountAndPwd,info) {
+      $ionicLoading.show({
+        template: '正在登录...'
+      });
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 30000);
+      pwd = hex_md5(pwd);
+      var path = '/hwweb/AppUser/userLogin.action?';
+      switch (isCommonAccount) {
+        case false:
+          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
+            .then(function (response) {
+              $rootScope.isCommonAccount = false;
+              success(response, isRemAccountAndPwd,info);
+            }, function (response) {
+              error(response)
+            });
+          break;
+        case  true:
+          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
+            .then(function (response) {
+              $rootScope.isCommonAccount = true;
+              success(response, isRemAccountAndPwd,info);
+            }, function (response) {
+              error(response)
+            });
+          break;
+        default:
+          break;
+      }
+    }
+
+    function success(res, isRemAccountAndPwd,info) {
+      console.log(res);
+      if (res.data.success == '1') {
+        $timeout(function () {
+          if (isRemAccountAndPwd) {
+            createSession(info);
+          } else {
+            destroySession();
+          }
+          saveUserInfo(res.data.data[0]);
+        }, 100).then(function () {
+          $ionicLoading.hide();
+          $state.go('home');
+        });
+      } else {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: res.data.msg
+        }).then(function (res) {
+        });
+      }
+    }
+
+    function error(res) {
+      $ionicLoading.hide();
+      $ionicPopup.alert({
+        title: '登陆失败',
+        template: res.data
+      }).then(function (res) {
+      });
+    }
+
+    function saveUserInfo(userInfo) {
+      if (userInfo) {
+        $rootScope.userId = userInfo.id;
+        $rootScope.userName = userInfo.name;
+        $rootScope.userOrg = userInfo.org;
+      } else {
+        $rootScope.userId = '';
+        $rootScope.userName = '';
+        $rootScope.userOrg= '';
+      }
+    }
+
+    function createSession(info) {
+      var userInfo = {
+        userName: '',
+        password: '',
+        isRemAccountAndPwd: false
+      };
+
+      if (info) {
+        userInfo.userName = info.userName;
+        userInfo.password = info.password;
+        userInfo.isRemAccountAndPwd = info.isRemAccountAndPwd;
+      }
+
+      $localStorage.userInfo = userInfo;
+    }
+
+    function getImei() {
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady() {
+        return $cordovaDevice.getUUID();
+      }
+    }
+
+    function getUserInfo() {
+      var userInfo = {
+        userName: '',
+        password: '',
+        isRemAccountAndPwd: false
+      };
+
+      if ($localStorage.userInfo) {
+        userInfo.userName = $localStorage.userInfo.userName;
+        userInfo.password = $localStorage.userInfo.password;
+        userInfo.isRemAccountAndPwd = $localStorage.userInfo.isRemAccountAndPwd;
+      }
+      return userInfo;
+    }
+
+    function destroySession() {
+      delete $localStorage.userInfo;
+    }
+
+    function setServerInfo() {
+
+      var serverInfo = {
+        SERVER_PATH: '',
+        SERVER_PORT: ''
+      }
+
+      if ($localStorage.serverInfo) {
+        SYS_INFO.SERVER_PATH = $localStorage.serverInfo.SERVER_PATH;
+        SYS_INFO.SERVER_PORT = $localStorage.serverInfo.SERVER_PORT;
+      } else {
+        serverInfo.SERVER_PATH = SYS_INFO.SERVER_PATH;
+        serverInfo.SERVER_PORT = SYS_INFO.SERVER_PORT;
+        $localStorage.serverInfo = serverInfo;
+      }
+    }
+
+  }
+})();
+
 (function () {
   'use strict';
 
@@ -1104,20 +1345,20 @@
 
 
     function toWaitForWork() {
+      $state.go('waitForWork');
+    }
+
+    function toComprehensiveAssessment() {
       if (vm.isCommonAccount) {
         $ionicPopup.alert(
           {
             title: '提示',
-            template: '公共账户无法查看代办工作'
+            template: '公共账户无法查看综合考核'
           }
         );
       } else {
-        $state.go('waitForWork');
+        $state.go('assessment');
       }
-    }
-
-    function toComprehensiveAssessment() {
-      $state.go('assessment');
     }
 
     function toGridCheck() {
@@ -1465,247 +1706,6 @@
   }
 })();
 
-/* global hex_md5 */
-(function () {
-  'use strict';
-
-  var loginModule = angular.module('app.login');
-  loginModule.controller('LoginController', LoginController);
-
-  LoginController.$inject = [
-    '$scope',
-    '$state',
-    'LoginService',
-    '$cordovaDevice',
-    '$ionicPopup'
-  ];
-
-  function LoginController($scope,
-                           $state,
-                           LoginService,
-                           $cordovaDevice,
-                           $ionicPopup) {
-
-    $scope.doLogin = doLogin;
-    $scope.setNetAddress = setNetAddress;
-
-    $scope.isCommonAccount = false;
-    $scope.userInfo = LoginService.getUserInfo();
-    $scope.imei = '';
-
-    $scope.info = {
-      userName: $scope.userInfo.userName,
-      password: $scope.userInfo.password,
-      isRemAccountAndPwd: $scope.userInfo.isRemAccountAndPwd
-    };
-
-    activate();
-
-
-    function activate() {
-
-    }
-
-
-    LoginService.setServerInfo();
-
-
-    function setNetAddress() {
-      if (device) {
-        $scope.imei = device.imei;
-      } else {
-        $scope.imei = '123456';
-      }
-      $state.go('setNet', {imei: $scope.imei});
-    }
-
-
-    function doLogin() {
-      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
-    }
-
-
-  }
-})();
-
-(function () {
-  angular.module('app.login')
-    .config(loginRouteConfig);
-
-  loginRouteConfig.$inject = ['$stateProvider'];
-
-  function loginRouteConfig($stateProvider) {
-    $stateProvider
-      .state('login', {
-        url: '/login',
-        cache: false,
-        templateUrl: 'templates/login/login.html'
-      });
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.login')
-    .service('LoginService', LoginService);
-
-  LoginService.$inject = ['$localStorage', '$http', 'SYS_INFO', '$timeout', '$ionicLoading', '$ionicPopup', '$rootScope', '$cordovaDevice','$state'];
-
-
-  function LoginService($localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice,$state) {
-
-    var service = {
-      login: login,
-      getUserInfo: getUserInfo,
-      setServerInfo: setServerInfo,
-      getImei: getImei
-    };
-
-    return service;
-
-
-    function login(userName, pwd, imei, isCommonAccount, isRemAccountAndPwd,info) {
-      $ionicLoading.show({
-        template: '正在登录...'
-      });
-      $timeout(function () {
-        $ionicLoading.hide();
-      }, 30000);
-      pwd = hex_md5(pwd);
-      var path = '/hwweb/AppUser/userLogin.action?';
-      switch (isCommonAccount) {
-        case false:
-          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
-            .then(function (response) {
-              $rootScope.isCommonAccount = false;
-              success(response, isRemAccountAndPwd,info);
-            }, function (response) {
-              error(response)
-            });
-          break;
-        case  true:
-          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
-            .then(function (response) {
-              $rootScope.isCommonAccount = true;
-              success(response, isRemAccountAndPwd,info);
-            }, function (response) {
-              error(response)
-            });
-          break;
-        default:
-          break;
-      }
-    }
-
-    function success(res, isRemAccountAndPwd,info) {
-      console.log(res);
-      if (res.data.success == '1') {
-        $timeout(function () {
-          if (isRemAccountAndPwd) {
-            createSession(info);
-          } else {
-            destroySession();
-          }
-          saveUserInfo(res.data.data[0]);
-        }, 100).then(function () {
-          $ionicLoading.hide();
-          $state.go('home');
-        });
-      } else {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: res.data.msg
-        }).then(function (res) {
-        });
-      }
-    }
-
-    function error(res) {
-      $ionicLoading.hide();
-      $ionicPopup.alert({
-        title: '登陆失败',
-        template: res.data
-      }).then(function (res) {
-      });
-    }
-
-    function saveUserInfo(userInfo) {
-      if (userInfo) {
-        $rootScope.userId = userInfo.id;
-        $rootScope.userName = userInfo.name;
-        $rootScope.userOrg = userInfo.org;
-      } else {
-        $rootScope.userId = '';
-        $rootScope.userName = '';
-        $rootScope.userOrg= '';
-      }
-    }
-
-    function createSession(info) {
-      var userInfo = {
-        userName: '',
-        password: '',
-        isRemAccountAndPwd: false
-      };
-
-      if (info) {
-        userInfo.userName = info.userName;
-        userInfo.password = info.password;
-        userInfo.isRemAccountAndPwd = info.isRemAccountAndPwd;
-      }
-
-      $localStorage.userInfo = userInfo;
-    }
-
-    function getImei() {
-      document.addEventListener("deviceready", onDeviceReady, false);
-
-      function onDeviceReady() {
-        return $cordovaDevice.getUUID();
-      }
-    }
-
-    function getUserInfo() {
-      var userInfo = {
-        userName: '',
-        password: '',
-        isRemAccountAndPwd: false
-      };
-
-      if ($localStorage.userInfo) {
-        userInfo.userName = $localStorage.userInfo.userName;
-        userInfo.password = $localStorage.userInfo.password;
-        userInfo.isRemAccountAndPwd = $localStorage.userInfo.isRemAccountAndPwd;
-      }
-      return userInfo;
-    }
-
-    function destroySession() {
-      delete $localStorage.userInfo;
-    }
-
-    function setServerInfo() {
-
-      var serverInfo = {
-        SERVER_PATH: '',
-        SERVER_PORT: ''
-      }
-
-      if ($localStorage.serverInfo) {
-        SYS_INFO.SERVER_PATH = $localStorage.serverInfo.SERVER_PATH;
-        SYS_INFO.SERVER_PORT = $localStorage.serverInfo.SERVER_PORT;
-      } else {
-        serverInfo.SERVER_PATH = SYS_INFO.SERVER_PATH;
-        serverInfo.SERVER_PORT = SYS_INFO.SERVER_PORT;
-        $localStorage.serverInfo = serverInfo;
-      }
-    }
-
-  }
-})();
-
 (function () {
   'use strict';
 
@@ -1731,12 +1731,12 @@
     vm.district = '';
 
     vm.accountList = [
-      {id: '0', account: '公厕', selected: true, code: 'gongche'},
-      {id: '1', account: '道路', selected: true, code: 'daolu'},
-      {id: '2', account: '车辆', selected: true, code: 'cheliang'},
-      {id: '3', account: '收集站', selected: true, code: 'shoujizhan'},
-      {id: '4', account: '过街天桥', selected: true, code: 'guojietianqiao'},
-      {id: '5', account: '全部', selected: true, code: 'all'}
+      {id: '0', account: '公厕', selected: false, code: 'gongche'},
+      {id: '1', account: '道路', selected: false, code: 'daolu'},
+      {id: '2', account: '车辆', selected: false, code: 'cheliang'},
+      {id: '3', account: '收集站', selected: false, code: 'shoujizhan'},
+      {id: '4', account: '过街天桥', selected: false, code: 'guojietianqiao'},
+      {id: '5', account: '全部', selected: false, code: 'all'}
     ];
 
 
@@ -2398,6 +2398,115 @@
   }
 })();
 
+(function () {
+  'use strict';
+
+  angular
+    .module('app.problemFeedback')
+    .controller('ProblemFeedbackController', ProblemFeedbackController);
+
+  ProblemFeedbackController.$inject = ['$rootScope', '$state', '$ionicPopup', '$scope', 'ProblemFeedbackService'];
+
+  /** @ngInject */
+  function ProblemFeedbackController($rootScope, $state, $ionicPopup, $scope, ProblemFeedbackService) {
+
+    var vm = this;
+    vm.title = '问题反馈';
+
+    vm.fun = {
+      checkProblemDetails: checkProblemDetails,
+      feedbackProblem: feedbackProblem
+    }
+
+    vm.problemList = [];
+
+    activate();
+
+
+    function activate() {
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        ProblemFeedbackService.getProblemList($rootScope.userId, function (resData) {
+          vm.problemList = resData;
+        });
+      });
+    }
+
+
+    function checkProblemDetails(item) {
+      toProblemFeedbackDetails(item);
+    }
+
+    function feedbackProblem(item) {
+      // if (item.status == 0) {
+      //   toProblemFeedbackDetails(item);
+      // } else {
+      //   $ionicPopup.alert({
+      //     title: '提示',
+      //     template: '您已经反馈过问题啦'
+      //   }).then(function (res) {
+      //
+      //   });
+      // }
+      toProblemFeedbackDetails(item);
+    }
+
+    function toProblemFeedbackDetails(item) {
+      $state.go('problemFeedbackDetails', {problemItem: item, fromWhere: 'problemFeedback'});
+    }
+
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.problemFeedback')
+    .config(ProblemFeedbackConfig);
+
+  ProblemFeedbackConfig.$inject = ['$stateProvider'];
+
+  /** @ngInject */
+  function ProblemFeedbackConfig($stateProvider) {
+    $stateProvider
+      .state('problemFeedback', {
+        url: '/problemFeedback',
+        // views: {
+        //   'main-content': {
+        //     templateUrl: 'templates/setting/setting.html'
+        //   }
+        cache:true,
+        templateUrl: 'templates/problemFeedback/problemFeedback.html'
+      });
+  }
+}());
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.problemFeedback')
+    .service('ProblemFeedbackService', ProblemFeedbackService);
+
+  ProblemFeedbackService.$inject = ['MyHttpService'];
+
+  /** @ngInject */
+  function ProblemFeedbackService(MyHttpService) {
+    var service = {
+      getProblemList: getProblemList
+    };
+
+    return service;
+
+    function getProblemList(userId, fun) {
+      var path = '/hwweb/GridInspection/CheckProblem.action?' + 'userId=' + userId;
+      MyHttpService.getCommonData(path, fun);
+    }
+
+  }
+})();
+
 /* global hex_md5 */
 (function () {
   'use strict';
@@ -2482,113 +2591,6 @@
   'use strict';
 
   angular
-    .module('app.problemFeedback')
-    .controller('ProblemFeedbackController', ProblemFeedbackController);
-
-  ProblemFeedbackController.$inject = ['$rootScope', '$state', '$ionicPopup', '$scope', 'ProblemFeedbackService'];
-
-  /** @ngInject */
-  function ProblemFeedbackController($rootScope, $state, $ionicPopup, $scope, ProblemFeedbackService) {
-
-    var vm = this;
-    vm.title = '问题反馈';
-
-    vm.fun = {
-      checkProblemDetails: checkProblemDetails,
-      feedbackProblem: feedbackProblem
-    }
-
-    vm.problemList = [];
-
-    activate();
-
-
-    function activate() {
-      ProblemFeedbackService.getProblemList($rootScope.userId, function (resData) {
-        vm.problemList = resData;
-      });
-    }
-
-
-    function checkProblemDetails(item) {
-      toProblemFeedbackDetails(item);
-    }
-
-    function feedbackProblem(item) {
-      // if (item.status == 0) {
-      //   toProblemFeedbackDetails(item);
-      // } else {
-      //   $ionicPopup.alert({
-      //     title: '提示',
-      //     template: '您已经反馈过问题啦'
-      //   }).then(function (res) {
-      //
-      //   });
-      // }
-      toProblemFeedbackDetails(item);
-    }
-
-    function toProblemFeedbackDetails(item) {
-      $state.go('problemFeedbackDetails', {problemItem: item, fromWhere: 'problemFeedback'});
-    }
-
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.problemFeedback')
-    .config(ProblemFeedbackConfig);
-
-  ProblemFeedbackConfig.$inject = ['$stateProvider'];
-
-  /** @ngInject */
-  function ProblemFeedbackConfig($stateProvider) {
-    $stateProvider
-      .state('problemFeedback', {
-        url: '/problemFeedback',
-        // views: {
-        //   'main-content': {
-        //     templateUrl: 'templates/setting/setting.html'
-        //   }
-        cache:true,
-        templateUrl: 'templates/problemFeedback/problemFeedback.html'
-      });
-  }
-}());
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.problemFeedback')
-    .service('ProblemFeedbackService', ProblemFeedbackService);
-
-  ProblemFeedbackService.$inject = ['MyHttpService'];
-
-  /** @ngInject */
-  function ProblemFeedbackService(MyHttpService) {
-    var service = {
-      getProblemList: getProblemList
-    };
-
-    return service;
-
-    function getProblemList(userId, fun) {
-      var path = '/hwweb/GridInspection/CheckProblem.action?' + 'userId=' + userId;
-      MyHttpService.getCommonData(path, fun);
-    }
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
     .module('app.setting')
     .controller('SettingController', SettingController);
 
@@ -2660,36 +2662,51 @@
     .module('app.waitForWork')
     .controller('WaitForWorkController', WaitForWorkController);
 
-  WaitForWorkController.$inject = ['$scope','WaitForWorkService','$rootScope','$state'];
+  WaitForWorkController.$inject = ['$scope', 'WaitForWorkService', '$rootScope', '$state'];
 
   /** @ngInject */
-  function WaitForWorkController($scope,WaitForWorkService,$rootScope,$state) {
+  function WaitForWorkController($scope, WaitForWorkService, $rootScope, $state) {
     var vm = this;
     vm.title = '待办工作';
     vm.titleController = {};
     vm.workList = [];
+    vm.isCommonAccount = $rootScope.isCommonAccount;
     vm.toJobDetails = toJobDetails;
-    vm.fun ={
-      pullToRefreshWaitForWorkDetails:pullToRefreshWaitForWorkDetails
+    vm.fun = {
+      pullToRefreshWaitForWorkDetails: pullToRefreshWaitForWorkDetails
     }
-
 
 
     activate();
 
 
     function activate() {
-      console.log($rootScope.userId);
-      WaitForWorkService.getWaitForWorkInfo($rootScope.userId,function (data) {
-        vm.workList = data;
-        console.log(vm.workList);
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        WaitForWorkService.getWaitForWorkInfo($rootScope.userId, function (data) {
+          if(vm.isCommonAccount){
+            for(var x in data){
+              if(data[x].eDate == '无'){
+                vm.workList.push(data[x]);
+              }
+            }
+          }else {
+            vm.workList = data;
+          }
+        });
       });
     }
 
     function pullToRefreshWaitForWorkDetails() {
-      WaitForWorkService.getWaitForWorkInfo($rootScope.userId,function (data) {
-        vm.workList = data;
-        console.log(vm.workList);
+      WaitForWorkService.getWaitForWorkInfo($rootScope.userId, function (data) {
+        if(vm.isCommonAccount){
+          for(var x in data){
+            if(data[x].eDate == '无'){
+              vm.workList.push(data[x]);
+            }
+          }
+        }else {
+          vm.workList = data;
+        }
         $scope.$broadcast('scroll.refreshComplete');
       });
     }
@@ -2697,7 +2714,7 @@
 
     function toJobDetails(item) {
       if (item.sDate == '无') {
-        $state.go('problemFeedbackDetails', {problemItem: item,fromWhere: 'waitForWork'});
+        $state.go('problemFeedbackDetails', {problemItem: item, fromWhere: 'waitForWork'});
       } else {
         $state.go('planDetails', {planDetailsData: item, fromWhere: 'waitForWork'});
       }
@@ -3111,8 +3128,8 @@
               break;
             case '3':
               var image3 = document.getElementById('addAssessmentImg3');
-              image3.src = '';
-              vm.uploadPicDataObj.img3 = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              image3.src = 'assets/global/img/gridCheck/icon_streetscape.jpg';
+              vm.uploadPicDataObj.img3 = '' ;
               break;
             default:
               break;
@@ -3165,7 +3182,7 @@
               "dItemName": "",
               "score": "",
               "userName": "",
-              "remark": "",
+              "remarks": "",
               "imgJson": []
             }
             jsonObj.infoId = resData[0];
@@ -3174,7 +3191,7 @@
             jsonObj.dItemName = vm.uploadData.reason;
             jsonObj.score = vm.uploadData.points;
             jsonObj.userName = $rootScope.userName;
-            jsonObj.remark = vm.uploadData.remark;
+            jsonObj.remarks = vm.uploadData.remarks;
             for (var i = 0; i < 3; i++) {
               switch (i) {
                 case 0:
@@ -3394,11 +3411,10 @@
       if ($stateParams.planDetailsData) {
         vm.data = $stateParams.planDetailsData;
         console.log(vm.data);
-        AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
-          vm.assessmentStatusList = resData;
-        });
+        // AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
+        //   vm.assessmentStatusList = resData;
+        // });
       }
-
       $scope.$on('$ionicView.beforeEnter', function (event) {
         AssessmentStatusService.getAssessmentStatusList(vm.data, function (resData) {
           vm.assessmentStatusList = resData;
@@ -3505,7 +3521,7 @@
           duration: 10 * 1000
         }
       );
-      var path = '/hwweb/AssignmentAssessment/complete.action?' + 'planId=' + planDetails.planId + '%infraId=' + planDetails.infraId;
+      var path = '/hwweb/AssignmentAssessment/complete.action?' + 'planId=' + planDetails.planId + '&infraId=' + planDetails.infraId;
       $http({
         method: 'GET',
         url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path
@@ -3614,7 +3630,7 @@
 
               } else {
                 for (var x in vm.picBase64DataArray) {
-                  var imageId = 'img' + x + 4;
+                  var imageId = 'img' + x;
                   var image = document.getElementById(imageId);
                   image.src = vm.serverUrl + vm.picBase64DataArray[x];
                 }
@@ -3648,7 +3664,7 @@
           "dItemName": "",
           "score": "",
           "userName": "",
-          "remark": "",
+          "remarks": "",
           "imgJson": []
         }
         jsonObj.infoId = vm.data.id;
@@ -3657,9 +3673,21 @@
         jsonObj.dItemName = vm.uploadData.reason;
         jsonObj.score = vm.uploadData.points;
         jsonObj.userName = $rootScope.userName;
-        jsonObj.remark = vm.uploadData.remarks;
+        jsonObj.remarks = vm.uploadData.remarks;
         for (var i = 0; i < 3; i++) {
-          jsonObj.imgJson.push(vm.uploadPicDataObj('img' + i + 1));
+          switch (i) {
+            case 0:
+              jsonObj.imgJson.push(vm.uploadPicDataObj.img1);
+              break;
+            case 1:
+              jsonObj.imgJson.push(vm.uploadPicDataObj.img2);
+              break;
+            case 2:
+              jsonObj.imgJson.push(vm.uploadPicDataObj.img3);
+              break;
+            default:
+              break;
+          }
         }
         console.log(jsonObj);
         AssessmentStatusDetailsService.uploadAssessmentStatusDetailsData(jsonObj, function (res) {
@@ -3945,9 +3973,12 @@
         vm.data = $stateParams.planDetailsData;
         vm.title = $stateParams.planDetailsData.planName;
       }
-      PlanDetailsService.getPlanDetailsList(vm.data.id, function (responseData) {
-        vm.planDetailsList = responseData;
+      $scope.$on('$ionicView.beforeEnter', function (event) {
+        PlanDetailsService.getPlanDetailsList(vm.data.id, function (responseData) {
+          vm.planDetailsList = responseData;
+        });
       });
+
     }
 
 
@@ -4014,138 +4045,6 @@
       var path = '/hwweb/AssignmentAssessment/findPlanView.action?planId=' + id;
       MyHttpService.getCommonData(path, fun);
     }
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.commonHttpService')
-    .service('MyHttpService', MyHttpService);
-
-  MyHttpService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO'];
-
-  /** @ngInject */
-  function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
-    var service = {
-      getCommonData: getCommonData,
-      uploadCommonData: uploadCommonData
-    };
-
-    return service;
-
-
-    function getCommonData(urlPath, fun) {
-
-      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
-
-      var data = [];
-
-      $ionicLoading.show(
-        {
-          templateUrl: 'templates/common/common.loadingData.html',
-          duration: 20 * 1000
-        });
-      $http({
-        method: 'GET',
-        url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
-        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      }).then(function (response) {
-        if (response.data.success == 1) {
-          $ionicLoading.hide();
-          data = response.data.data;
-          console.log('数据获取成功');
-          console.log(data);
-          fun(data);
-        } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '提示',
-            template: '获取数据失败'
-          }).then(function (res) {
-            console.log('数据获取失败');
-            console.log(data);
-            fun(data);
-          });
-        }
-      }, function (response) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: '提示',
-          template: '获取数据失败'
-        }).then(function (res) {
-          console.log('通信异常');
-          console.log(data);
-          fun(data);
-        });
-      });
-    }
-
-
-    //上传数据通用方法
-    function uploadCommonData(urlPath, jsonStr, fun) {
-
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>数据上传中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        }
-      );
-
-      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
-      console.log(url);
-      console.log(jsonStr);
-      // $http({
-      //   method: 'post',
-      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
-      //   data: {data: jsonStr}
-      // }).then(function (res) {
-      $http({
-        method: 'post',
-        url: url,
-        data: {data: jsonStr},
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        transformRequest: function (obj) {
-          var str = [];
-          for (var p in obj) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          }
-          console.log(str.join("&"));
-          return str.join("&");
-
-        }
-      }).then(function (res) {
-        if (res.data.success = 1) {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '提示',
-            template: res.data.msg
-          }).then(function (res) {
-            fun('success');
-          })
-        } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '数据上传失败'
-          }).then(function (res) {
-            fun('failed');
-          })
-        }
-      }, function (error) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: '数据上传失败'
-        }).then(function (res) {
-          fun('failed');
-        })
-      });
-    }
-
-
   }
 })();
 
@@ -4522,6 +4421,138 @@
   'use strict';
 
   angular
+    .module('app.commonHttpService')
+    .service('MyHttpService', MyHttpService);
+
+  MyHttpService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO'];
+
+  /** @ngInject */
+  function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
+    var service = {
+      getCommonData: getCommonData,
+      uploadCommonData: uploadCommonData
+    };
+
+    return service;
+
+
+    function getCommonData(urlPath, fun) {
+
+      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
+
+      var data = [];
+
+      $ionicLoading.show(
+        {
+          templateUrl: 'templates/common/common.loadingData.html',
+          duration: 20 * 1000
+        });
+      $http({
+        method: 'GET',
+        url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
+        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      }).then(function (response) {
+        if (response.data.success == 1) {
+          $ionicLoading.hide();
+          data = response.data.data;
+          console.log('数据获取成功');
+          console.log(data);
+          fun(data);
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: '获取数据失败'
+          }).then(function (res) {
+            console.log('数据获取失败');
+            console.log(data);
+            fun(data);
+          });
+        }
+      }, function (response) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '提示',
+          template: '获取数据失败'
+        }).then(function (res) {
+          console.log('通信异常');
+          console.log(data);
+          fun(data);
+        });
+      });
+    }
+
+
+    //上传数据通用方法
+    function uploadCommonData(urlPath, jsonStr, fun) {
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        }
+      );
+
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
+      console.log(url);
+      console.log(jsonStr);
+      // $http({
+      //   method: 'post',
+      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
+      //   data: {data: jsonStr}
+      // }).then(function (res) {
+      $http({
+        method: 'post',
+        url: url,
+        data: {data: jsonStr},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          console.log(str.join("&"));
+          return str.join("&");
+
+        }
+      }).then(function (res) {
+        if (res.data.success = 1) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: res.data.msg
+          }).then(function (res) {
+            fun('success');
+          })
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '数据上传失败'
+          }).then(function (res) {
+            fun('failed');
+          })
+        }
+      }, function (error) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '数据上传失败'
+        }).then(function (res) {
+          fun('failed');
+        })
+      });
+    }
+
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
     .module('app.gridCheckMap')
     .controller('GridCheckMapController', GridCheckMapController);
 
@@ -4557,10 +4588,11 @@
         vm.marker = CommonMapService.initMyPosition(vm.map, data);
         CommonMapService.getLocationByLatitudeAndLongitude(data, function (res) {
           vm.address = res.address;
+          $scope.$apply();
         });
         vm.map.on('click', function (e) {
           vm.marker.setPosition(e.lnglat);
-          vm.position = e.lnglat;
+          vm.position = e.lnglat.toString();
           //获取详细的地点
           CommonMapService.getLocationByLatitudeAndLongitude(e.lnglat, function (res) {
             vm.address = res.address;
@@ -4596,14 +4628,13 @@
         console.log('$cacheFactory:cacheGridCheckMapData');
         console.log($cacheFactory.get('cacheGridCheckMapData'));
         $cacheFactory.get('cacheGridCheckMapData').destroy();
-      } else {
-        var cacheMapData = $cacheFactory('cacheGridCheckMapData');
-        cacheMapData.put('position', vm.position);
-        cacheMapData.put('address', vm.address);
-        console.log('存储在本地的定位的相关数据：');
-        console.log(cacheMapData);
-        $ionicHistory.goBack();
       }
+      var cacheMapData = $cacheFactory('cacheGridCheckMapData');
+      cacheMapData.put('position', vm.position);
+      cacheMapData.put('address', vm.address);
+      console.log('存储在本地的定位的相关数据：');
+      console.log(cacheMapData);
+      $ionicHistory.goBack();
     }
 
 
@@ -5306,6 +5337,23 @@
             });
           } else {
             return;
+          }
+        });
+      }else{
+        ProblemFeedbackDetailsService.uploadProblemFeedbackData(vm.uploadData, function (res) {
+          if (res == 'success') {
+            $ionicHistory.goBack();
+          } else if (res == 'failed') {
+            try {
+              var json = {};
+              json.date = moment().format('YYYY/MM/DD/HH:mm:ss');
+              json.address = vm.problemDetails.name;
+              json.type = 'problemFeedbackDetails';
+              json.data = JSON.stringify(vm.uploadData);
+              HomeService.insertDataToSqlDB(vm.db, json);
+            } catch (error) {
+
+            }
           }
         });
       }

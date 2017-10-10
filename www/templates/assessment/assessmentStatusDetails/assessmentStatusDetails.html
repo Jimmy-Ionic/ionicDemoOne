@@ -62,7 +62,42 @@
 
 
           <!--扣分情况部分-->
-          <div class="common-center common-margin-top-10">
+          <!--<div class="common-center common-margin-top-10">-->
+          <!--<div class="row">-->
+          <!--<div class="col">-->
+          <!--<div class="common-center">-->
+          <!--<span class="common-font-4CB1AF-size-default">扣分情况</span>-->
+          <!--<input class="add-assessment-input common-font-666" ng-model="vm.uploadData.points"-->
+          <!--ng-disabled="!vm.isEdit"/>-->
+          <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col">-->
+          <!--<span class="common-font-4CB1AF-size-default">扣分原因</span>-->
+          <!--<input class="add-assessment-input common-font-666" ng-model="vm.uploadData.reason"-->
+          <!--ng-disabled="!vm.isEdit" ng-if="!vm.isEdit"/>-->
+          <!--<select class="add-assessment-input common-font-666" ng-model="vm.uploadData.reason" ng-if="vm.isEdit">-->
+          <!--<option ng-repeat="item in vm.reasonAccount">{{item.name}}</option>-->
+          <!--</select>-->
+          <!--</div>-->
+          <!--</div>-->
+
+
+          <!--<div class="row common-margin-top-5">-->
+          <!--<div class="col">-->
+          <!--<div class="common-center">-->
+          <!--<span class="common-font-4CB1AF-size-default">备&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp注</span>-->
+          <!--<input class="add-assessment-input" style="width: 250px;"-->
+          <!--ng-model="vm.uploadData.remarks"-->
+          <!--ng-disabled="!vm.isEdit">-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col">-->
+          <!--</div>-->
+          <!--</div>-->
+          <!--</div>-->
+          <div class="common-margin-top-10">
+
             <div class="row">
               <div class="col">
                 <div class="common-center">
@@ -82,19 +117,15 @@
               </div>
             </div>
 
-
-            <div class="row common-margin-top-5">
-              <div class="col">
-                <div class="common-center">
+            <div class="common-margin-top-10" style="padding-left: 17px;">
+              <div class="row">
                   <span class="common-font-4CB1AF-size-default">备&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp注</span>
-                  <input class="add-assessment-input"
+                  <input class="add-assessment-input" style="width: 200px;"
                          ng-model="vm.uploadData.remarks"
                          ng-disabled="!vm.isEdit">
-                </div>
-              </div>
-              <div class="col">
               </div>
             </div>
+
           </div>
 
           <!--拍照上传部分-->
@@ -113,12 +144,12 @@
                    ng-click="vm.fun.takePicture()">
             </div>
 
-            <div class="common-flex-around" ng-hide="vm.isEdit">
+            <div class="common-flex-around" ng-if="!vm.isEdit">
               <!--<img class="add-assessment-img"-->
               <!--ng-repeat="item in vm.picBase64DataArray" ng-src="{{vm.serverUrl+item}}">-->
-              <img id="img4" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
-              <img id="img5" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
-              <img id="img6" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
+              <img id="img0" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
+              <img id="img1" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
+              <img id="img2" class="add-assessment-img" ng-src="assets/global/img/gridCheck/icon_streetscape.jpg">
               <img class="add-assessment-img" ng-src="assets/global/img/assessment/icon_takePhoto.png">
             </div>
           </div>
