@@ -5,10 +5,10 @@
     .module('app.account')
     .controller('AccountController', AccountController);
 
-  AccountController.$inject = ['$scope', 'AccountService', '$state'];
+  AccountController.$inject = ['$scope', 'AccountService', '$state', '$ionicPopup'];
 
   /** @ngInject */
-  function AccountController($scope, AccountService, $state) {
+  function AccountController($scope, AccountService, $state, $ionicPopup) {
 
     var vm = this;
     vm.title = '环卫台帐';
@@ -54,18 +54,15 @@
         }
       }
 
-      if(vm.queryCriteria.level == ''&&vm.queryCriteria.cityPlace == ''
-        &&vm.queryCriteria.accountType == ''&&vm.queryCriteria.keyword==''){
+      if (vm.queryCriteria.level == '' && vm.queryCriteria.cityPlace == ''
+        && vm.queryCriteria.accountType == '' && vm.queryCriteria.keyword == '') {
         $ionicPopup.confirm({
           title: '提示',
           template: '查询全部台帐可能会导致等待时间很长，要继续么？',
-          buttons: [{
-            text: '取消',
-            type: 'button-positive'
-          }, {
-            text: '确认',
-            type: 'button-calm'
-          }]
+          cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+          cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+          okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+          okType: 'button-positive'
         }).then(function (res) {
           if (res) {
             AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
@@ -75,7 +72,7 @@
             return;
           }
         });
-      }else{
+      } else {
         AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
           vm.accountList = resData[0];
         });

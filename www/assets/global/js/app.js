@@ -264,13 +264,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.login', []);
+  angular.module('app.home',[]);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.home',[]);
+  angular.module('app.login', []);
 })();
 
 (function () {
@@ -288,13 +288,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.problemFeedback', []);
+  angular.module('app.setNet', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.setNet', []);
+  angular.module('app.problemFeedback', []);
 })();
 
 (function () {
@@ -342,13 +342,13 @@
 (function () {
   'use strict';
 
-  angular.module('app.commonMap', []);
+  angular.module('app.commonHttpService', []);
 })();
 
 (function () {
   'use strict';
 
-  angular.module('app.commonHttpService', []);
+  angular.module('app.commonMap', []);
 })();
 
 (function () {
@@ -394,10 +394,10 @@
     .module('app.account')
     .controller('AccountController', AccountController);
 
-  AccountController.$inject = ['$scope', 'AccountService', '$state'];
+  AccountController.$inject = ['$scope', 'AccountService', '$state', '$ionicPopup'];
 
   /** @ngInject */
-  function AccountController($scope, AccountService, $state) {
+  function AccountController($scope, AccountService, $state, $ionicPopup) {
 
     var vm = this;
     vm.title = '环卫台帐';
@@ -443,18 +443,15 @@
         }
       }
 
-      if(vm.queryCriteria.level == ''&&vm.queryCriteria.cityPlace == ''
-        &&vm.queryCriteria.accountType == ''&&vm.queryCriteria.keyword==''){
+      if (vm.queryCriteria.level == '' && vm.queryCriteria.cityPlace == ''
+        && vm.queryCriteria.accountType == '' && vm.queryCriteria.keyword == '') {
         $ionicPopup.confirm({
           title: '提示',
           template: '查询全部台帐可能会导致等待时间很长，要继续么？',
-          buttons: [{
-            text: '取消',
-            type: 'button-positive'
-          }, {
-            text: '确认',
-            type: 'button-calm'
-          }]
+          cancelText: '取消', // String (默认: 'Cancel'). 取消按钮的标题文本
+          cancelType: 'button-royal', // String (默认: 'button-default'). 取消按钮的类型
+          okText: '确认', // String (默认: 'OK'). OK按钮的标题文本
+          okType: 'button-positive'
         }).then(function (res) {
           if (res) {
             AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
@@ -464,7 +461,7 @@
             return;
           }
         });
-      }else{
+      } else {
         AccountService.getAccountListByQueryCriteria(vm.queryCriteria, function (resData) {
           vm.accountList = resData[0];
         });
@@ -1003,247 +1000,6 @@
   }
 })();
 
-/* global hex_md5 */
-(function () {
-  'use strict';
-
-  var loginModule = angular.module('app.login');
-  loginModule.controller('LoginController', LoginController);
-
-  LoginController.$inject = [
-    '$scope',
-    '$state',
-    'LoginService',
-    '$cordovaDevice',
-    '$ionicPopup'
-  ];
-
-  function LoginController($scope,
-                           $state,
-                           LoginService,
-                           $cordovaDevice,
-                           $ionicPopup) {
-
-    $scope.doLogin = doLogin;
-    $scope.setNetAddress = setNetAddress;
-
-    $scope.isCommonAccount = false;
-    $scope.userInfo = LoginService.getUserInfo();
-    $scope.imei = '';
-
-    $scope.info = {
-      userName: $scope.userInfo.userName,
-      password: $scope.userInfo.password,
-      isRemAccountAndPwd: $scope.userInfo.isRemAccountAndPwd
-    };
-
-    activate();
-
-
-    function activate() {
-
-    }
-
-
-    LoginService.setServerInfo();
-
-
-    function setNetAddress() {
-      // if (device) {
-      //   $scope.imei = device.imei;
-      // } else {
-      //   $scope.imei = '123456';
-      // }
-      $state.go('setNet', {imei: $scope.imei});
-    }
-
-
-    function doLogin() {
-      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
-    }
-
-
-  }
-})();
-
-(function () {
-  angular.module('app.login')
-    .config(loginRouteConfig);
-
-  loginRouteConfig.$inject = ['$stateProvider'];
-
-  function loginRouteConfig($stateProvider) {
-    $stateProvider
-      .state('login', {
-        url: '/login',
-        cache: false,
-        templateUrl: 'templates/login/login.html'
-      });
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.login')
-    .service('LoginService', LoginService);
-
-  LoginService.$inject = ['$localStorage', '$http', 'SYS_INFO', '$timeout', '$ionicLoading', '$ionicPopup', '$rootScope', '$cordovaDevice','$state'];
-
-
-  function LoginService($localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice,$state) {
-
-    var service = {
-      login: login,
-      getUserInfo: getUserInfo,
-      setServerInfo: setServerInfo,
-      getImei: getImei
-    };
-
-    return service;
-
-
-    function login(userName, pwd, imei, isCommonAccount, isRemAccountAndPwd,info) {
-      $ionicLoading.show({
-        template: '正在登录...'
-      });
-      $timeout(function () {
-        $ionicLoading.hide();
-      }, 30000);
-      pwd = hex_md5(pwd);
-      var path = '/hwweb/AppUser/userLogin.action?';
-      switch (isCommonAccount) {
-        case false:
-          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
-            .then(function (response) {
-              $rootScope.isCommonAccount = false;
-              success(response, isRemAccountAndPwd,info);
-            }, function (response) {
-              error(response)
-            });
-          break;
-        case  true:
-          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
-            .then(function (response) {
-              $rootScope.isCommonAccount = true;
-              success(response, isRemAccountAndPwd,info);
-            }, function (response) {
-              error(response)
-            });
-          break;
-        default:
-          break;
-      }
-    }
-
-    function success(res, isRemAccountAndPwd,info) {
-      console.log(res);
-      if (res.data.success == '1') {
-        $timeout(function () {
-          if (isRemAccountAndPwd) {
-            createSession(info);
-          } else {
-            destroySession();
-          }
-          saveUserInfo(res.data.data[0]);
-        }, 100).then(function () {
-          $ionicLoading.hide();
-          $state.go('home');
-        });
-      } else {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: res.data.msg
-        }).then(function (res) {
-        });
-      }
-    }
-
-    function error(res) {
-      $ionicLoading.hide();
-      $ionicPopup.alert({
-        title: '登陆失败',
-        template: res.data
-      }).then(function (res) {
-      });
-    }
-
-    function saveUserInfo(userInfo) {
-      if (userInfo) {
-        $rootScope.userId = userInfo.id;
-        $rootScope.userName = userInfo.name;
-        $rootScope.userOrg = userInfo.org;
-      } else {
-        $rootScope.userId = '';
-        $rootScope.userName = '';
-        $rootScope.userOrg= '';
-      }
-    }
-
-    function createSession(info) {
-      var userInfo = {
-        userName: '',
-        password: '',
-        isRemAccountAndPwd: false
-      };
-
-      if (info) {
-        userInfo.userName = info.userName;
-        userInfo.password = info.password;
-        userInfo.isRemAccountAndPwd = info.isRemAccountAndPwd;
-      }
-
-      $localStorage.userInfo = userInfo;
-    }
-
-    function getImei() {
-      document.addEventListener("deviceready", onDeviceReady, false);
-
-      function onDeviceReady() {
-        return $cordovaDevice.getUUID();
-      }
-    }
-
-    function getUserInfo() {
-      var userInfo = {
-        userName: '',
-        password: '',
-        isRemAccountAndPwd: false
-      };
-
-      if ($localStorage.userInfo) {
-        userInfo.userName = $localStorage.userInfo.userName;
-        userInfo.password = $localStorage.userInfo.password;
-        userInfo.isRemAccountAndPwd = $localStorage.userInfo.isRemAccountAndPwd;
-      }
-      return userInfo;
-    }
-
-    function destroySession() {
-      delete $localStorage.userInfo;
-    }
-
-    function setServerInfo() {
-
-      var serverInfo = {
-        SERVER_PATH: '',
-        SERVER_PORT: ''
-      }
-
-      if ($localStorage.serverInfo) {
-        SYS_INFO.SERVER_PATH = $localStorage.serverInfo.SERVER_PATH;
-        SYS_INFO.SERVER_PORT = $localStorage.serverInfo.SERVER_PORT;
-      } else {
-        serverInfo.SERVER_PATH = SYS_INFO.SERVER_PATH;
-        serverInfo.SERVER_PORT = SYS_INFO.SERVER_PORT;
-        $localStorage.serverInfo = serverInfo;
-      }
-    }
-
-  }
-})();
-
 (function () {
   'use strict';
 
@@ -1700,6 +1456,247 @@
         return temperature;
       } else {
         return '';
+      }
+    }
+
+  }
+})();
+
+/* global hex_md5 */
+(function () {
+  'use strict';
+
+  var loginModule = angular.module('app.login');
+  loginModule.controller('LoginController', LoginController);
+
+  LoginController.$inject = [
+    '$scope',
+    '$state',
+    'LoginService',
+    '$cordovaDevice',
+    '$ionicPopup'
+  ];
+
+  function LoginController($scope,
+                           $state,
+                           LoginService,
+                           $cordovaDevice,
+                           $ionicPopup) {
+
+    $scope.doLogin = doLogin;
+    $scope.setNetAddress = setNetAddress;
+
+    $scope.isCommonAccount = false;
+    $scope.userInfo = LoginService.getUserInfo();
+    $scope.imei = '';
+
+    $scope.info = {
+      userName: $scope.userInfo.userName,
+      password: $scope.userInfo.password,
+      isRemAccountAndPwd: $scope.userInfo.isRemAccountAndPwd
+    };
+
+    activate();
+
+
+    function activate() {
+
+    }
+
+
+    LoginService.setServerInfo();
+
+
+    function setNetAddress() {
+      if (device) {
+        $scope.imei = device.imei;
+      } else {
+        $scope.imei = '123456';
+      }
+      $state.go('setNet', {imei: $scope.imei});
+    }
+
+
+    function doLogin() {
+      LoginService.login($scope.info.userName, $scope.info.password, $scope.imei, $scope.isCommonAccount, $scope.info.isRemAccountAndPwd, $scope.info);
+    }
+
+
+  }
+})();
+
+(function () {
+  angular.module('app.login')
+    .config(loginRouteConfig);
+
+  loginRouteConfig.$inject = ['$stateProvider'];
+
+  function loginRouteConfig($stateProvider) {
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        cache: false,
+        templateUrl: 'templates/login/login.html'
+      });
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.login')
+    .service('LoginService', LoginService);
+
+  LoginService.$inject = ['$localStorage', '$http', 'SYS_INFO', '$timeout', '$ionicLoading', '$ionicPopup', '$rootScope', '$cordovaDevice','$state'];
+
+
+  function LoginService($localStorage, $http, SYS_INFO, $timeout, $ionicLoading, $ionicPopup, $rootScope, $cordovaDevice,$state) {
+
+    var service = {
+      login: login,
+      getUserInfo: getUserInfo,
+      setServerInfo: setServerInfo,
+      getImei: getImei
+    };
+
+    return service;
+
+
+    function login(userName, pwd, imei, isCommonAccount, isRemAccountAndPwd,info) {
+      $ionicLoading.show({
+        template: '正在登录...'
+      });
+      $timeout(function () {
+        $ionicLoading.hide();
+      }, 30000);
+      pwd = hex_md5(pwd);
+      var path = '/hwweb/AppUser/userLogin.action?';
+      switch (isCommonAccount) {
+        case false:
+          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd + '&' + 'imei=' + imei)
+            .then(function (response) {
+              $rootScope.isCommonAccount = false;
+              success(response, isRemAccountAndPwd,info);
+            }, function (response) {
+              error(response)
+            });
+          break;
+        case  true:
+          $http.get(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + path + 'account=' + userName + '&' + 'password=' + pwd)
+            .then(function (response) {
+              $rootScope.isCommonAccount = true;
+              success(response, isRemAccountAndPwd,info);
+            }, function (response) {
+              error(response)
+            });
+          break;
+        default:
+          break;
+      }
+    }
+
+    function success(res, isRemAccountAndPwd,info) {
+      console.log(res);
+      if (res.data.success == '1') {
+        $timeout(function () {
+          if (isRemAccountAndPwd) {
+            createSession(info);
+          } else {
+            destroySession();
+          }
+          saveUserInfo(res.data.data[0]);
+        }, 100).then(function () {
+          $ionicLoading.hide();
+          $state.go('home');
+        });
+      } else {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: res.data.msg
+        }).then(function (res) {
+        });
+      }
+    }
+
+    function error(res) {
+      $ionicLoading.hide();
+      $ionicPopup.alert({
+        title: '登陆失败',
+        template: res.data
+      }).then(function (res) {
+      });
+    }
+
+    function saveUserInfo(userInfo) {
+      if (userInfo) {
+        $rootScope.userId = userInfo.id;
+        $rootScope.userName = userInfo.name;
+        $rootScope.userOrg = userInfo.org;
+      } else {
+        $rootScope.userId = '';
+        $rootScope.userName = '';
+        $rootScope.userOrg= '';
+      }
+    }
+
+    function createSession(info) {
+      var userInfo = {
+        userName: '',
+        password: '',
+        isRemAccountAndPwd: false
+      };
+
+      if (info) {
+        userInfo.userName = info.userName;
+        userInfo.password = info.password;
+        userInfo.isRemAccountAndPwd = info.isRemAccountAndPwd;
+      }
+
+      $localStorage.userInfo = userInfo;
+    }
+
+    function getImei() {
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady() {
+        return $cordovaDevice.getUUID();
+      }
+    }
+
+    function getUserInfo() {
+      var userInfo = {
+        userName: '',
+        password: '',
+        isRemAccountAndPwd: false
+      };
+
+      if ($localStorage.userInfo) {
+        userInfo.userName = $localStorage.userInfo.userName;
+        userInfo.password = $localStorage.userInfo.password;
+        userInfo.isRemAccountAndPwd = $localStorage.userInfo.isRemAccountAndPwd;
+      }
+      return userInfo;
+    }
+
+    function destroySession() {
+      delete $localStorage.userInfo;
+    }
+
+    function setServerInfo() {
+
+      var serverInfo = {
+        SERVER_PATH: '',
+        SERVER_PORT: ''
+      }
+
+      if ($localStorage.serverInfo) {
+        SYS_INFO.SERVER_PATH = $localStorage.serverInfo.SERVER_PATH;
+        SYS_INFO.SERVER_PORT = $localStorage.serverInfo.SERVER_PORT;
+      } else {
+        serverInfo.SERVER_PATH = SYS_INFO.SERVER_PATH;
+        serverInfo.SERVER_PORT = SYS_INFO.SERVER_PORT;
+        $localStorage.serverInfo = serverInfo;
       }
     }
 
@@ -2398,6 +2395,86 @@
   }
 })();
 
+/* global hex_md5 */
+(function () {
+  'use strict';
+
+  angular.module('app.setNet')
+    .controller('SetNetController', SetNetController);
+
+  SetNetController.$inject = ['$scope', 'SetNetService', 'SYS_INFO', '$ionicHistory', '$stateParams'];
+
+  function SetNetController($scope, SetNetService, SYS_INFO, $ionicHistory, $stateParams) {
+    $scope.netSetList = [
+      {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
+      {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
+    ];
+    if ($stateParams.imei) {
+      $scope.IMEI = $stateParams.imei;
+    }
+
+
+    $scope.setNet = function () {
+      SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {
+        $ionicHistory.goBack();
+      });
+    }
+
+    $scope.backToLogin = function () {
+      $ionicHistory.goBack();
+    }
+
+  }
+})();
+
+(function () {
+  angular.module('app.setNet')
+    .config(NetRouteConfig);
+
+  NetRouteConfig.$inject = ['$stateProvider',];
+
+  function NetRouteConfig($stateProvider) {
+    $stateProvider
+      .state('setNet', {
+        url: '/setNet',
+        params: {imei: ''},
+        cache: false,
+        controller: 'SetNetController',
+        templateUrl: 'templates/setNet/net.html'
+      });
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('app.setNet')
+    .service('SetNetService', SetNetService)
+
+  SetNetService.$inject = ['$localStorage','SYS_INFO'];
+
+  function SetNetService($localStorage,SYS_INFO) {
+
+    var service = {
+      saveNetSettings: saveNetSettings
+    }
+
+
+    function saveNetSettings(address, port ,back) {
+      var serverInfo = {
+        SERVER_PATH:address,
+        SERVER_PORT:port
+      }
+      $localStorage.serverInfo= serverInfo;
+      SYS_INFO.SERVER_PATH = serverInfo.SERVER_PATH;
+      SYS_INFO.SERVER_PORT = serverInfo.SERVER_PORT;
+      back();
+    }
+    return service;
+  }
+})();
+
 (function () {
   'use strict';
 
@@ -2507,86 +2584,6 @@
   }
 })();
 
-/* global hex_md5 */
-(function () {
-  'use strict';
-
-  angular.module('app.setNet')
-    .controller('SetNetController', SetNetController);
-
-  SetNetController.$inject = ['$scope', 'SetNetService', 'SYS_INFO', '$ionicHistory', '$stateParams'];
-
-  function SetNetController($scope, SetNetService, SYS_INFO, $ionicHistory, $stateParams) {
-    $scope.netSetList = [
-      {placeholderValue: '服务器地址：', value: SYS_INFO.SERVER_PATH},
-      {placeholderValue: '服务器端口：', value: SYS_INFO.SERVER_PORT}
-    ];
-    if ($stateParams.imei) {
-      $scope.IMEI = $stateParams.imei;
-    }
-
-
-    $scope.setNet = function () {
-      SetNetService.saveNetSettings($scope.netSetList[0].value, $scope.netSetList[1].value, function () {
-        $ionicHistory.goBack();
-      });
-    }
-
-    $scope.backToLogin = function () {
-      $ionicHistory.goBack();
-    }
-
-  }
-})();
-
-(function () {
-  angular.module('app.setNet')
-    .config(NetRouteConfig);
-
-  NetRouteConfig.$inject = ['$stateProvider',];
-
-  function NetRouteConfig($stateProvider) {
-    $stateProvider
-      .state('setNet', {
-        url: '/setNet',
-        params: {imei: ''},
-        cache: false,
-        controller: 'SetNetController',
-        templateUrl: 'templates/setNet/net.html'
-      });
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.setNet')
-    .service('SetNetService', SetNetService)
-
-  SetNetService.$inject = ['$localStorage','SYS_INFO'];
-
-  function SetNetService($localStorage,SYS_INFO) {
-
-    var service = {
-      saveNetSettings: saveNetSettings
-    }
-
-
-    function saveNetSettings(address, port ,back) {
-      var serverInfo = {
-        SERVER_PATH:address,
-        SERVER_PORT:port
-      }
-      $localStorage.serverInfo= serverInfo;
-      SYS_INFO.SERVER_PATH = serverInfo.SERVER_PATH;
-      SYS_INFO.SERVER_PORT = serverInfo.SERVER_PORT;
-      back();
-    }
-    return service;
-  }
-})();
-
 (function () {
   'use strict';
 
@@ -2684,6 +2681,7 @@
       $scope.$on('$ionicView.beforeEnter', function (event) {
         WaitForWorkService.getWaitForWorkInfo($rootScope.userId, function (data) {
           if(vm.isCommonAccount){
+            vm.workList = [];
             for(var x in data){
               if(data[x].eDate == '无'){
                 vm.workList.push(data[x]);
@@ -2699,6 +2697,7 @@
     function pullToRefreshWaitForWorkDetails() {
       WaitForWorkService.getWaitForWorkInfo($rootScope.userId, function (data) {
         if(vm.isCommonAccount){
+          vm.workList = [];
           for(var x in data){
             if(data[x].eDate == '无'){
               vm.workList.push(data[x]);
@@ -4052,6 +4051,138 @@
   'use strict';
 
   angular
+    .module('app.commonHttpService')
+    .service('MyHttpService', MyHttpService);
+
+  MyHttpService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO'];
+
+  /** @ngInject */
+  function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
+    var service = {
+      getCommonData: getCommonData,
+      uploadCommonData: uploadCommonData
+    };
+
+    return service;
+
+
+    function getCommonData(urlPath, fun) {
+
+      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
+
+      var data = [];
+
+      $ionicLoading.show(
+        {
+          templateUrl: 'templates/common/common.loadingData.html',
+          duration: 20 * 1000
+        });
+      $http({
+        method: 'GET',
+        url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
+        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      }).then(function (response) {
+        if (response.data.success == 1) {
+          $ionicLoading.hide();
+          data = response.data.data;
+          console.log('数据获取成功');
+          console.log(data);
+          fun(data);
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: '获取数据失败'
+          }).then(function (res) {
+            console.log('数据获取失败');
+            console.log(data);
+            fun(data);
+          });
+        }
+      }, function (response) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '提示',
+          template: '获取数据失败'
+        }).then(function (res) {
+          console.log('通信异常');
+          console.log(data);
+          fun(data);
+        });
+      });
+    }
+
+
+    //上传数据通用方法
+    function uploadCommonData(urlPath, jsonStr, fun) {
+
+      $ionicLoading.show(
+        {
+          template: '<div class="common-loading-dialog-center">' +
+          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
+          '  <span>数据上传中...</span>' +
+          '</div>',
+          duration: 10 * 1000
+        }
+      );
+
+      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
+      console.log(url);
+      console.log(jsonStr);
+      // $http({
+      //   method: 'post',
+      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
+      //   data: {data: jsonStr}
+      // }).then(function (res) {
+      $http({
+        method: 'post',
+        url: url,
+        data: {data: jsonStr},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        transformRequest: function (obj) {
+          var str = [];
+          for (var p in obj) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+          console.log(str.join("&"));
+          return str.join("&");
+
+        }
+      }).then(function (res) {
+        if (res.data.success = 1) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '提示',
+            template: res.data.msg
+          }).then(function (res) {
+            fun('success');
+          })
+        } else {
+          $ionicLoading.hide();
+          $ionicPopup.alert({
+            title: '数据上传失败'
+          }).then(function (res) {
+            fun('failed');
+          })
+        }
+      }, function (error) {
+        $ionicLoading.hide();
+        $ionicPopup.alert({
+          title: '数据上传失败'
+        }).then(function (res) {
+          fun('failed');
+        })
+      });
+    }
+
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
     .module('app.commonMap')
     .controller('CommonMapController', CommonMapController);
 
@@ -4413,138 +4544,6 @@
         });
       });
     }
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('app.commonHttpService')
-    .service('MyHttpService', MyHttpService);
-
-  MyHttpService.$inject = ['$http', '$ionicLoading', '$ionicPopup', 'SYS_INFO'];
-
-  /** @ngInject */
-  function MyHttpService($http, $ionicLoading, $ionicPopup, SYS_INFO) {
-    var service = {
-      getCommonData: getCommonData,
-      uploadCommonData: uploadCommonData
-    };
-
-    return service;
-
-
-    function getCommonData(urlPath, fun) {
-
-      console.log(SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath);
-
-      var data = [];
-
-      $ionicLoading.show(
-        {
-          templateUrl: 'templates/common/common.loadingData.html',
-          duration: 20 * 1000
-        });
-      $http({
-        method: 'GET',
-        url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath
-        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      }).then(function (response) {
-        if (response.data.success == 1) {
-          $ionicLoading.hide();
-          data = response.data.data;
-          console.log('数据获取成功');
-          console.log(data);
-          fun(data);
-        } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '提示',
-            template: '获取数据失败'
-          }).then(function (res) {
-            console.log('数据获取失败');
-            console.log(data);
-            fun(data);
-          });
-        }
-      }, function (response) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: '提示',
-          template: '获取数据失败'
-        }).then(function (res) {
-          console.log('通信异常');
-          console.log(data);
-          fun(data);
-        });
-      });
-    }
-
-
-    //上传数据通用方法
-    function uploadCommonData(urlPath, jsonStr, fun) {
-
-      $ionicLoading.show(
-        {
-          template: '<div class="common-loading-dialog-center">' +
-          '  <ion-spinner icon="ios"></ion-spinner>&nbsp;&nbsp;' +
-          '  <span>数据上传中...</span>' +
-          '</div>',
-          duration: 10 * 1000
-        }
-      );
-
-      var url = SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath;
-      console.log(url);
-      console.log(jsonStr);
-      // $http({
-      //   method: 'post',
-      //   url: SYS_INFO.SERVER_PATH + ':' + SYS_INFO.SERVER_PORT + urlPath,
-      //   data: {data: jsonStr}
-      // }).then(function (res) {
-      $http({
-        method: 'post',
-        url: url,
-        data: {data: jsonStr},
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        transformRequest: function (obj) {
-          var str = [];
-          for (var p in obj) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          }
-          console.log(str.join("&"));
-          return str.join("&");
-
-        }
-      }).then(function (res) {
-        if (res.data.success = 1) {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '提示',
-            template: res.data.msg
-          }).then(function (res) {
-            fun('success');
-          })
-        } else {
-          $ionicLoading.hide();
-          $ionicPopup.alert({
-            title: '数据上传失败'
-          }).then(function (res) {
-            fun('failed');
-          })
-        }
-      }, function (error) {
-        $ionicLoading.hide();
-        $ionicPopup.alert({
-          title: '数据上传失败'
-        }).then(function (res) {
-          fun('failed');
-        })
-      });
-    }
-
 
   }
 })();

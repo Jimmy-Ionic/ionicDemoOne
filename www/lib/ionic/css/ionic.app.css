@@ -10079,7 +10079,7 @@ a.button {
   margin-top: 10px; }
 
 .add-assessment-input {
-  width: 70px;
+  width: 55px;
   height: 25px;
   line-height: 30px;
   border: solid;
@@ -10797,7 +10797,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
   padding-right: 25px; }
 
 .common-ion-content-child-div {
-  height: 400px;
+  height: 380px;
   width: auto;
   overflow-x: hidden;
   overflow-y: scroll; }

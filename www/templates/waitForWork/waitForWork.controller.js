@@ -27,6 +27,7 @@
       $scope.$on('$ionicView.beforeEnter', function (event) {
         WaitForWorkService.getWaitForWorkInfo($rootScope.userId, function (data) {
           if(vm.isCommonAccount){
+            vm.workList = [];
             for(var x in data){
               if(data[x].eDate == '无'){
                 vm.workList.push(data[x]);
@@ -42,6 +43,7 @@
     function pullToRefreshWaitForWorkDetails() {
       WaitForWorkService.getWaitForWorkInfo($rootScope.userId, function (data) {
         if(vm.isCommonAccount){
+          vm.workList = [];
           for(var x in data){
             if(data[x].eDate == '无'){
               vm.workList.push(data[x]);
