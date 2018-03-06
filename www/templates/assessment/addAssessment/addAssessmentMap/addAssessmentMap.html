@@ -1,0 +1,29 @@
+<ion-view class="home-bg" ng-controller="AddAssessmentMapController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <div class="home-bottom-bg">
+
+  <div class="common-center" scroll="false">
+
+    <div>
+      <div id="map" class="add-assessment-map card">
+
+      </div>
+
+      <div class="common-margin-top common-center">{{vm.mapPositionObj.address}}
+      </div>
+
+      <div class="common-margin-top common-center">
+        <div class="assessment-map-btn" ng-click="vm.fun.refreshMyPosition()">显示当前位置</div>
+        &nbsp&nbsp
+        <div class="assessment-map-btn"
+                ng-click="vm.fun.refreshRoadOrInstallationPosition()">查看设施位置
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+</ion-view>

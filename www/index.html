@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!--<meta http-equiv="content-type" content="text/html;charset=utf-8">-->
+  <meta
+    content="script-src * 'unsafe-eval'; connect-src * 'unsafe-eval'; object-src 'self'; style-src * 'unsafe-inline'; img-src *">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src https://codepush.azurewebsites.net * data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+  <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;script-src * 'unsafe-inline'">-->
+  <title></title>
+
+  <!-- inject:css -->
+  <link rel="stylesheet" href="lib/ionic/css/ionic.app.min.css">
+  <!-- endinject -->
+  <script src="http://webapi.amap.com/maps?v=1.3&key=d45d5c33d38a3b60670d530e1cc61a91&plugin=AMap.MarkerClusterer"></script>
+  <!--<script src="http://webapi.amap.com/maps?v=1.3&key=d45d5c33d38a3b60670d530e1cc61a91"></script>-->
+  <script src="http://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+</head>
+
+<body ng-app="app" ng-controller="AppController">
+<!--
+    The nav bar that will be updated as we navigate between views.
+  -->
+
+<!--
+    The views will be rendered in the <ion-nav-view> directive below
+    Templates are in the /templates folder (but you could also
+    have templates inline in this html file if you'd like).
+  -->
+<ion-nav-view>
+</ion-nav-view>
+
+
+<!-- ionic/angularjs js -->
+<script src="lib/md5.js"></script>
+<script src="lib/ionic/js/ionic.bundle.js"></script>
+<script src="lib/moment/min/moment-with-locales.min.js"></script>
+<script src="lib/lodash/dist/lodash.min.js"></script>
+<script src="lib/ngstorage/ngStorage.min.js"></script>
+<script src="lib/echarts/dist/echarts.min.js"></script>
+<script src="lib/echarts/theme/shine.js"></script>
+<script src="lib/bower-ng-echarts/dist/ng-echarts.js"></script>
+<script src="lib/ng-file-upload/ng-file-upload.js"></script>
+
+<!-- cordova script (this will be a 404 during development) -->
+<script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+<script src="cordova.js"></script>
+
+<!-- inject:js -->
+<script src="assets/global/js/app.min.js"></script>
+<!-- endinject -->
+</body>
+
+</html>

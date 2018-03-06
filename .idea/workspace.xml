@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4474cb06-fc90-4f82-b85f-c01c181e1baa" name="Default" comment="1,BUG修改">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="LaGuanChuAppNew" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="login.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/login/login.controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="832">
+              <caret line="47" column="26" lean-forward="false" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-228">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/platforms/android/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>account</find>
+      <find>input</find>
+      <find>problemFeedbackDetails</find>
+      <find>gridCheckMap</find>
+      <find>picBase64DataArray</find>
+      <find>pointReasonArray</find>
+      <find>mapPositionObj</find>
+      <find>add-assessment-img</find>
+      <find>$cordovaFileTransfer</find>
+      <find>downloadFile</find>
+      <find>uploadPicDataObj</find>
+      <find>isEdit</find>
+      <find>transaction</find>
+      <find>$ionicLoading</find>
+      <find>icon_delte</find>
+      <find>success</find>
+      <find>vm.uploadData.points</find>
+      <find>vm.uploadData</find>
+      <find>remark</find>
+      <find>getAddressByLatitudeAndLongitude</find>
+      <find>markers</find>
+      <find>getAccountList</find>
+      <find>src</find>
+      <find>uploadData</find>
+      <find>serverUrl</find>
+      <find>img</find>
+      <find>feedbackDescription</find>
+      <find>$ionicHistory</find>
+      <find>problemDetails</find>
+      <find>vm.accountType</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetailsMap/problemFeedbackDetailsMap.html" />
+        <option value="$PROJECT_DIR$/www/templates/setting/setting.html" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessment.route.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessmentMap/addAssessmentMap.route.js" />
+        <option value="$PROJECT_DIR$/www/lib/ionic/css/ionic.app.min.css" />
+        <option value="$PROJECT_DIR$/www/templates/gridCheck/gridCheck.route.js" />
+        <option value="$PROJECT_DIR$/www/templates/login/login.html" />
+        <option value="$PROJECT_DIR$/www/templates/message/messageContent/messageContent.html" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessmentMap/addAssessmentMap.controller.js" />
+        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/config.xml" />
+        <option value="$PROJECT_DIR$/plugins/cordova-plugin-file/types/index.d.ts" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/assessmentStatusDetails/assessmentStatusDetails.route.js" />
+        <option value="$PROJECT_DIR$/www/templates/message/messageContent/messageContent.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/common/http/commonHttpService.service.js" />
+        <option value="$PROJECT_DIR$/www/templates/home/savedData/savedData.service.js" />
+        <option value="$PROJECT_DIR$/www/js/app.js" />
+        <option value="$PROJECT_DIR$/www/templates/home/savedData/savedData.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/home/savedData/savedData.html" />
+        <option value="$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetailsMap/problemFeedbackDetailsMap.controller.js" />
+        <option value="$PROJECT_DIR$/www/assets/global/js/app.js" />
+        <option value="$PROJECT_DIR$/www/templates/common/map/commonMap.service.js" />
+        <option value="$PROJECT_DIR$/www/templates/home/home.service.js" />
+        <option value="$PROJECT_DIR$/www/templates/map/map.service.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/assessmentStatus/assessmentStatus.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/assessmentStatus/assessmentStatus.service.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/planDetails/planDetails.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/gridCheck/gridCheckMap/gridCheckMap.html" />
+        <option value="$PROJECT_DIR$/www/templates/gridCheck/gridCheck.html" />
+        <option value="$PROJECT_DIR$/www/templates/gridCheck/gridCheckMap/gridCheckMap.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/gridCheck/gridCheck.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/assessmentStatusDetails/assessmentStatusDetails.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/assessmentStatusDetails/assessmentStatusDetails.html" />
+        <option value="$PROJECT_DIR$/www/templates/home/home.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/map/map.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.html" />
+        <option value="$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/assessment.html" />
+        <option value="$PROJECT_DIR$/www/templates/problemFeedback/problemFeedback.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessment.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/waitForWork/waitForWork.html" />
+        <option value="$PROJECT_DIR$/www/templates/account/accountDetails/accountDetails.html" />
+        <option value="$PROJECT_DIR$/www/templates/waitForWork/waitForWork.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/planDetails/planDetails.html" />
+        <option value="$PROJECT_DIR$/www/templates/account/account.controller.js" />
+        <option value="$PROJECT_DIR$/www/templates/account/account.html" />
+        <option value="$PROJECT_DIR$/scss/ionic.app.scss" />
+        <option value="$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessment.html" />
+        <option value="$PROJECT_DIR$/www/templates/login/login.controller.js" />
+        <option value="$PROJECT_DIR$/platforms/android/AndroidManifest.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <gulpfiles>
+      <GulpfileState>
+        <gulpfile-path>$PROJECT_DIR$/gulpfile.js</gulpfile-path>
+      </GulpfileState>
+    </gulpfiles>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+    <handled-path value="$PROJECT_DIR$/plugins/cordova-sqlite-storage/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="437" />
+    <option name="y" value="6" />
+    <option name="width" value="1339" />
+    <option name="height" value="1000" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+              <item name="platforms" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+              <item name="platforms" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LaGuanChuAppNew" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LaGuanChuAppNew" type="462c0819:PsiDirectoryNode" />
+              <item name="www" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="login" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path" value="F:/dev-environment/NodeJs/node" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="js.buildTools.gulp.gulp_package_dir" value="$PROJECT_DIR$/node_modules/gulp" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/ProjectWork/laguanchu/code/LaGuanChuAppNew/www/templates/assessment/addAssessment/addAssessment.html" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\resources" />
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\www\templates\problemFeedback\problemFeedbackDetailsMap" />
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\www\assets\global\img\gridCheck" />
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\www\assets\global\img\map" />
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\www\assets\global\img\assessment" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\www\assets\global\img\login" />
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\resources\android\icon" />
+      <recent name="E:\ProjectWork\laguanchu\code\LaGuanChuAppNew\www\assets\global\img" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration name="build" type="js.build_tools.gulp" factoryName="Gulp.js" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>build</task>
+      </tasks>
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration name="buildindex" type="js.build_tools.gulp" factoryName="Gulp.js" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>buildindex</task>
+      </tasks>
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration name="default" type="js.build_tools.gulp" factoryName="Gulp.js" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>default</task>
+      </tasks>
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration name="index" type="js.build_tools.gulp" factoryName="Gulp.js" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>index</task>
+      </tasks>
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration name="sass" type="js.build_tools.gulp" factoryName="Gulp.js" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>sass</task>
+      </tasks>
+      <arguments />
+      <envs />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Gulp.js.default" />
+      <item index="1" class="java.lang.String" itemvalue="Gulp.js.index" />
+      <item index="2" class="java.lang.String" itemvalue="Gulp.js.build" />
+      <item index="3" class="java.lang.String" itemvalue="Gulp.js.buildindex" />
+      <item index="4" class="java.lang.String" itemvalue="Gulp.js.sass" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Gulp.js.build" />
+        <item index="1" class="java.lang.String" itemvalue="Gulp.js.default" />
+        <item index="2" class="java.lang.String" itemvalue="Gulp.js.sass" />
+        <item index="3" class="java.lang.String" itemvalue="Gulp.js.buildindex" />
+        <item index="4" class="java.lang.String" itemvalue="Gulp.js.index" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4474cb06-fc90-4f82-b85f-c01c181e1baa" name="Default" comment="" />
+      <created>1502435238658</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1502435238658</updated>
+      <workItem from="1502435239976" duration="4481000" />
+      <workItem from="1502501687730" duration="680000" />
+      <workItem from="1502669047472" duration="58839000" />
+      <workItem from="1502786008468" duration="1641000" />
+      <workItem from="1502843591417" duration="2701000" />
+      <workItem from="1502930862792" duration="26809000" />
+      <workItem from="1503015320697" duration="6492000" />
+      <workItem from="1503022762325" duration="1295000" />
+      <workItem from="1503024078204" duration="5046000" />
+      <workItem from="1503035109064" duration="424000" />
+      <workItem from="1503035556525" duration="6755000" />
+      <workItem from="1503042515221" duration="4283000" />
+      <workItem from="1503103173873" duration="2160000" />
+      <workItem from="1503108775801" duration="2010000" />
+      <workItem from="1503110808519" duration="467000" />
+      <workItem from="1503111291655" duration="2263000" />
+      <workItem from="1503113573993" duration="9801000" />
+      <workItem from="1503215041857" duration="3434000" />
+      <workItem from="1503274279556" duration="1202000" />
+      <workItem from="1503275515887" duration="6050000" />
+      <workItem from="1503281628139" duration="3943000" />
+      <workItem from="1503285608589" duration="18020000" />
+      <workItem from="1503360459360" duration="17467000" />
+      <workItem from="1503384676147" duration="2954000" />
+      <workItem from="1503387650004" duration="11714000" />
+      <workItem from="1503447566828" duration="13741000" />
+      <workItem from="1503468094682" duration="3802000" />
+      <workItem from="1503471930121" duration="9055000" />
+      <workItem from="1503535595751" duration="16179000" />
+      <workItem from="1503561879308" duration="5685000" />
+      <workItem from="1503620650428" duration="2124000" />
+      <workItem from="1503623423773" duration="18352000" />
+      <workItem from="1503650853868" duration="2126000" />
+      <workItem from="1503653986247" duration="2118000" />
+      <workItem from="1503708695191" duration="5819000" />
+      <workItem from="1503714552831" duration="1111000" />
+      <workItem from="1503715757406" duration="15028000" />
+      <workItem from="1503746937408" duration="3542000" />
+      <workItem from="1503750495648" duration="37914000" />
+      <workItem from="1503970914963" duration="4500000" />
+      <workItem from="1503975713018" duration="45559000" />
+      <workItem from="1504095296478" duration="4002000" />
+      <workItem from="1504139655000" duration="296000" />
+      <workItem from="1504140169618" duration="29436000" />
+      <workItem from="1504224614126" duration="2738000" />
+      <workItem from="1504227979855" duration="937000" />
+      <workItem from="1504229169976" duration="663000" />
+      <workItem from="1504229855967" duration="21266000" />
+      <workItem from="1504267967913" duration="11972000" />
+      <workItem from="1504420523322" duration="16789000" />
+      <workItem from="1504484303369" duration="7836000" />
+      <workItem from="1504509017831" duration="39826000" />
+      <workItem from="1504600815304" duration="13004000" />
+      <workItem from="1504657383266" duration="11197000" />
+      <workItem from="1504671798870" duration="11692000" />
+      <workItem from="1504686428139" duration="4786000" />
+      <workItem from="1504692986458" duration="517000" />
+      <workItem from="1504743414570" duration="18485000" />
+      <workItem from="1504768339227" duration="21422000" />
+      <workItem from="1504841017865" duration="21931000" />
+      <workItem from="1504917788487" duration="21829000" />
+      <workItem from="1505089732315" duration="17615000" />
+      <workItem from="1505114813604" duration="9016000" />
+      <workItem from="1505124274328" duration="1735000" />
+      <workItem from="1505175627656" duration="24533000" />
+      <workItem from="1505206241024" duration="1298000" />
+      <workItem from="1505207564784" duration="3345000" />
+      <workItem from="1505262597344" duration="23409000" />
+      <workItem from="1505295072927" duration="3188000" />
+      <workItem from="1505348711458" duration="9164000" />
+      <workItem from="1505358431499" duration="4704000" />
+      <workItem from="1505367429803" duration="11238000" />
+      <workItem from="1505382514260" duration="2591000" />
+      <workItem from="1505435668483" duration="4276000" />
+      <workItem from="1505440169469" duration="960000" />
+      <workItem from="1505441142080" duration="357000" />
+      <workItem from="1505441858732" duration="20902000" />
+      <workItem from="1505523592500" duration="740000" />
+      <workItem from="1505524356661" duration="11302000" />
+      <workItem from="1505535714696" duration="3638000" />
+      <workItem from="1505546475127" duration="3983000" />
+      <workItem from="1505550483384" duration="4659000" />
+      <workItem from="1505622841923" duration="24554000" />
+      <workItem from="1505692588901" duration="2065000" />
+      <workItem from="1505696671370" duration="41318000" />
+      <workItem from="1505806697719" duration="10383000" />
+      <workItem from="1505867650600" duration="26694000" />
+      <workItem from="1505953894032" duration="26441000" />
+      <workItem from="1506040972227" duration="12121000" />
+      <workItem from="1506061286630" duration="14940000" />
+      <workItem from="1506130250954" duration="1724000" />
+      <workItem from="1506132002620" duration="6481000" />
+      <workItem from="1506233567264" duration="20255000" />
+      <workItem from="1506298595189" duration="18640000" />
+      <workItem from="1506322791522" duration="12511000" />
+      <workItem from="1506386538340" duration="14447000" />
+      <workItem from="1506405484113" duration="6246000" />
+      <workItem from="1506412400711" duration="36766000" />
+      <workItem from="1506503977147" duration="7941000" />
+      <workItem from="1506563702762" duration="23604000" />
+      <workItem from="1506645529427" duration="29364000" />
+      <workItem from="1506734216025" duration="6994000" />
+      <workItem from="1506752695983" duration="9391000" />
+      <workItem from="1507429287429" duration="7639000" />
+      <workItem from="1507509386358" duration="14288000" />
+      <workItem from="1507533928367" duration="4388000" />
+      <workItem from="1507538890289" duration="2392000" />
+      <workItem from="1507597023272" duration="22589000" />
+      <workItem from="1507683389735" duration="8766000" />
+      <workItem from="1507788203691" duration="1753000" />
+      <workItem from="1508116205966" duration="630000" />
+      <workItem from="1508227264790" duration="135000" />
+      <workItem from="1508291196826" duration="3400000" />
+      <workItem from="1509502044559" duration="1471000" />
+      <workItem from="1509507243484" duration="951000" />
+      <workItem from="1509508202099" duration="1431000" />
+    </task>
+    <task id="LOCAL-00001" summary="项目进度更新">
+      <created>1504743521954</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1504743521954</updated>
+    </task>
+    <task id="LOCAL-00002" summary="1修改Cordova插件内容，添加imei功能。&#10;2修改了一些ui以及相关的逻辑。&#10;3与服务器联调。">
+      <created>1505089906036</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1505089906036</updated>
+    </task>
+    <task id="LOCAL-00003" summary="1修改Cordova插件内容，添加imei功能。&#10;2继续跟服务器联合调试。">
+      <created>1505125972772</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1505125972772</updated>
+    </task>
+    <task id="LOCAL-00004" summary="1地图以及台帐功能完成，需要调试。">
+      <created>1505555422778</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1505555422778</updated>
+    </task>
+    <task id="LOCAL-00005" summary="1,添加美工给的各种图片&#10;2,登录，home页，代办工作，综合考核，界面UI重新优化完成&#10;3,重写了一些ionic的样式&#10;4,台帐功能完成">
+      <created>1505902003513</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1505902003513</updated>
+    </task>
+    <task id="LOCAL-00006" summary="1.Ui优化工作继续中">
+      <created>1505989541510</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1505989541510</updated>
+    </task>
+    <task id="LOCAL-00007" summary="1.Ui优化工作已经完成&#10;2.添加ionic对安卓back按键的监听&#10;3.添加了本地存储功能&#10;4.消息附件的下载功能完成">
+      <created>1506676897907</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1506676897907</updated>
+    </task>
+    <task id="LOCAL-00008" summary="优化map模块的逻辑">
+      <created>1507512824968</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1507512824968</updated>
+    </task>
+    <task id="LOCAL-00009" summary="1,与服务器联合调试修改上传数据接口出现的bug&#10;2,修改ui以及其他的业务逻辑存在的bug">
+      <created>1507626705222</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1507626705222</updated>
+    </task>
+    <task id="LOCAL-00010" summary="1,BUG修改">
+      <created>1507858520516</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1507858520516</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1233576000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20969442" sideWeight="0.65397173" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20969442" sideWeight="0.3460283" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.218716" sideWeight="0.50632244" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4515778" sideWeight="0.49367756" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297062" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42872688" sideWeight="0.49789253" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24130663" sideWeight="0.52955663" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55168664" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="项目进度更新" />
+    <MESSAGE value="1修改Cordova插件内容，添加imei功能。&#10;2修改了一些ui以及相关的逻辑。&#10;3与服务器联调。" />
+    <MESSAGE value="1修改Cordova插件内容，添加imei功能。&#10;2继续跟服务器联合调试。" />
+    <MESSAGE value="1地图以及台帐功能完成，需要调试" />
+    <MESSAGE value="1地图以及台帐功能完成，需要调试。" />
+    <MESSAGE value="1,添加美工给的各种图片&#10;2,登录，home页，代办工作，综合考核，界面UI重新优化完成&#10;3,重写了一些ionic的样式&#10;4,台帐功能完成" />
+    <MESSAGE value="2,Ui优化工作继续中" />
+    <MESSAGE value="1.Ui优化工作继续中" />
+    <MESSAGE value="1.Ui优化工作已经完成&#10;2.添加ionic对安卓back按键的监听&#10;3.添加了本地存储功能&#10;4.消息附件的下载功能完成" />
+    <MESSAGE value="优化map模块的逻辑" />
+    <MESSAGE value="1,与服务器联合调试修改上传数据接口出现的bug&#10;2,修改ui以及其他的业务逻辑存在的bug" />
+    <MESSAGE value="1,BUG修改" />
+    <option name="LAST_COMMIT_MESSAGE" value="1,BUG修改" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="14" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/assessmentStatusDetails/assessmentStatusDetails.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="641">
+          <caret line="46" column="61" lean-forward="false" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/gridCheck/gridCheckMap/gridCheckMap.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="43" column="43" lean-forward="false" selection-start-line="43" selection-start-column="43" selection-end-line="43" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/home/home.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="39" column="52" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/map/map.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="30" column="60" lean-forward="false" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="29" column="30" lean-forward="false" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.bowerrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="119" column="50" lean-forward="true" selection-start-line="119" selection-start-column="50" selection-end-line="119" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/problemFeedback/problemFeedbackDetails/problemFeedbackDetails.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="61" column="29" lean-forward="false" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/common/http/commonHttpService.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="90" column="30" lean-forward="true" selection-start-line="90" selection-start-column="8" selection-end-line="90" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/assessmentStatus/assessmentStatus.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="38" column="9" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="38" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/problemFeedback/problemFeedback.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="30" column="9" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="30" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/assessmentStatusDetails/assessmentStatusDetails.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="111" column="40" lean-forward="false" selection-start-line="111" selection-start-column="40" selection-end-line="111" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/assets/global/img/gridCheck/icon_streetscape.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/assessmentStatusDetails/assessmentStatusDetails.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="82" column="42" lean-forward="false" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/assessment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="55" lean-forward="true" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/waitForWork/waitForWork.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/account/accountDetails/accountDetails.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1691">
+          <caret line="841" column="26" lean-forward="false" selection-start-line="841" selection-start-column="26" selection-end-line="841" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/account/accountDetails/accountDetails.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-157">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/common/map/commonMap.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="171" column="35" lean-forward="false" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/gridCheck/gridCheck.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="95" column="34" lean-forward="true" selection-start-line="95" selection-start-column="34" selection-end-line="95" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/assessment.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/waitForWork/waitForWork.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="34" column="13" lean-forward="true" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/planDetails/planDetails.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="19" column="36" lean-forward="true" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/account/account.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1273">
+          <caret line="67" column="45" lean-forward="false" selection-start-line="67" selection-start-column="45" selection-end-line="67" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/account/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1007">
+          <caret line="53" column="44" lean-forward="false" selection-start-line="53" selection-start-column="44" selection-end-line="53" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/account/account.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="18" lean-forward="false" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scss/ionic.app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6707">
+          <caret line="353" column="14" lean-forward="false" selection-start-line="353" selection-start-column="14" selection-end-line="353" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/assessment/addAssessment/addAssessment.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4313">
+          <caret line="227" column="8" lean-forward="false" selection-start-line="220" selection-start-column="6" selection-end-line="227" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ionic.project">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-mdpi-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-xxhdpi-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-xxxhdpi-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-xhdpi-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-ldpi-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/drawable-hdpi-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/icon/icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/splash.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/splash/drawable-land-ldpi-screen.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/splash/drawable-port-ldpi-screen.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/android/splash/drawable-port-mdpi-screen.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="36" lean-forward="false" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/platforms/android/src/io/sqlc/SQLitePlugin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/platforms/android/src/com/xinhai/appdemo/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/platforms/android/src/org/apache/cordova/device/Device.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/cordova-plugin-device/types/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="35" column="12" lean-forward="false" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/login/login.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="832">
+          <caret line="47" column="26" lean-forward="false" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-228">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/platforms/android/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

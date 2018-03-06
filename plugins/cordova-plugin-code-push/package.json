@@ -1,0 +1,109 @@
+{
+  "name": "cordova-plugin-code-push",
+  "version": "1.9.8-beta",
+  "description": "CodePush Plugin for Apache Cordova",
+  "cordova": {
+    "id": "cordova-plugin-code-push",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/cordova-plugin-code-push.git"
+  },
+  "keywords": [
+    "cordova",
+    "code",
+    "push",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "archiver": "latest",
+    "body-parser": "latest",
+    "del": "latest",
+    "express": "latest",
+    "gulp": "latest",
+    "gulp-insert": "latest",
+    "gulp-tslint": "latest",
+    "gulp-typescript": "latest",
+    "mkdirp": "latest",
+    "mocha": "latest",
+    "mocha-junit-reporter": "latest",
+    "q": "latest",
+    "replace": "latest",
+    "run-sequence": "latest",
+    "tslint": "latest",
+    "typescript": "latest"
+  },
+  "gitHead": "c2651a82cc8944bd2caabb5e9937df5fe53bcced",
+  "bugs": {
+    "url": "https://github.com/Microsoft/cordova-plugin-code-push/issues"
+  },
+  "homepage": "https://github.com/Microsoft/cordova-plugin-code-push#readme",
+  "_id": "cordova-plugin-code-push@1.9.8-beta",
+  "_npmVersion": "5.0.4",
+  "_nodeVersion": "6.6.0",
+  "_npmUser": {
+    "name": "max-mironov",
+    "email": "v-maximi@microsoft.com"
+  },
+  "dist": {
+    "integrity": "sha512-IG+Ab5fyvGFB5kuEOjLT+0T2cAaT+PYLotkQaUItlgbT6EvvIB3O3rV5iZBtUqZGSveYRVppIdieEbufIFK2Hw==",
+    "shasum": "e77ed0c347dbad40c06203281df425f2be793d59",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-code-push/-/cordova-plugin-code-push-1.9.8-beta.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "axemclion",
+      "email": "code@nparashuram.com"
+    },
+    {
+      "name": "bokang",
+      "email": "buptkang@gmail.com"
+    },
+    {
+      "name": "bretjohnson",
+      "email": "bret.johnson@microsoft.com"
+    },
+    {
+      "name": "max-mironov",
+      "email": "v-maximi@microsoft.com"
+    },
+    {
+      "name": "maximpop",
+      "email": "maximpop@microsoft.com"
+    },
+    {
+      "name": "pniko",
+      "email": "patrick.nikoletich@microsoft.com"
+    },
+    {
+      "name": "ryanjsalva",
+      "email": "ryanjsalva@gmail.com"
+    },
+    {
+      "name": "sergey-akhalkov",
+      "email": "v-seakha@microsoft.com"
+    },
+    {
+      "name": "silhouettes",
+      "email": "rich@rkhua.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-code-push-1.9.8-beta.tgz_1505386686737_0.8608516692183912"
+  },
+  "directories": {},
+  "_shasum": "e77ed0c347dbad40c06203281df425f2be793d59",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-code-push/-/cordova-plugin-code-push-1.9.8-beta.tgz",
+  "_from": "cordova-plugin-code-push@latest"
+}

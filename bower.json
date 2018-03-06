@@ -1,0 +1,16 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.3.1",
+    "platform.js": "platform#^1.3.1"
+  },
+  "dependencies": {
+    "lodash": "^4.15.0",
+    "moment": "^2.14.1",
+    "ngstorage": "^0.3.11",
+    "echarts": "^3.2.3",
+    "bower-ng-echarts": "^3.2.4",
+    "ng-file-upload": "^12.2.13"
+  }
+}

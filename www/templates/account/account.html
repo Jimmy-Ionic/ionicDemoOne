@@ -1,0 +1,204 @@
+<ion-view class="home-bg" ng-controller="AccountController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+
+  <div class="home-bottom-bg">
+
+    <div class="padding-left-right-20">
+
+      <div class=" common-center padding-top-20">
+        <input id="search-form" class="map-long-input"
+               ng-model="vm.queryCriteria.keyword" placeholder="请输入关键字搜索"/>
+        <div class="map-query-btn" ng-click="vm.fun.getAccountListByQueryCriteria()"></div>
+      </div>
+
+      <div class="row common-margin-top-10">
+        <div class="col  text-center">
+          <select class="account-select common-font-4CB1AF" ng-init="vm.queryCriteria.cityPlace = ''"
+                  ng-model="vm.queryCriteria.cityPlace">
+            <option value="" class="common-font-4CB1AF">全部区</option>
+            <option class="common-font-4CB1AF" ng-repeat="x in vm.queryCriteriaObj.area" value="{{x.id}}">{{x.name}}
+            </option>
+          </select>
+        </div>
+        <div class="col  text-center">
+          <select class="account-select common-max-width-100 common-text-ellipsis common-font-4CB1AF"
+                  ng-init="vm.accountType = vm.optionAll"
+                  ng-model="vm.accountType" ng-change="vm.fun.updateLevelArrayByType(vm.accountType)">
+            <option class="common-font-4CB1AF" value="{{vm.optionAll}}">全部类型</option>
+            <option class="common-max-width-100 common-text-ellipsis common-font-4CB1AF"
+                    ng-repeat="x in vm.queryCriteriaObj.item"
+                    value="{{x}}">{{x.name}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col  text-center">
+          <select class="account-select common-max-width-100 common-text-ellipsis common-font-4CB1AF"
+                  ng-init="vm.queryCriteria.leve = ''"
+                  ng-model="vm.queryCriteria.level">
+            <option class="common-font-4CB1AF" value="">全部子类</option>
+            <option class="common-font-4CB1AF" ng-repeat="x in vm.levelList" value="{{x.id}}">{{x.name}}</option>
+          </select>
+        </div>
+
+        <div class="col  text-center common-font-4CB1AF">
+          详情
+        </div>
+      </div>
+
+
+      <div class="save-data-line"></div>
+
+      <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+
+        <div class="common-ion-content-child-div">
+
+          <!--车辆-->
+          <li class="common-item" ng-repeat="item in vm.accountList.cheliang">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaId}}</span>
+              <span class="col  col-center text-center">{{item.vehicleType}}</span>
+              <div class="col  col-center text-center">{{item.vehicleFirstType}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'cheliang')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--冲洗作业-->
+          <li class="common-item" ng-repeat="item in vm.accountList.congxizuoye">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.AreaId}}</span>
+              <span class="col  col-center text-center">{{item.operateType}}</span>
+              <div class="col  col-center text-center">{{item.frequency}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'congxizuoye')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--道路-->
+          <li class="common-item" ng-repeat="item in vm.accountList.daolu">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaId}}</span>
+              <span class="col  col-center text-center">{{item.roadName}}</span>
+              <div class="col  col-center text-center">{{item.cleanLevel}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'daolu')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--公厕-->
+          <li class="common-item" ng-repeat="item in vm.accountList.gongche">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaId}}</span>
+              <span class="col  col-center text-center">{{item.toiletName}}</span>
+              <div class="col  col-center text-center">{{item.toiletType}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'gongche')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--过街天桥-->
+          <li class="common-item" ng-repeat="item in vm.accountList.guojietianqiao">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaId}}</span>
+              <span class="col  col-center text-center">{{item.startEnd}}</span>
+              <div class="col  col-center text-center">{{item.cleanLevel}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'guojietianqiao')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--机扫作业-->
+          <li class="common-item" ng-repeat="item in vm.accountList.jishaozuoye">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.AreaId}}</span>
+              <span class="col  col-center text-center">{{item.operateType}}</span>
+              <div class="col  col-center text-center">{{item.frequency}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'jishaozuoye')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--机械作业-->
+          <li class="common-item" ng-repeat="item in vm.accountList.jixiezuoye">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaId}}</span>
+              <span class="col  col-center text-center">{{item.operateType}}</span>
+              <div class="col  col-center text-center">{{item.vehicleType}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'jixiezuoye')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--垃圾桶-->
+          <li class="common-item" ng-repeat="item in vm.accountList.lajitong">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaid}}</span>
+              <span class="col  col-center text-center">{{item.trashArea}}</span>
+              <div class="col  col-center text-center">{{item.unit}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'lajitong')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--洒水作业-->
+          <li class="common-item" ng-repeat="item in vm.accountList.shashuizuoye">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.AreaId}}</span>
+              <span class="col  col-center text-center">{{item.operateType}}</span>
+              <div class="col  col-center text-center">{{item.frequency}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'shashuizuoye')"></div>
+              </div>
+            </div>
+          </li>
+
+
+          <!--收集站-->
+          <li class="common-item" ng-repeat="item in vm.accountList.shoujizhan">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaid}}</span>
+              <span class="col  col-center text-center">{{item.RCPsname}}</span>
+              <div class="col  col-center text-center">{{item.category}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'shoujizhan')"></div>
+              </div>
+            </div>
+          </li>
+
+          <!--收运作业-->
+          <li class="common-item" ng-repeat="item in vm.accountList.shouyunzuoye">
+            <div class="row">
+              <span class="col  col-center text-center">{{item.areaId}}</span>
+              <span class="col  col-center text-center">{{item.operatePlate}}</span>
+              <div class="col  col-center text-center">{{item.collectType}}</div>
+              <div class="col common-center">
+                <div class="common-check-btn" ng-click="vm.fun.toAccountDetails(item,'shouyunzuoye')"></div>
+              </div>
+            </div>
+          </li>
+        </div>
+    </div>
+
+    </ion-content>
+
+    <div class="save-data-line"></div>
+
+  </div>
+
+
+  </div>
+
+  </div>
+
+</ion-view>

@@ -1,0 +1,50 @@
+<ion-view class="home-bg" ng-controller="MessageContentController as vm" title="消息内容">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+
+  <div class="home-bottom-bg">
+    <div class="padding-left-right-20">
+
+      <ion-content class="common-center" scroll="false">
+        <div class="card common-width-300">
+          <ul class="list">
+            <div class="item item-divider text-center">
+              {{vm.msg.title}}
+            </div>
+            <li class="item">
+              <i class="icon ion-person-stalker"></i>
+              收件人：{{vm.msg.addressee}}
+            </li>
+            <li class="item">
+              <i class="icon ion-person-stalker"></i>
+              发件人：{{vm.msg.sender}}
+            </li>
+            <li class="item">
+              <i class="icon ion-clock"></i>
+              邮件时间：{{vm.msg.sendDate}}
+            </li>
+            <li class="item">
+              <i class="icon ion-clock"></i>
+              消息详细内容：{{vm.msg.context}}
+            </li>
+            <div class="item item-divider text-center">
+              附件
+            </div>
+            <li class="item">
+              <i class="icon ion-document"></i>
+              附件名称：{{vm.msgView.name}}
+            </li>
+            <a ng-click="vm.fun.downloadFile()" class="item text-center">
+              <i class="icon ion-link"></i>
+              点击下载
+            </a>
+          </ul>
+        </div>
+
+      </ion-content>
+
+    </div>
+  </div>
+
+</ion-view>

@@ -1,0 +1,66 @@
+{
+  "name": "cordova-plugin-file-opener2",
+  "version": "2.0.19",
+  "description": "A File Opener Plugin for Cordova. (The Original Version)",
+  "cordova": {
+    "id": "cordova-plugin-file-opener2",
+    "platforms": [
+      "android",
+      "ios",
+      "wp8",
+      "windows"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pwlin/cordova-plugin-file-opener2.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-wp8",
+    "cordova-windows"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": {
+    "name": "pwlin05@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pwlin/cordova-plugin-file-opener2/issues"
+  },
+  "homepage": "https://github.com/pwlin/cordova-plugin-file-opener2#readme",
+  "gitHead": "f08a0fb15495e95f2bbe1fdb65077bd6e036b955",
+  "_id": "cordova-plugin-file-opener2@2.0.19",
+  "scripts": {},
+  "_shasum": "ca3ae1225395b77ab1fe5b20accbfecc688e2493",
+  "_from": "cordova-plugin-file-opener2@latest",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "5.12.0",
+  "_npmUser": {
+    "name": "pwlin",
+    "email": "pwlin05@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "pwlin",
+      "email": "pwlin05@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "ca3ae1225395b77ab1fe5b20accbfecc688e2493",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-file-opener2/-/cordova-plugin-file-opener2-2.0.19.tgz"
+  },
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-file-opener2-2.0.19.tgz_1496387012327_0.8553608951624483"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-file-opener2/-/cordova-plugin-file-opener2-2.0.19.tgz"
+}

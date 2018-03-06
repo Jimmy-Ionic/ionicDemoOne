@@ -1,0 +1,39 @@
+<ion-view class="home-bg" ng-controller="SetNetController">
+
+  <div class="save-data-top-bar">
+    <div class="row">
+      <div class="col">
+        <button class="home-top-button" ng-click="backToLogin()">&lt;返回</button>
+      </div>
+      <div class="col common-center save-data-title">服务器设置</div>
+      <div class="col text-right">
+        <button id="unReadMsgBtn" class="home-top-button " ng-click="setNet()">确定</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="home-bottom-bg">
+
+    <div class="padding padding-top-20">
+      <div class="list list-inset">
+        <label class="item item-input" ng-repeat="item in netSetList">
+          <span class="input-label">{{item.placeholderValue}}</span>
+          <input type="text" ng-model="item.value">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">IMEI码：</span>
+          <input type="text" ng-model="IMEI" ng-focus="false" readonly>
+        </label>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+</ion-view>
+

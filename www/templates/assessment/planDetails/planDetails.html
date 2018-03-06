@@ -1,0 +1,55 @@
+<ion-view class="home-bg" ng-controller="PlanDetailsController as vm">
+
+  <div ng-include="'templates/common/common.title.html'"></div>
+
+  <div class="home-bottom-bg">
+
+    <div class="padding-left-right-20 save-data-row padding-top-10 common-font-4CB1AF-size-17">
+      <div class="col col-40 text-center">设施名称</div>
+      <div class="col col-20 text-center">类型</div>
+      <div class="col col-20 text-center">状态</div>
+      <div class="col col-20 text-center">详情</div>
+    </div>
+
+    <div class="padding-left-right-20">
+
+      <div class="save-data-line"></div>
+
+      <ion-content class="common-ion-content" has-bouncing="false" scroll="false">
+
+        <div class="common-ion-content-child-div">
+          <div class="list">
+            <li class="common-item" ng-repeat="item in vm.planDetailsList">
+              <div class="row">
+                <span class="col col-40 col-center text-center">{{item.name}}</span>
+                <span class="col col-20 col-center text-center">{{item.type}}</span>
+                <div class="col col-20 col-center text-center">
+                  <span ng-if="item.status == null">未考核</span>
+                  <span ng-if="item.status == true">考核完成</span>
+                  <span ng-if="item.status == false">已考核</span>
+                </div>
+                <div class="col col-20 common-center">
+                  <div ng-if="item.status == null" class="common-check-btn" ng-click="vm.toAssessmentStatus(item)"></div>
+                  <div ng-if="item.status != null" class="common-query-btn" ng-click="vm.toAssessmentStatus(item)"></div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+
+      </ion-content>
+
+      <div class="save-data-line"></div>
+
+    </div>
+
+
+    <div class="plan-details-bottom-bar common-center common-margin-top-10">
+      <button class="plan-details-insert-plan-btn" ng-click="vm.fun.toAddAssessment()">录入计划
+      </button>
+    </div>
+
+  </div>
+
+
+</ion-view>
